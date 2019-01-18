@@ -93,6 +93,7 @@ before_install:
         -DCRC32C_BUILD_TESTS=no
         -DCRC32C_BUILD_BENCHMARKS=no
         -DBUILD_SHARED_LIBS=yes
+        -DCMAKE_INSTALL_PREFIX:PATH=${CRC32C_INSTALL_PREFIX}
         ..
     
     - make all install
