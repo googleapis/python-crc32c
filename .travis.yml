@@ -1,6 +1,6 @@
 ---
 # Only Build/Publish wheels on tags
-if: tag IS present
+#if: tag IS present
 env:
   global:
     - PROJECT_SPEC="python-crc32c"
