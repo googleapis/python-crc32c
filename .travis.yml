@@ -82,19 +82,20 @@ matrix:
 
 before_install:
     # First, build libcrc32c
-    - mkdir %BUILD_DIR%
-    - cd %BUILD_DIR%
+    # - mkdir %BUILD_DIR%
+    # - cd %BUILD_DIR%
+    # Build and install `crc32c`
+    - cd crc32c/
+    - mkdir build
+    - cd build/
     - cmake
-        -G "%CMAKE_GENERATOR%"
         -DCRC32C_BUILD_TESTS=no
         -DCRC32C_BUILD_BENCHMARKS=no
         -DBUILD_SHARED_LIBS=yes
-        -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes
-        -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX%
         ..
-    - cmake --build . --config RelWithDebInfo --target install
-    - dir %CRC32C_INSTALL_PREFIX% /b /s
-
+    
+    - make all install
+  
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
     - before_install
