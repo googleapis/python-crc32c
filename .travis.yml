@@ -112,6 +112,6 @@ after_success:
     - pip install requests[security] twine
     - twine upload --skip-existing ${TRAVIS_BUILD_DIR}/wheelhouse/*
 
-branches:
-  only:
-  - master
+# branches:
+#   only:
+#   - master
