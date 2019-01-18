@@ -38,13 +38,6 @@ matrix:
   include:
     - os: linux
       env:
-        - MB_PYTHON_VERSION=3.4
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.4
-        - PLAT=i686
-    - os: linux
-      env:
         - MB_PYTHON_VERSION=3.5
     - os: linux
       env:
@@ -64,10 +57,6 @@ matrix:
       env:
         - MB_PYTHON_VERSION=3.7
         - PLAT=i686
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.4
     - os: osx
       language: generic
       env:
