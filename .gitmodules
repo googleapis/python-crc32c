@@ -1,3 +1,6 @@
 [submodule "crc32c"]
 	path = crc32c
 	url = https://github.com/google/crc32c
+[submodule "multibuild"]
+	path = multibuild
+	url = https://github.com/matthew-brett/multibuild.git

@@ -1,0 +1,115 @@
+---
+# Only Build/Publish wheels on tags
+if: tag IS present
+env:
+  global:
+    - PROJECT_SPEC="python-crc32c"
+    # pip dependencies to _build_ your project
+    - BUILD_DEPENDS="cffi"
+    # pip dependencies to _test_ your project.  Include any dependencies
+    # that you need, that are also specified in BUILD_DEPENDS, this will be
+    # a separate install.
+    - TEST_DEPENDS="pytest"
+    - PLAT=x86_64
+    - UNICODE_WIDTH=32
+    - CONFIG_PATH="travis/config.sh"
+
+    # PyPI configuration (TWINE_USERNAME and TWINE_PASSWORD)
+    # - secure: "IcWRYouF+SQ7sxTYm3Z3dfvw7TuB4b0WLySndROsYKOjSqYJey2PpScFFrM1K8qHLsTkdcGPhoFVzLXvItg2yHS56uP93iC7SQaMzjV63BrBFcqS5erG0+zrnbdDSx1EkCJ/cpsFMpVhJ8NJtTRggZNyBtJZB6NsWL575gutG4ocjpWoEUKKwkbBtBoUdO+IMoRuHI8KWHGjMhwGDpf04+/KAxAHLnM2w0+/jUlA7OBUrW+0BPcVjDK90uqU0LTSRIcPymVYg8+TPuJVU963ZRLW5wm7ENibdG9Z2jPvGomFsUsXU+rMjcpJwPVPSjBSUN13xglEh4IYTlZF/lF7dDV555N+TWdDeQrz8woFigEaHTD2PjMM7/EMUxEOQDytoAphCAW7KKwEZzDfjZK9mxw17qyaWQrsh2Xqa8eddAyFCU0iWqPP/IsQnHA5Y573gsHMSRrB4lFgbvTs3uWxXywKapBARTBPpTKn8Xmy7pf1yL0nZUgPT70pjIl2kvTE7Cgka+YVZlbGr/piDQrTwTatIwXckMNjDCabqQmFYi6YrSivZxQjXgivbjSgoGKVvagSeXVP3Vk0+NWXHy1yTx/6bx1OGbcPk3UYv1U3MerBjTNwQeCDCqMA4dt2i0rSAibHc2eAAlrpw9Y9KjPb/4/gRehZofzy9ISHqhasiTA="
+    # TestPyPI configuration
+    # Use TestPyPI
+    - TWINE_REPOSITORY_URL="https://test.pypi.org/legacy/"
+    # # TWINE_USERNAME and TWINE_PASSWORD for TestPyPI
+    - secure: "Nk868faO8yrcYEK8eWSLh7ovKpdka722pVxwFCi7F78n+jfyztt4ie24sNupepdZ1GscgkVT/Z3Hbpl7RnvBQsMhNiLeeJE0KdKi4MPI9AiAT2aIn5Osda6PkOcJ2tR+ilBtxfAToF09Mvf8r06gfevrF8j1Wl43eC9YQAm774q58cyYGmysQEzMNTy1FZGHv+kDC1oKfLkDQbPf35rnLmYfx/A/tmGW8B6Z9ID+H9eKc2pQD4vS8/HnKAwKqSP85JbK6A/uVkBy9EvEameccq4MM/vroaDaKGSSwgZvIWYGGRYsGnjV3hFhM0+mUCy4lUpftzK8OczL7Mc8qdwOuaSm+6MwbwbXKfYmDgPblLUqHXF0WQ9qljbxFa50MKsppXFajF82uRCKfTYcs5iW9862F+AB+QANJp/IhUUs9lOzfOFIJITjxe0H4/tvhu8b0jJBZsuLmIYGP+3lWh2SX/4LOqTeOCaRBQIdyes8po+3hMauCvzqYbFCCAemZ719a2nxDECkRs8SPDQq4/s6bE4mObyR+t6hSTGFMgKO0GVx4j/BaBu1Yc3Xm/JwnmwgA1zQSRImyZ1qW+1uM9L11560+GbMwq/4AnIIlSiFZ13pbwncFNZX7+22du4blpoTxyfnjLb4XrL5vODtvBpgKdKPyQCRey6Ui1md0FspNao="
+
+language: python
+# The travis Python version is unrelated to the version we build and test
+# with.  This is set with the MB_PYTHON_VERSION variable.
+python: 3.5
+sudo: required
+dist: trusty
+services: docker
+
+matrix:
+  exclude:
+    # Exclude the default Python 3.5 build
+    - python: 3.5
+  include:
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.4
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.4
+        - PLAT=i686
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.5
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.5
+        - PLAT=i686
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.6
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.6
+        - PLAT=i686
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.7
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.7
+        - PLAT=i686
+    - os: osx
+      language: generic
+      env:
+        - MB_PYTHON_VERSION=3.4
+    - os: osx
+      language: generic
+      env:
+        - MB_PYTHON_VERSION=3.5
+    - os: osx
+      language: generic
+      env:
+        - MB_PYTHON_VERSION=3.6
+    - os: osx
+      language: generic
+      env:
+        - MB_PYTHON_VERSION=3.7
+
+before_install:
+    # First, build libcrc32c
+    - mkdir %BUILD_DIR%
+    - cd %BUILD_DIR%
+    - cmake
+        -G "%CMAKE_GENERATOR%"
+        -DCRC32C_BUILD_TESTS=no
+        -DCRC32C_BUILD_BENCHMARKS=no
+        -DBUILD_SHARED_LIBS=yes
+        -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes
+        -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX%
+        ..
+    - cmake --build . --config RelWithDebInfo --target install
+    - dir %CRC32C_INSTALL_PREFIX% /b /s
+
+    - source multibuild/common_utils.sh
+    - source multibuild/travis_steps.sh
+    - before_install
+
+install:
+    - build_index_wheel $PROJECT_SPEC
+
+script:
+    - install_run $PLAT
+
+after_success:
+    # Upload wheels to PyPI
+    - pip install requests[security] twine
+    - twine upload --skip-existing ${TRAVIS_BUILD_DIR}/wheelhouse/*
+
+branches:
+  only:
+  - master

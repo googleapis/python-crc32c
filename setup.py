@@ -61,7 +61,7 @@ def main():
         long_description=readme,
         long_description_content_type="text/markdown",
         author="Google LLC",
-        author_email="googleapis-packages@oogle.com",
+        author_email="googleapis-packages@google.com",
         scripts=(),
         url="https://github.com/googleapis/python-crc32c",
         packages=["crc32c"],
@@ -78,14 +78,13 @@ def main():
             "Intended Audience :: Developers",
             "License :: OSI Approved :: Apache Software License",
             "Operating System :: OS Independent",
-            "Programming Language :: Python :: 2",
-            "Programming Language :: Python :: 2.7",
             "Programming Language :: Python :: 3",
             "Programming Language :: Python :: 3.5",
             "Programming Language :: Python :: 3.6",
             "Programming Language :: Python :: 3.7",
         ],
         cmdclass={"build_ext": BuildExtWithDLL},
+        python_requires=">=3.5.*"
         extras_require={
             "testing": ["pytest", 'mock; python_version == "2.7"']
         },
