@@ -85,6 +85,7 @@ before_install:
     # - mkdir %BUILD_DIR%
     # - cd %BUILD_DIR%
     # Build and install `crc32c`
+    - CRC32C_INSTALL_PREFIX=${pwd}/usr
     - cd crc32c/
     - mkdir build
     - cd build/
