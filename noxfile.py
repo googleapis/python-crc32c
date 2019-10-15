@@ -19,13 +19,27 @@
 from __future__ import absolute_import
 import nox
 
-# @nox.session(python="3.7")
-# def check(session):
-#     session.install("-e", ".")
 
-#     # Run py.test against the unit tests.
-#     session.run(
-#         "python",
-#         "scripts/check_cffi_crc32c.py",
-#         *session.posargs,
-#     )
+def build(session):
+    from sys import platform
+    
+    if platform.startswith("win"):
+
+    elif platform == "linux":
+    
+    elif platform == "darwin":
+    
+    else:
+        raise Exception("Unsupported")
+  
+
+ @nox.session(python="3.7")
+ def check(session):
+     session.install("-e", ".")
+
+    # Run py.test against the unit tests.
+    session.run(
+        "python",
+        "scripts/check_cffi_crc32c.py",
+        *session.posargs,
+    )
