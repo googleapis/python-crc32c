@@ -51,9 +51,9 @@ export PROJECT_ID=$(cat "${KOKORO_GFILE_DIR}/project-id.json")
 
 # cd "$PACKAGE"
 
-# Some system tests require indexes. Use gclod to create them.
+# Some system tests require indexes. Use gcloud to create them.
 gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=$PROJECT_ID
-gcloud --quiet --verbosity=debug datastore indexes create tests/system/index.yaml
+#gcloud --quiet --verbosity=debug datastore indexes create tests/system/index.yaml
 
 # Remove old nox
 python3.6 -m pip uninstall --yes --quiet nox-automation
