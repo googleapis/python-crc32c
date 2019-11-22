@@ -20,6 +20,8 @@ MANYLINUX_DIR=$(echo $(cd $(dirname ${0}); pwd))
 SCRIPTS_DIR=$(dirname ${MANYLINUX_DIR})
 REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 
+docker pull quay.io/pypa/manylinux2010_x86_64	
+
 cd $REPO_ROOT
 git submodule update --init --recursive 
 
