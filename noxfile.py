@@ -18,20 +18,19 @@
 
 from __future__ import absolute_import
 import nox
+import subprocess
+from sys import platform
 
 
-def build(session):
-    from sys import platform
-    
+def build_libcrc32c(session):
     if platform.startswith("win"):
-        pass
+        subprocess.run(["cmd", "-c", "scripts\\windows\\build.bat"])
     elif platform == "linux":
-        pass
+        subprocess.run(["bash", "scripts/local-linux/build_libcrc32c.sh"])
     elif platform == "darwin":
-        pass
+        subprocess.run(["bash", "scripts/osx/build_libcrc32c.sh"])
     else:
         raise Exception("Unsupported")
-  
 
 @nox.session(python="3.7")
 def check(session):
