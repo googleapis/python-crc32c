@@ -24,18 +24,18 @@ def build(session):
     from sys import platform
     
     if platform.startswith("win"):
-
+        pass
     elif platform == "linux":
-    
+        pass
     elif platform == "darwin":
-    
+        pass
     else:
         raise Exception("Unsupported")
   
 
- @nox.session(python="3.7")
- def check(session):
-     session.install("-e", ".")
+@nox.session(python="3.7")
+def check(session):
+    session.install("-e", ".")
 
     # Run py.test against the unit tests.
     session.run(
