@@ -21,7 +21,7 @@ import nox
 import subprocess
 from sys import platform
 
-
+@nox.session(python="3.7")
 def build_libcrc32c(session):
     if platform.startswith("win"):
         subprocess.run(["cmd", "-c", "scripts\\windows\\build.bat"])
