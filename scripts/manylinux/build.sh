@@ -27,7 +27,6 @@ git submodule update --init --recursive
 
 docker run \
     --rm \
-    --tty \
     --interactive \
     --volume ${REPO_ROOT}:/var/code/py-crc32c/ \
     quay.io/pypa/manylinux2010_x86_64 \
