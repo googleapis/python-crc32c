@@ -17,9 +17,13 @@
 cd /d %~dp0
 cd ..
 
+where python
+where py
+
 @echo "Build Wheel"
 call scripts\windows\build.bat || goto :error
 
+ 
 goto :EOF
 
 :error
