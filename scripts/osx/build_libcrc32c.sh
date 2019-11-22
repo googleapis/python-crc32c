@@ -42,16 +42,16 @@ fi
 # Make sure we have an updated `pip`.
 ${PY_BIN} -m pip install --upgrade pip
 # Create a virtualenv where we can install `cmake`.
-${PY_BIN} -m pip install --upgrade virtualenv
+#${PY_BIN} -m pip install --upgrade virtualenv
 VENV=${REPO_ROOT}/venv
-${PY_BIN} -m virtualenv ${VENV}
+${PY_BIN} -m venv ${VENV}
 ${VENV}/bin/python -m pip install "cmake >= 3.12.0"
 # Build `libcrc32c`
 cd ${REPO_ROOT}/crc32c
-mkdir build
+mkdir -p build
 cd build/
 ${VENV}/bin/cmake \
-    -DCMAKE_OSX_ARCHITECTURES="x86_64;i386" \
+    -DCMAKE_OSX_ARCHITECTURES="x86_64" \
     -DCRC32C_BUILD_TESTS=no \
     -DCRC32C_BUILD_BENCHMARKS=no \
     -DBUILD_SHARED_LIBS=yes \

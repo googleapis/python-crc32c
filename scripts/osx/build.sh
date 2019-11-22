@@ -29,27 +29,27 @@ PYTHON36="/Library/Frameworks/Python.framework/Versions/3.6/bin"
 PYTHON37="/Library/Frameworks/Python.framework/Versions/3.7/bin"
 
 # Build and install `libcrc32c`
-export PY_BIN="${PYTHON37}/python3"
+export PY_BIN="python3"
 export CRC32C_INSTALL_PREFIX="${REPO_ROOT}/usr"
 ${OSX_DIR}/build_libcrc32c.sh
 
 # Build wheel for Python 2.7.
-export PY_BIN="${PYTHON27}/python2"
+export PY_BIN="python2"
 export PY_TAG="cp27-cp27m"
 ${OSX_DIR}/build_python_wheel.sh
 
 # Build wheel for Python 3.5.
-export PY_BIN="${PYTHON35}/python3"
+export PY_BIN="python3.5"
 export PY_TAG="cp35-cp35m"
 ${OSX_DIR}/build_python_wheel.sh
 
 # Build wheel for Python 3.6.
-export PY_BIN="${PYTHON36}/python3"
+export PY_BIN="python3.6"
 export PY_TAG="cp36-cp36m"
 ${OSX_DIR}/build_python_wheel.sh
 
 # Build wheel for Python 3.7.
-export PY_BIN="${PYTHON37}/python3"
+export PY_BIN="python3.7"
 export PY_TAG="cp37-cp37m"
 ${OSX_DIR}/build_python_wheel.sh
 
