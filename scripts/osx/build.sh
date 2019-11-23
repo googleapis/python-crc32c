@@ -33,11 +33,6 @@ export PY_BIN="python3"
 export CRC32C_INSTALL_PREFIX="${REPO_ROOT}/usr"
 ${OSX_DIR}/build_libcrc32c.sh
 
-# Build wheel for Python 2.7.
-export PY_BIN="python2"
-export PY_TAG="cp27-cp27m"
-${OSX_DIR}/build_python_wheel.sh
-
 # Build wheel for Python 3.5.
 export PY_BIN="python3.5"
 export PY_TAG="cp35-cp35m"

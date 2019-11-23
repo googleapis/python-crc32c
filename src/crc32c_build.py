@@ -29,7 +29,7 @@ def get_kwargs():
     return {
         "library_dirs": library_dirs,
         "include_dirs": [os.path.join(install_prefix, "include")],
-        "extra_link_args": ["-Wl,-rpath={}".format(rpath)],
+        "extra_link_args": ["-Wl,-rpath,{}".format(rpath)],
     }
 
 

@@ -36,15 +36,14 @@ fi
 # Make sure we have an updated `pip`.
 ${PY_BIN} -m pip install --upgrade pip
 # Create a virtualenv where we can install Python build dependencies.
-${PY_BIN} -m pip install --upgrade virtualenv
-VENV=${REPO_ROOT}/venv
-${PY_BIN} -m virtualenv ${VENV}
+VENV=${REPO_ROOT}/venv${PY_BIN}
+${PY_BIN} -m venv ${VENV}
 ${VENV}/bin/python -m pip install \
     --requirement ${REPO_ROOT}/scripts/dev-requirements.txt
 
 # Create the wheel.
 DIST_WHEELS="${REPO_ROOT}/dist_wheels"
-mkdir ${DIST_WHEELS}
+mkdir -p ${DIST_WHEELS}
 ${VENV}/bin/python -m pip wheel ${REPO_ROOT} --wheel-dir ${DIST_WHEELS}
 
 # Delocate the wheel.
