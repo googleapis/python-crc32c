@@ -40,7 +40,7 @@ C:\Python37\Scripts\cmake --build . --config RelWithDebInfo --target install
 dir %CRC32C_INSTALL_PREFIX% /b /s
 popd
 
-copy %CRC32C_INSTALL_PREFIX%\crc32c.dll .
+copy %CRC32C_INSTALL_PREFIX%crc32c.dll .
 
 @rem update python deps
 py -3.5 -m pip install --upgrade pip setuptools wheel
