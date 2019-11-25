@@ -40,6 +40,11 @@ C:\Python37\Scripts\cmake --build . --config RelWithDebInfo --target install
 dir %CRC32C_INSTALL_PREFIX% /b /s
 popd
 
+@rem update python deps
+py -3.5 -m pip install --upgrade pip setuptools wheel
+py -3.6 -m pip install --upgrade pip setuptools wheel
+py -3.7 -m pip install --upgrade pip setuptools wheel
+
 @rem Build wheels (requires CRC32C_INSTALL_PREFIX is set)
 cd %APPVEYOR_BUILD_FOLDER%
 py -3.5 -m pip wheel .
