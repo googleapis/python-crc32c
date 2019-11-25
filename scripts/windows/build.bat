@@ -13,7 +13,7 @@
 py -3.7 -m pip install cmake
 
 @rem First, build libcrc32c
-set CRC32C_INSTALL_PREFIX=t:\src\bin\
+set CRC32C_INSTALL_PREFIX=%KOKORO_ARTIFACTS_DIR%\bin\
 pushd crc32c
 
 git submodule update --init --recursive
@@ -39,6 +39,8 @@ C:\Python37\Scripts\cmake ^
 C:\Python37\Scripts\cmake --build . --config RelWithDebInfo --target install
 dir %CRC32C_INSTALL_PREFIX% /b /s
 popd
+
+copy %CRC32C_INSTALL_PREFIX%\crc32c.dll .
 
 @rem update python deps
 py -3.5 -m pip install --upgrade pip setuptools wheel
