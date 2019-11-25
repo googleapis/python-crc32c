@@ -17,16 +17,27 @@
 cd /d %~dp0
 cd ..
 
-where python
-
-call py -3.7 -V
-call py -3.6 -V
-call py -3.5 -V
-call py -3.8 -V
-
-
 @echo "Build Wheel"
 call scripts\windows\build.bat || goto :error
+
+
+
+REM test_script:
+REM     # Install the wheel with pip
+REM     - "%PYTHON35%\\python -m pip install --no-index --find-links=. google-crc32c"
+REM     - "%PYTHON36%\\python -m pip install --no-index --find-links=. google-crc32c"
+REM     - "%PYTHON37%\\python -m pip install --no-index --find-links=. google-crc32c"
+REM     # Install pytest with pip
+REM     - "%PYTHON35%\\python -m pip install pytest"
+REM     - "%PYTHON36%\\python -m pip install pytest"
+REM     - "%PYTHON37%\\python -m pip install pytest"
+REM     # Run the tests
+REM     - "%PYTHON35%/python -m pytest tests"
+REM     - "%PYTHON36%/python -m pytest tests"
+REM     - "%PYTHON37%/python -m pytest tests"
+
+REM artifacts:
+REM     - path: 'google_crc32c*win*.whl'
 
  
 goto :EOF
