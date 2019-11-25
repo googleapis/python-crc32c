@@ -15,6 +15,9 @@ py -3.7 -m pip install cmake
 @rem First, build libcrc32c
 set CRC32C_INSTALL_PREFIX=C:\bin\
 pushd crc32c
+
+git submodule update --init --recursive
+
 mkdir build
 C:\Python37\Scripts\cmake ^
     -DCRC32C_BUILD_TESTS=no ^
