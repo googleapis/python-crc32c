@@ -11,11 +11,11 @@
 @REM  -2.7-32"Build Wheel"
 
 @rem First, build libcrc32c
-cd crc32c
+set CRC32C_INSTALL_PREFIX=C:\bin
+pushd crc32c
 mkdir build
 cd build
 cmake ^
-    -G "%CMAKE_GENERATOR%" ^
     -DCRC32C_BUILD_TESTS=no ^
     -DCRC32C_BUILD_BENCHMARKS=no ^
     -DBUILD_SHARED_LIBS=yes ^
@@ -23,9 +23,18 @@ cmake ^
     -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ^
     ..
 
+@REM cmake ^
+@REM     -G "%CMAKE_GENERATOR%" ^
+@REM     -DCRC32C_BUILD_TESTS=no ^
+@REM     -DCRC32C_BUILD_BENCHMARKS=no ^
+@REM     -DBUILD_SHARED_LIBS=yes ^
+@REM     -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes ^
+@REM     -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ^
+@REM     ..
+
 cmake --build . --config RelWithDebInfo --target install
 dir %CRC32C_INSTALL_PREFIX% /b /s
-
+popd
 
 @rem Build wheels (requires CRC32C_INSTALL_PREFIX is set)
 cd %APPVEYOR_BUILD_FOLDER%
