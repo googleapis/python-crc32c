@@ -16,14 +16,13 @@ py -3.7 -m pip install cmake
 set CRC32C_INSTALL_PREFIX=C:\bin\
 pushd crc32c
 mkdir build
-cd build
 C:\Python37\Scripts\cmake ^
     -DCRC32C_BUILD_TESTS=no ^
     -DCRC32C_BUILD_BENCHMARKS=no ^
     -DBUILD_SHARED_LIBS=yes ^
     -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes ^
     -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ^
-    ..
+    .
 
 @REM cmake ^
 @REM     -G "%CMAKE_GENERATOR%" ^

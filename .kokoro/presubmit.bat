@@ -18,7 +18,7 @@ cd /d %~dp0
 cd ..
 
 @rem as this package uses submodules make sure we have all content
-git submodule update --recursive
+call git submodule update --recursive || goto :error
 
 @echo "Build Wheel"
 call scripts\windows\build.bat || goto :error
