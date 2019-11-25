@@ -18,7 +18,12 @@ cd /d %~dp0
 cd ..
 
 where python
-where py
+
+call py -3.7 -V
+call py -3.6 -V
+call py -3.5 -V
+call py -3.8 -V
+
 
 @echo "Build Wheel"
 call scripts\windows\build.bat || goto :error
