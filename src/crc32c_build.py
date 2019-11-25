@@ -26,10 +26,16 @@ def get_kwargs():
     if os.name == "nt":
         library_dirs.append(os.path.join(install_prefix, "bin"))
     rpath = os.pathsep.join(library_dirs)
+    
+    if os.name == "darwin":
+        extra_link_args = ["-Wl,-rpath,{}".format(rpath)]
+    else:
+        extra_link_args = ["-Wl,-rpath={}".format(rpath)]
+
     return {
         "library_dirs": library_dirs,
         "include_dirs": [os.path.join(install_prefix, "include")],
-        "extra_link_args": ["-Wl,-rpath,{}".format(rpath)],
+        "extra_link_args": extra_link_args,
     }
 
 
