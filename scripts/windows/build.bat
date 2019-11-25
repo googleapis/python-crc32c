@@ -17,7 +17,7 @@ set CRC32C_INSTALL_PREFIX=C:\bin\
 pushd crc32c
 mkdir build
 cd build
-cmake ^
+C:\Python37\Scripts\cmake ^
     -DCRC32C_BUILD_TESTS=no ^
     -DCRC32C_BUILD_BENCHMARKS=no ^
     -DBUILD_SHARED_LIBS=yes ^
@@ -34,7 +34,7 @@ cmake ^
 @REM     -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ^
 @REM     ..
 
-cmake --build . --config RelWithDebInfo --target install
+C:\Python37\Scripts\cmake --build . --config RelWithDebInfo --target install
 dir %CRC32C_INSTALL_PREFIX% /b /s
 popd
 
