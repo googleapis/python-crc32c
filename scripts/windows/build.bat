@@ -23,14 +23,9 @@ pushd crc32c
 git submodule update --init --recursive
 
 mkdir build
-C:\Python37\Scripts\cmake ^
-    -G %CMAKE_GENERATOR% ^ 
-    -DCRC32C_BUILD_TESTS=no ^
-    -DCRC32C_BUILD_BENCHMARKS=no ^
-    -DBUILD_SHARED_LIBS=yes ^
-    -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes ^
-    -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ^
-    .
+
+@REM removed -DCRC32C_BUILD_TESTS=no 
+C:\Python37\Scripts\cmake -G %CMAKE_GENERATOR% -DCRC32C_BUILD_BENCHMARKS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% .
 
 C:\Python37\Scripts\cmake --build . --config RelWithDebInfo --target install
 dir %CRC32C_INSTALL_PREFIX% /b /s
