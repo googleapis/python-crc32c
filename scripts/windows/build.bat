@@ -40,7 +40,6 @@ py -3.6 -m pip install --upgrade pip setuptools wheel
 py -3.7 -m pip install --upgrade pip setuptools wheel
 
 @rem Build wheels (requires CRC32C_INSTALL_PREFIX is set)
-cd %APPVEYOR_BUILD_FOLDER%
 py -3.5-64 -m pip wheel .
 py -3.5-32 -m pip wheel .
 py -3.6-64 -m pip wheel .
