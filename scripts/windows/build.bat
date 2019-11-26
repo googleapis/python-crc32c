@@ -58,6 +58,11 @@ FOR %%V IN (3.5-64,3.6-64,3.7-64) DO (
 
 @REM 32 Bit Builds.
 @REM removed -DCRC32C_BUILD_TESTS=no 
+
+@rem clean up 64 bit artifacts
+del CMakeCache.txt
+del /s /q CMakeFiles/
+
 set CMAKE_GENERATOR="Visual Studio 15 2017"
 pushd crc32c
 C:\Python37\Scripts\cmake -G %CMAKE_GENERATOR% -A Win32 -DCRC32C_BUILD_BENCHMARKS=no -DBUILD_SHARED_LIBS=yes ^
