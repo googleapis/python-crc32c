@@ -17,7 +17,7 @@ set CRC32C_INSTALL_PREFIX=%KOKORO_ARTIFACTS_DIR%\bin\
 
 echo %CRC32C_INSTALL_PREFIX%
 
-set CMAKE_GENERATOR="Visual Studio 15 2017"
+set CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
 pushd crc32c
 
 git submodule update --init --recursive
