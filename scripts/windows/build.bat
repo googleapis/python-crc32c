@@ -34,15 +34,22 @@ popd
 
 copy %CRC32C_INSTALL_PREFIX%bin\crc32c.dll .
 
-@rem update python deps
-py -3.5 -m pip install --upgrade pip setuptools wheel
-py -3.6 -m pip install --upgrade pip setuptools wheel
-py -3.7 -m pip install --upgrade pip setuptools wheel
+@REM @rem update python deps
+@REM py -3.5 -m pip install --upgrade pip setuptools wheel
+@REM py -3.6 -m pip install --upgrade pip setuptools wheel
+@REM py -3.7 -m pip install --upgrade pip setuptools wheel
 
-@rem Build wheels (requires CRC32C_INSTALL_PREFIX is set)
-py -3.5-64 -m pip wheel .
-py -3.5-32 -m pip wheel .
-py -3.6-64 -m pip wheel .
-py -3.6-32 -m pip wheel .
-py -3.7-64 -m pip wheel .
-py -3.7-32 -m pip wheel .
+@REM @rem Build wheels (requires CRC32C_INSTALL_PREFIX is set)
+@REM py -3.5-64 -m pip wheel .
+@REM py -3.5-32 -m pip wheel .
+@REM py -3.6-64 -m pip wheel .
+@REM py -3.6-32 -m pip wheel .
+@REM py -3.7-64 -m pip wheel .
+@REM py -3.7-32 -m pip wheel .
+
+@rem update python deps and build wheels (requires CRC32C_INSTALL_PREFIX is set)
+FOR %%V IN (3.5-64,3.5-32,3.6-64,3.6-32,3.7-64,3.7-32) DO (
+    py -%%V -m pip install --upgrade pip setuptools wheel
+    py -%%V -m pip wheel .
+)
+
