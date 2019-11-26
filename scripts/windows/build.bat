@@ -14,7 +14,10 @@ py -3.7 -m pip install cmake
 
 @rem First, build libcrc32c
 set CRC32C_INSTALL_PREFIX=%KOKORO_ARTIFACTS_DIR%\bin\
-set CMAKE_GENERATOR=Visual Studio 15 2017
+
+echo %CRC32C_INSTALL_PREFIX%
+
+set CMAKE_GENERATOR="Visual Studio 15 2017"
 pushd crc32c
 
 git submodule update --init --recursive
@@ -28,16 +31,6 @@ C:\Python37\Scripts\cmake ^
     -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes ^
     -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ^
     .
-
-
-@REM cmake ^
-@REM     -G "%CMAKE_GENERATOR%" ^
-@REM     -DCRC32C_BUILD_TESTS=no ^
-@REM     -DCRC32C_BUILD_BENCHMARKS=no ^
-@REM     -DBUILD_SHARED_LIBS=yes ^
-@REM     -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes ^
-@REM     -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ^
-@REM     ..
 
 C:\Python37\Scripts\cmake --build . --config RelWithDebInfo --target install
 dir %CRC32C_INSTALL_PREFIX% /b /s
