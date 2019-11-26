@@ -23,6 +23,9 @@ call git submodule update --recursive || goto :error
 @echo "Build Wheel"
 call scripts\windows\build.bat || goto :error
 
+@echo "Run Tests"
+call scripts\windows\test.bat || goto :error
+
 
 
 REM test_script:
