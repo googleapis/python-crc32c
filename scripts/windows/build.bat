@@ -33,9 +33,7 @@ set CRC32C_INSTALL_PREFIX=%KOKORO_ARTIFACTS_DIR%\bin\
 echo %CRC32C_INSTALL_PREFIX%
 
 pushd crc32c
-
 git submodule update --init --recursive
-
 mkdir build
 
 @REM 64 Bit Builds.
@@ -61,6 +59,7 @@ FOR %%V IN (3.5-64,3.6-64,3.7-64) DO (
 @REM 32 Bit Builds.
 @REM removed -DCRC32C_BUILD_TESTS=no 
 set CMAKE_GENERATOR="Visual Studio 15 2017"
+pushd crc32c
 C:\Python37\Scripts\cmake -G %CMAKE_GENERATOR% -A Win32 -DCRC32C_BUILD_BENCHMARKS=no -DBUILD_SHARED_LIBS=yes ^
 -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% .
 
