@@ -28,7 +28,7 @@
 py -3.7 -m pip install cmake
 
 @rem First, build libcrc32c
-set CRC32C_INSTALL_PREFIX=%KOKORO_ARTIFACTS_DIR%\bin\
+set CRC32C_INSTALL_PREFIX=%KOKORO_ARTIFACTS_DIR%\bin_win64\
 
 echo %CRC32C_INSTALL_PREFIX%
 
@@ -59,12 +59,14 @@ FOR %%V IN (3.5-64,3.6-64,3.7-64) DO (
 @REM 32 Bit Builds.
 @REM removed -DCRC32C_BUILD_TESTS=no 
 
-@rem clean up 64 bit artifacts
-del CMakeCache.txt
-del /s /q CMakeFiles/
 
 set CMAKE_GENERATOR="Visual Studio 15 2017"
 pushd crc32c
+@rem reset hard to cleanup any changes done by 64-bit build.
+git reset --hard
+
+set CRC32C_INSTALL_PREFIX=%KOKORO_ARTIFACTS_DIR%\bin_win32\
+
 C:\Python37\Scripts\cmake -G %CMAKE_GENERATOR% -A Win32 -DCRC32C_BUILD_BENCHMARKS=no -DBUILD_SHARED_LIBS=yes ^
 -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% .
 
@@ -76,7 +78,7 @@ copy %CRC32C_INSTALL_PREFIX%bin\crc32c.dll .
 
 @rem update python deps and build wheels (requires CRC32C_INSTALL_PREFIX is set)
 @rem FOR %%V IN (3.5-64,3.5-32,3.6-64,3.6-32,3.7-64,3.7-32) DO (
-FOR %%V IN (3.5-64,3.6-64,3.7-64) DO (
+FOR %%V IN (3.5-32,3.6-32,3.7-32) DO (
     py -%%V -m pip install --upgrade pip setuptools wheel
     py -%%V -m pip wheel .
 )
