@@ -24,7 +24,7 @@ git submodule update --init --recursive
 
 mkdir build
 C:\Python37\Scripts\cmake ^
-    -G "%CMAKE_GENERATOR%" ^ 
+    -G %CMAKE_GENERATOR% ^ 
     -DCRC32C_BUILD_TESTS=no ^
     -DCRC32C_BUILD_BENCHMARKS=no ^
     -DBUILD_SHARED_LIBS=yes ^
