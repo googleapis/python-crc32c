@@ -38,8 +38,8 @@ mkdir build
 
 @REM 64 Bit Builds.
 @REM removed -DCRC32C_BUILD_TESTS=no 
-set CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
-C:\Python37\Scripts\cmake -G %CMAKE_GENERATOR% -DCRC32C_BUILD_BENCHMARKS=no -DBUILD_SHARED_LIBS=yes ^
+set CMAKE_GENERATOR="Visual Studio 16 2019"
+C:\Python37\Scripts\cmake -G %CMAKE_GENERATOR% -A x64 -DCRC32C_BUILD_BENCHMARKS=no -DBUILD_SHARED_LIBS=yes ^
 -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% .
 
 C:\Python37\Scripts\cmake --build . --config RelWithDebInfo --target install
@@ -60,7 +60,7 @@ FOR %%V IN (3.5-64,3.6-64,3.7-64) DO (
 @REM removed -DCRC32C_BUILD_TESTS=no 
 
 
-set CMAKE_GENERATOR="Visual Studio 15 2017"
+set CMAKE_GENERATOR="Visual Studio 16 2019"
 pushd crc32c
 @rem reset hard to cleanup any changes done by 64-bit build.
 git reset --hard
