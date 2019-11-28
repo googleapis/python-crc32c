@@ -66,6 +66,8 @@ pushd crc32c
 @rem reset hard to cleanup any changes done by 64-bit build.
 git reset --hard
 
+del /s /q CMakeFiles\
+del CMakeCache.txt
 set CRC32C_INSTALL_PREFIX=%KOKORO_ARTIFACTS_DIR%\bin_win32\
 
 C:\Python37\Scripts\cmake -G %CMAKE_GENERATOR% -A Win32 -DCRC32C_BUILD_BENCHMARKS=no -DBUILD_SHARED_LIBS=yes ^
