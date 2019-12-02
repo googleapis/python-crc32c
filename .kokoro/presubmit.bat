@@ -45,6 +45,7 @@ REM     - "%PYTHON37%/python -m pytest tests"
 REM artifacts:
 REM     - path: 'google_crc32c*win*.whl'
 
+for /r %%a in (*.whl) do xcopy "%%a" %KOKORO_ARTIFACTS_DIR% /i
  
 goto :EOF
 
