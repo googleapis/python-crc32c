@@ -40,9 +40,9 @@ make all install
 VERSION_WHITELIST=""
 for PYTHON_BIN in /opt/python/*/bin; do
     # H/T: https://stackoverflow.com/a/229606/1068170
-    if [[ "${PYTHON_BIN}" == *"27"* ]]; then
-        VERSION_WHITELIST="${VERSION_WHITELIST} ${PYTHON_BIN}"
-        continue
+    # if [[ "${PYTHON_BIN}" == *"27"* ]]; then
+    #     VERSION_WHITELIST="${VERSION_WHITELIST} ${PYTHON_BIN}"
+    #     continue
     elif [[ "${PYTHON_BIN}" == *"35"* ]]; then
         VERSION_WHITELIST="${VERSION_WHITELIST} ${PYTHON_BIN}"
         continue

@@ -59,10 +59,10 @@ gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS 
 #gcloud --quiet --verbosity=debug datastore indexes create tests/system/index.yaml
 
 # Remove old nox
-python3.6 -m pip uninstall --yes --quiet nox-automation
+python3.7 -m pip uninstall --yes --quiet nox-automation
 
 # Install nox
-python3.6 -m pip install --upgrade --quiet nox
-python3.6 -m nox --version
+python3.7 -m pip install --upgrade --quiet nox
+python3.7 -m nox --version
 
-python3.6 -m nox
+python3.7 -m nox
