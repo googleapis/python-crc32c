@@ -48,7 +48,9 @@ ${VENV}/bin/python -m pip install "cmake >= 3.12.0"
 # Build `libcrc32c`
 cd ${REPO_ROOT}/crc32c
 mkdir -p build
-mkdir ${CRC32C_INSTALL_PREFIX}
+mkdir -p ${CRC32C_INSTALL_PREFIX}
+mkdir -p ${CRC32C_INSTALL_PREFIX}/lib
+
 ${VENV}/bin/cmake \
     -DCMAKE_OSX_ARCHITECTURES="x86_64" \
     -DCRC32C_BUILD_TESTS=no \
