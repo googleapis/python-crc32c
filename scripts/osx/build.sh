@@ -31,7 +31,7 @@ PYTHON37="/Library/Frameworks/Python.framework/Versions/3.7/bin"
 # Build and install `libcrc32c`
 export PY_BIN="python3"
 export CRC32C_INSTALL_PREFIX="${REPO_ROOT}/usr"
-${OSX_DIR}/build_libcrc32c.sh
+${OSX_DIR}/build_c_lib.sh
 
 # Build wheel for Python 3.5.
 export PY_BIN="python3.5"
