@@ -12,11 +12,9 @@ sudo apt-get update
 sudo apt-get -y install dictionaries-common aspell aspell-en \
                         hunspell-en-us libenchant1c2a enchant
 
-# Remove old nox
-python3.6 -m pip uninstall --yes --quiet nox-automation
 
 # Install nox
-python3.6 -m pip install --upgrade --quiet nox
+python3.6 -m pip install --upgrade --quiet nox --user
 python3.6 -m nox --version
 
 # build docs

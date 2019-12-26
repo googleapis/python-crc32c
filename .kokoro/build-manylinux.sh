@@ -58,11 +58,8 @@ export PROJECT_ID=$(cat "${KOKORO_GFILE_DIR}/project-id.json")
 gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=$PROJECT_ID
 #gcloud --quiet --verbosity=debug datastore indexes create tests/system/index.yaml
 
-# Remove old nox
-python3 -m pip uninstall --yes --quiet nox-automation
-
 # Install nox
-python3 -m pip install --upgrade --quiet nox
+python3 -m pip install --upgrade --quiet nox --user
 python3 -m nox --version
 
 python3 -m nox
