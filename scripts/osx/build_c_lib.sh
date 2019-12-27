@@ -39,6 +39,10 @@ if [[ -z "${PY_BIN}" ]]; then
     exit 1
 fi
 
+# Precreate install directories for crc32 lib.
+mkdir -p ${CRC32C_INSTALL_PREFIX}
+mkdir -p ${CRC32C_INSTALL_PREFIX}/lib
+
 # Make sure we have an updated `pip`.
 ${PY_BIN} -m pip install --upgrade pip
 # Create a virtualenv where we can install `cmake`.
@@ -46,12 +50,10 @@ VENV=${REPO_ROOT}/venv_build_libcrc32c
 ${PY_BIN} -m venv ${VENV}
 ${VENV}/bin/python -m pip install --upgrade pip
 ${VENV}/bin/python -m pip install "cmake >= 3.12.0"
+
 # Build `libcrc32c`
 cd ${REPO_ROOT}/crc32c
 mkdir -p build
-mkdir -p ${CRC32C_INSTALL_PREFIX}
-mkdir -p ${CRC32C_INSTALL_PREFIX}/lib
-which ${VENV}/bin/cmake
 
 ${VENV}/bin/cmake \
     -DCMAKE_OSX_ARCHITECTURES="x86_64" \
