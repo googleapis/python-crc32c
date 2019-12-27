@@ -17,8 +17,9 @@
 
 set -e -x
 
-WHEEL_FILE="wheels/google_crc32c-0.0.1-cp37-cp37m-manylinux1_x86_64.whl"
-PYTHON="python3.7"
+WHEEL_FILE="wheels/google_crc32c-0.0.1-cp36-cp36m-manylinux1_x86_64.whl"
+PYTHON="python3.6"
+
 
 
 VERSION_WHITELIST=""
