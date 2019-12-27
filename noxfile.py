@@ -26,9 +26,9 @@ def build_libcrc32c(session):
     if platform.startswith("win"):
         session.run("cmd", "-c", "scripts\\windows\\build.bat")
     elif platform == "linux":
-        session.run("bash", "scripts/local-linux/build.sh", external=True)
+        session.run("bash", "scripts/local-linux/build.sh")
     elif platform == "darwin":
-        session.run("bash", "scripts/osx/build.sh", external=True)
+        session.run("bash", "scripts/osx/build.sh")
     else:
         raise Exception("Unsupported")
 
