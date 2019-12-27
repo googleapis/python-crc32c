@@ -38,6 +38,7 @@ ${PY_BIN} -m pip install --upgrade pip
 # Create a virtualenv where we can install Python build dependencies.
 VENV=${REPO_ROOT}/venv${PY_BIN}
 ${PY_BIN} -m venv ${VENV}
+${VENV}/bin/python -m pip install --upgrade pip
 ${VENV}/bin/python -m pip install \
     --requirement ${REPO_ROOT}/scripts/dev-requirements.txt
 

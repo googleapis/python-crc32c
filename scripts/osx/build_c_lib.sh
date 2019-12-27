@@ -44,6 +44,7 @@ ${PY_BIN} -m pip install --upgrade pip
 # Create a virtualenv where we can install `cmake`.
 VENV=${REPO_ROOT}/venv_build_libcrc32c
 ${PY_BIN} -m venv ${VENV}
+${VENV}/bin/python -m pip install --upgrade pip
 ${VENV}/bin/python -m pip install "cmake >= 3.12.0"
 # Build `libcrc32c`
 cd ${REPO_ROOT}/crc32c
