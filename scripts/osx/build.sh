@@ -40,6 +40,8 @@ ${OSX_DIR}/build_c_lib.sh
 # Build wheel for Python 3.5.
 export PY_BIN="python3.5"
 export PY_TAG="cp35-cp35m"
+# Make sure we have an updated `pip`.
+curl https://bootstrap.pypa.io/get-pip.py | ${PY_BIN}
 ${OSX_DIR}/build_python_wheel.sh
 
 # Build wheel for Python 3.6.

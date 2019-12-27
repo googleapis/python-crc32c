@@ -33,9 +33,6 @@ if [[ -z "${PY_TAG}" ]]; then
     exit 1
 fi
 
-# Make sure we have an updated `pip`.
-curl https://bootstrap.pypa.io/get-pip.py | ${PY_BIN}
-#${PY_BIN} -m pip install --upgrade pip --user
 # Create a virtualenv where we can install Python build dependencies.
 VENV=${REPO_ROOT}/venv${PY_BIN}
 ${PY_BIN} -m venv ${VENV}
