@@ -18,7 +18,7 @@
 set -e -x
 
 WHEEL_FILE="wheels/google_crc32c-0.0.1-cp36-cp36m-manylinux1_x86_64.whl"
-PYTHON=python3.7
+PYTHON=python3.6
 
 # Using pyenv, set 3.6.1 as a local python version.
 # pyenv versions
