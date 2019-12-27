@@ -37,20 +37,20 @@ git submodule update --init --recursive
 
 ${OSX_DIR}/build_c_lib.sh
 
-# # Build wheel for Python 3.5.
-# export PY_BIN="python3.5"
-# export PY_TAG="cp35-cp35m"
-# ${OSX_DIR}/build_python_wheel.sh
+# Build wheel for Python 3.5.
+export PY_BIN="python3.5"
+export PY_TAG="cp35-cp35m"
+${OSX_DIR}/build_python_wheel.sh
 
-# # Build wheel for Python 3.6.
-# export PY_BIN="python3.6"
-# export PY_TAG="cp36-cp36m"
-# ${OSX_DIR}/build_python_wheel.sh
+# Build wheel for Python 3.6.
+export PY_BIN="python3.6"
+export PY_TAG="cp36-cp36m"
+${OSX_DIR}/build_python_wheel.sh
 
-# # Build wheel for Python 3.7.
-# export PY_BIN="python3.7"
-# export PY_TAG="cp37-cp37m"
-# ${OSX_DIR}/build_python_wheel.sh
+# Build wheel for Python 3.7.
+export PY_BIN="python3.7"
+export PY_TAG="cp37-cp37m"
+${OSX_DIR}/build_python_wheel.sh
 
 # Clean up.
 rm -fr ${CRC32C_INSTALL_PREFIX}
