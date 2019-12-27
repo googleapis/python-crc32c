@@ -23,7 +23,6 @@ SCRIPTS_DIR=$(dirname ${OSX_DIR})
 export REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 
 # NOTE: These are the Python.org versions of Python.
-PYTHON27="/Library/Frameworks/Python.framework/Versions/2.7/bin"
 PYTHON35="/Library/Frameworks/Python.framework/Versions/3.5/bin"
 PYTHON36="/Library/Frameworks/Python.framework/Versions/3.6/bin"
 PYTHON37="/Library/Frameworks/Python.framework/Versions/3.7/bin"
@@ -31,17 +30,9 @@ PYTHON37="/Library/Frameworks/Python.framework/Versions/3.7/bin"
 # Make sure we have an updated `pip`.
 ${PYTHON37}/python3 -m pip install --upgrade pip --user
 # Make sure virtualenv and delocate.
-${PYTHON37}/python3 -m pip install --upgrade delocate virtualenv
+${PYTHON37}/python3 -m pip install --upgrade delocate
 LISTDEPS_CMD="${PYTHON37}/delocate-listdeps --all --depending"
-VIRTUALENV_CMD="${PYTHON37}/python3 -m virtualenv"
-
-# Create Python 2.7 virtual environment and check.
-WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp27-cp27m-macosx_10_6_intel.whl
-${VIRTUALENV_CMD} --python=${PYTHON27}/python2 venv27
-venv27/bin/pip install ${WHL}
-venv27/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
-${LISTDEPS_CMD} ${WHL}
-rm -fr venv27
+VIRTUALENV_CMD="${PYTHON37}/python3 -m venv"
 
 ${VIRTUALENV_CMD} --python=${PYTHON35}/python3 venv35
 WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp35-cp35m-macosx_10_6_intel.whl
