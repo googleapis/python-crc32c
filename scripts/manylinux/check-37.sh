@@ -27,6 +27,9 @@ for PYTHON_BIN in /opt/python/*/bin; do
     if [[ "${PYTHON_BIN}" == *"37"* ]]; then
         PYTHON="${PYTHON_BIN}"
         continue
+    else
+        echo "Ignoring unsupported version: ${PYTHON_BIN}"
+        echo "====================================="
     fi
 done
 
