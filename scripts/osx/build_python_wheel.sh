@@ -34,7 +34,7 @@ if [[ -z "${PY_TAG}" ]]; then
 fi
 
 # Make sure we have an updated `pip`.
-${PY_BIN} -m pip install --upgrade pip
+${PY_BIN} -m pip install --upgrade pip --user
 # Create a virtualenv where we can install Python build dependencies.
 VENV=${REPO_ROOT}/venv${PY_BIN}
 ${PY_BIN} -m venv ${VENV}
