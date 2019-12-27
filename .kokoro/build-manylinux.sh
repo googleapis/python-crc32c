@@ -21,45 +21,21 @@ sudo apt-get -y install dictionaries-common aspell aspell-en \
 
 set -eo pipefail
 
-cd github/python-crc32c
-
-# Before running nox and such, build the extension.
-./scripts/manylinux/build.sh
-
 # Disable buffering, so that the logs stream through.
 export PYTHONUNBUFFERED=1
 
 # Debug: show build environment
 env | grep KOKORO
 
-# Setup firestore account credentials
-export FIRESTORE_APPLICATION_CREDENTIALS=${KOKORO_GFILE_DIR}/firebase-credentials.json
+cd github/python-crc32c
 
-# Setup service account credentials.
-export GOOGLE_APPLICATION_CREDENTIALS=${KOKORO_GFILE_DIR}/service-account.json
+# Before running nox and such, build the extension.
+./scripts/manylinux/build.sh
+./scripts/manylinux/check-37.sh
 
-# Setup project id.
-export PROJECT_ID=$(cat "${KOKORO_GFILE_DIR}/project-id.json")
 
-# Find out if this package was modified.
-# Temporarily use Thea's fork of ci-diff-helper w/ Kokoro support.
-# python3.6 -m pip install --quiet git+https://github.com/theacodes/ci-diff-helper.git
-# python3.6 test_utils/scripts/get_target_packages_kokoro.py > ~/target_packages
-# cat ~/target_packages
+# # Install nox
+# python3 -m pip install --upgrade --quiet nox --user
+# python3 -m nox --version
 
-# if [[ ! -n $(grep -x "$PACKAGE" ~/target_packages) ]]; then
-#     echo "$PACKAGE was not modified, returning."
-#     exit;
-# fi
-
-# cd "$PACKAGE"
-
-# Some system tests require indexes. Use gcloud to create them.
-gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=$PROJECT_ID
-#gcloud --quiet --verbosity=debug datastore indexes create tests/system/index.yaml
-
-# Install nox
-python3 -m pip install --upgrade --quiet nox --user
-python3 -m nox --version
-
-python3 -m nox check
+# python3 -m nox check
