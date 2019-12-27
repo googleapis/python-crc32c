@@ -62,4 +62,4 @@ gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS 
 python3 -m pip install --upgrade --quiet nox --user
 python3 -m nox --version
 
-python3 -m nox
+python3 -m nox check
