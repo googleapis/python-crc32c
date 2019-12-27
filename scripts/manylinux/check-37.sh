@@ -17,22 +17,11 @@
 
 set -e -x
 
-WHEEL_FILE="wheels/google_crc32c-0.0.1-cp36-cp36m-manylinux1_x86_64.whl"
-PYTHON="python3.6"
+WHEEL_FILE="wheels/google_crc32c-0.0.1-cp37-cp37m-manylinux1_x86_64.whl"
+PYTHON=python3.7
+# Using pyenv, set 3.7.0 as a local python version.
 
-
-
-VERSION_WHITELIST=""
-for PYTHON_BIN in /opt/python/*/bin; do
-    # H/T: https://stackoverflow.com/a/229606/1068170
-    if [[ "${PYTHON_BIN}" == *"37"* ]]; then
-        PYTHON="${PYTHON_BIN}"
-        continue
-    else
-        echo "Ignoring unsupported version: ${PYTHON_BIN}"
-        echo "====================================="
-    fi
-done
+pyenv local 3.7.0
 
 # Make sure we can create a virtual environment.
 ${PYTHON} -m pip install --upgrade pip
