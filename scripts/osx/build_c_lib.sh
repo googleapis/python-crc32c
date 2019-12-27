@@ -51,6 +51,7 @@ cd ${REPO_ROOT}/crc32c
 mkdir -p build
 mkdir -p ${CRC32C_INSTALL_PREFIX}
 mkdir -p ${CRC32C_INSTALL_PREFIX}/lib
+${VENV}/bin/cmake
 
 ${VENV}/bin/cmake \
     -DCMAKE_OSX_ARCHITECTURES="x86_64" \

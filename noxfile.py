@@ -21,7 +21,7 @@ import nox
 from sys import platform
 
 
-@nox.session(python="3.7")
+@nox.session(python=["3.5", "3.6", "3.7", "3.8"])
 def build_libcrc32c(session):
     if platform.startswith("win"):
         session.run("cmd", "-c", "scripts\\windows\\build.bat")
@@ -33,7 +33,7 @@ def build_libcrc32c(session):
         raise Exception("Unsupported")
 
 
-@nox.session(python="3.7")
+@nox.session(python=["3.5", "3.6", "3.7", "3.8"])
 def check(session):
     session.install("-e", ".")
 
