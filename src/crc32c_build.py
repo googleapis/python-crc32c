@@ -30,7 +30,7 @@ def get_kwargs():
     if os.name == "nt":
         extra_link_args = ["-Wl,-rpath={}".format(rpath)]
     elif os.name == "darwin":
-        extra_link_args = ["-Wl,-rpath,{}".format(rpath)]
+        extra_link_args = ["-Wl,-rpath={}".format(rpath)]
     else:
         extra_link_args = ["-Wl,-rpath={}".format(rpath)]
 
