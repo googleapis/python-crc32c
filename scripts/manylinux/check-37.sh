@@ -19,9 +19,10 @@ set -e -x
 
 WHEEL_FILE="wheels/google_crc32c-0.0.1-cp36-cp36m-manylinux1_x86_64.whl"
 PYTHON=python3.7
-# Using pyenv, set 3.7.0 as a local python version.
-pyenv versions
-pyenv local 3.6.0
+
+# Using pyenv, set 3.6.1 as a local python version.
+# pyenv versions
+pyenv local 3.6.1
 
 # Make sure we can create a virtual environment.
 ${PYTHON} -m pip install --upgrade pip
