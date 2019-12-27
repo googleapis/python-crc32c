@@ -32,13 +32,10 @@ def build_libcrc32c(session):
     else:
         raise Exception("Unsupported")
 
+
 @nox.session(python="3.7")
 def check(session):
     session.install("-e", ".")
 
     # Run py.test against the unit tests.
-    session.run(
-        "python",
-        "scripts/check_cffi_crc32c.py",
-        *session.posargs,
-    )
+    session.run("python", "scripts/check_cffi_crc32c.py", *session.posargs)
