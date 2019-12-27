@@ -45,7 +45,7 @@ ${VENV}/bin/python -m pip install \
 DIST_WHEELS="${REPO_ROOT}/dist_wheels"
 mkdir -p ${DIST_WHEELS}
 cd ${REPO_ROOT}
-bash -c "${VENV}/bin/python -m pip wheel ${REPO_ROOT} --wheel-dir ${DIST_WHEELS}"
+${VENV}/bin/python -m pip wheel ${REPO_ROOT} --wheel-dir ${DIST_WHEELS}
 
 # Delocate the wheel.
 FIXED_WHEELS="${REPO_ROOT}/wheels"
