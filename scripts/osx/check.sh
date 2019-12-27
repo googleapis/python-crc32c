@@ -34,21 +34,21 @@ ${PYTHON37}/python3 -m pip install --upgrade delocate
 LISTDEPS_CMD="${PYTHON37}/delocate-listdeps --all --depending"
 VIRTUALENV_CMD="${PYTHON37}/python3 -m venv"
 
-${PYTHON35} venv venv35
+${PYTHON35}/python3 venv venv35
 WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp35-cp35m-macosx_10_6_intel.whl
 venv35/bin/pip install ${WHL}
 venv35/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
 ${LISTDEPS_CMD} ${WHL}
 rm -fr venv35
 
-${PYTHON36} venv venv36
+${PYTHON36}/python3 venv venv36
 WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp36-cp36m-macosx_10_6_intel.whl
 venv36/bin/pip install ${WHL}
 venv36/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
 ${LISTDEPS_CMD} ${WHL}
 rm -fr venv36
 
-${PYTHON37} venv venv37
+${PYTHON37}/python3 venv venv37
 WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp37-cp37m-macosx_10_6_intel.whl
 venv37/bin/pip install ${WHL}
 venv37/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
