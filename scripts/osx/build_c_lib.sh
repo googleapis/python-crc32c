@@ -57,6 +57,7 @@ mkdir -p build
 ls
 
 ${VENV}/bin/cmake \
+    -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 \
     -DCMAKE_OSX_ARCHITECTURES="x86_64" \
     -DCRC32C_BUILD_TESTS=no \
     -DCRC32C_BUILD_BENCHMARKS=no \
