@@ -27,6 +27,10 @@ PYTHON35="/Library/Frameworks/Python.framework/Versions/3.5/bin"
 PYTHON36="/Library/Frameworks/Python.framework/Versions/3.6/bin"
 PYTHON37="/Library/Frameworks/Python.framework/Versions/3.7/bin"
 
+PYTHON37="/users/crwilcox/.pyenv/versions/3.7.2/bin"
+PYTHON36="/users/crwilcox/.pyenv/versions/3.6.6/bin"
+PYTHON35="/users/crwilcox/.pyenv/versions/3.5.6/bin"
+
 # Make sure we have an updated `pip`.
 ${PYTHON37}/python3 -m pip install --upgrade pip --user
 # Make sure virtualenv and delocate.
@@ -35,14 +39,15 @@ LISTDEPS_CMD="${PYTHON37}/delocate-listdeps --all --depending"
 VIRTUALENV_CMD="${PYTHON37}/python3 -m venv"
 
 ${PYTHON35}/python3 -m venv venv35
-WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp35-cp35m-macosx_10_13_x86_64.whl
+#WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp35-cp35m-macosx_10_13_x86_64.whl
+WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp37-cp37m-macosx_10_14_x86_64.whl}
 venv35/bin/pip install ${WHL}
 venv35/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
 ${LISTDEPS_CMD} ${WHL}
 rm -fr venv35
 
 ${PYTHON36}/python3 -m venv venv36
-WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp36-cp36m-macosx_10_13_x86_64.whl
+WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp36-cp36m-macosx_10_14_x86_64.whl
 venv36/bin/pip install ${WHL}
 venv36/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
 ${LISTDEPS_CMD} ${WHL}
