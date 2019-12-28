@@ -56,6 +56,8 @@ cd ${REPO_ROOT}/crc32c
 mkdir -p build
 ls
 
+export PYTHON_CONFIGURE_OPTS="--enable-universalsdk=/ --with-universal-archs=intel"
+
 ${VENV}/bin/cmake \
     -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 \
     -DCMAKE_OSX_ARCHITECTURES="x86_64" \
