@@ -27,10 +27,6 @@ PYTHON35="/Library/Frameworks/Python.framework/Versions/3.5/bin"
 PYTHON36="/Library/Frameworks/Python.framework/Versions/3.6/bin"
 PYTHON37="/Library/Frameworks/Python.framework/Versions/3.7/bin"
 
-PYTHON37="/users/crwilcox/.pyenv/versions/3.7.2/bin"
-PYTHON36="/users/crwilcox/.pyenv/versions/3.6.6/bin"
-PYTHON35="/users/crwilcox/.pyenv/versions/3.5.6/bin"
-
 # Make sure we have an updated `pip`.
 ${PYTHON37}/python3 -m pip install --upgrade pip --user
 # Make sure virtualenv and delocate.
