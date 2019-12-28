@@ -44,6 +44,7 @@ LISTDEPS_CMD="${PYTHON37}/delocate-listdeps --all --depending"
 VIRTUALENV_CMD="${PYTHON37}/python3 -m venv"
 
 ${PYTHON35}/python3 -m venv venv35
+curl https://bootstrap.pypa.io/get-pip.py | ${PYTHON35}/python3
 #WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp35-cp35m-macosx_10_13_x86_64.whl
 WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp35-cp35m-macosx_10_6_intel.whl
 
@@ -53,6 +54,7 @@ ${LISTDEPS_CMD} ${WHL}
 rm -fr venv35
 
 ${PYTHON36}/python3 -m venv venv36
+curl https://bootstrap.pypa.io/get-pip.py | ${PYTHON36}/python3
 WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp36-cp36m-macosx_10_9_x86_64.whl
 venv36/bin/pip install ${WHL}
 venv36/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
@@ -60,6 +62,7 @@ ${LISTDEPS_CMD} ${WHL}
 rm -fr venv36
 
 ${PYTHON37}/python3 -m venv venv37
+curl https://bootstrap.pypa.io/get-pip.py | ${PYTHON37}/python3
 WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp37-cp37m-macosx_10_9_x86_64.whl
 venv37/bin/pip install ${WHL}
 venv37/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
