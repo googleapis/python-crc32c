@@ -58,9 +58,10 @@ ls
 
 export PYTHON_CONFIGURE_OPTS="--enable-universalsdk=/ --with-universal-archs=intel"
 
+# We don't build i386 anymore as XCode no longer supports.
 ${VENV}/bin/cmake \
     -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 \
-    -DCMAKE_OSX_ARCHITECTURES="i386;x86_64" \
+    -DCMAKE_OSX_ARCHITECTURES="x86_64" \
     -DCRC32C_BUILD_TESTS=no \
     -DCRC32C_BUILD_BENCHMARKS=no \
     -DBUILD_SHARED_LIBS=yes \

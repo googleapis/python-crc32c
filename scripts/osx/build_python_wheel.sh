@@ -47,11 +47,10 @@ mkdir -p ${DIST_WHEELS}
 cd ${REPO_ROOT}
 ${VENV}/bin/python -m pip wheel ${REPO_ROOT} --wheel-dir ${DIST_WHEELS}
 
-# Delocate the wheel.
+# Delocate the wheel. removed --check-archs. We don't build i386.
 FIXED_WHEELS="${REPO_ROOT}/wheels"
 mkdir -p ${FIXED_WHEELS}
 ${VENV}/bin/delocate-wheel \
-    --check-archs \
     --wheel-dir ${FIXED_WHEELS} \
     --verbose \
     ${DIST_WHEELS}/google_crc32c*${PY_TAG}*.whl
