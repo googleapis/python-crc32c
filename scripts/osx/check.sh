@@ -15,12 +15,16 @@
 
 set -e -x
 
+echo "CHECKING OSX WHEELS"
+
 # ``readlink -f`` is not our friend on OS X. This relies on **some**
 # ``python`` being installed.
 SCRIPT_FI=$(python -c "import os; print(os.path.realpath('${0}'))")
 OSX_DIR=$(dirname ${SCRIPT_FI})
 SCRIPTS_DIR=$(dirname ${OSX_DIR})
 export REPO_ROOT=$(dirname ${SCRIPTS_DIR})
+
+ls ${REPO_ROOT}/wheels
 
 # NOTE: These are the Python.org versions of Python.
 PYTHON35="/Library/Frameworks/Python.framework/Versions/3.5/bin"
