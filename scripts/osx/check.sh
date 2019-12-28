@@ -36,7 +36,8 @@ PYTHON37="/Library/Frameworks/Python.framework/Versions/3.7/bin"
 # PYTHON35="/users/crwilcox/.pyenv/versions/3.5.6/bin"
 
 # Make sure we have an updated `pip`.
-${PYTHON37}/python3 -m pip install --upgrade pip --user
+curl https://bootstrap.pypa.io/get-pip.py | ${PYTHON37}/python3
+
 # Make sure virtualenv and delocate.
 ${PYTHON37}/python3 -m pip install --upgrade delocate
 LISTDEPS_CMD="${PYTHON37}/delocate-listdeps --all --depending"
