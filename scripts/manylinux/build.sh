@@ -14,7 +14,7 @@
 # limitations under the License.
 
 set -e -x
-
+echo "BUILDING ON LINUX"
 
 MANYLINUX_DIR=$(echo $(cd $(dirname ${0}); pwd))
 SCRIPTS_DIR=$(dirname ${MANYLINUX_DIR})

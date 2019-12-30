@@ -56,8 +56,6 @@ cd ${REPO_ROOT}/crc32c
 mkdir -p build
 ls
 
-export PYTHON_CONFIGURE_OPTS="--enable-universalsdk=/ --with-universal-archs=intel"
-
 # We don't build i386 anymore as XCode no longer supports.
 ${VENV}/bin/cmake \
     -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 \

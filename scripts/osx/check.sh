@@ -14,7 +14,6 @@
 # limitations under the License.
 
 set -e -x
-
 echo "CHECKING OSX WHEELS"
 
 # ``readlink -f`` is not our friend on OS X. This relies on **some**
@@ -30,6 +29,7 @@ ls ${REPO_ROOT}/wheels
 PYTHON35="/Library/Frameworks/Python.framework/Versions/3.5/bin"
 PYTHON36="/Library/Frameworks/Python.framework/Versions/3.6/bin"
 PYTHON37="/Library/Frameworks/Python.framework/Versions/3.7/bin"
+PYTHON38="/Library/Frameworks/Python.framework/Versions/3.8/bin"
 
 # PYTHON37="/users/crwilcox/.pyenv/versions/3.7.2/bin"
 # PYTHON36="/users/crwilcox/.pyenv/versions/3.6.6/bin"
@@ -45,9 +45,7 @@ VIRTUALENV_CMD="${PYTHON37}/python3 -m venv"
 
 ${PYTHON35}/python3 -m venv venv35
 curl https://bootstrap.pypa.io/get-pip.py | venv35/bin/python3
-#WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp35-cp35m-macosx_10_13_x86_64.whl
 WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp35-cp35m-macosx_10_6_intel.whl
-
 venv35/bin/pip install ${WHL}
 venv35/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
 ${LISTDEPS_CMD} ${WHL}
@@ -69,6 +67,14 @@ venv37/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
 ${LISTDEPS_CMD} ${WHL}
 rm -fr venv37
 
+
+${PYTHON38}/python3 -m venv venv38
+curl https://bootstrap.pypa.io/get-pip.py | venv38/bin/python3
+WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp38-cp38m-macosx_10_9_x86_64.whl
+venv37/bin/pip install ${WHL}
+venv37/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
+${LISTDEPS_CMD} ${WHL}
+rm -fr venv38
 
 
 

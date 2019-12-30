@@ -37,7 +37,6 @@ fi
 VENV=${REPO_ROOT}/venv${PY_BIN}
 ${PY_BIN} -m venv ${VENV}
 curl https://bootstrap.pypa.io/get-pip.py | ${VENV}/bin/python
-#${VENV}/bin/python -m pip install --upgrade pip
 ${VENV}/bin/python -m pip install \
     --requirement ${REPO_ROOT}/scripts/dev-requirements.txt
 

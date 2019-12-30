@@ -14,6 +14,7 @@
 # limitations under the License.
 
 set -e -x
+echo "BUILDING FOR OSX"
 
 # ``readlink -f`` is not our friend on OS X. This relies on **some**
 # ``python`` being installed.
@@ -23,10 +24,10 @@ SCRIPTS_DIR=$(dirname ${OSX_DIR})
 export REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 
 # NOTE: These are the Python.org versions of Python.
-PYTHON27="/Library/Frameworks/Python.framework/Versions/2.7/bin"
 PYTHON35="/Library/Frameworks/Python.framework/Versions/3.5/bin"
 PYTHON36="/Library/Frameworks/Python.framework/Versions/3.6/bin"
 PYTHON37="/Library/Frameworks/Python.framework/Versions/3.7/bin"
+PYTHON38="/Library/Frameworks/Python.framework/Versions/3.8/bin"
 
 # Build and install `libcrc32c`
 export PY_BIN="python3"
@@ -51,6 +52,12 @@ ${OSX_DIR}/build_python_wheel.sh
 export PY_BIN="python3.7"
 export PY_TAG="cp37-cp37m"
 ${OSX_DIR}/build_python_wheel.sh
+
+# Build wheel for Python 3.7.
+export PY_BIN="python3.8"
+export PY_TAG="cp38-cp38m"
+${OSX_DIR}/build_python_wheel.sh
+
 
 # Clean up.
 rm -fr ${CRC32C_INSTALL_PREFIX}

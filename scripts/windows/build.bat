@@ -23,7 +23,7 @@
 @REM  -3.4-64
 @REM  -3.4-32
 @REM  -2.7-64
-@REM  -2.7-32"Build Wheel"
+@REM  -2.7-32
 
 py -3.7 -m pip install cmake
 
@@ -35,7 +35,6 @@ echo %CRC32C_INSTALL_PREFIX%
 pushd crc32c
 git submodule update --init --recursive
 mkdir build
-
 
 @REM 64 Bit Builds.
 @REM removed -DCRC32C_BUILD_TESTS=no 
@@ -50,7 +49,6 @@ popd
 copy %CRC32C_INSTALL_PREFIX%bin\crc32c.dll .
 
 @rem update python deps and build wheels (requires CRC32C_INSTALL_PREFIX is set)
-@rem FOR %%V IN (3.5-64,3.5-32,3.6-64,3.6-32,3.7-64,3.7-32) DO (
 FOR %%V IN (3.5-64,3.6-64,3.7-64) DO (
     py -%%V -m pip install --upgrade pip setuptools wheel
     py -%%V -m pip wheel .
@@ -59,7 +57,6 @@ FOR %%V IN (3.5-64,3.6-64,3.7-64) DO (
 
 @REM 32 Bit Builds.
 @REM removed -DCRC32C_BUILD_TESTS=no 
-
 
 set CMAKE_GENERATOR="Visual Studio 15 2017"
 pushd crc32c
@@ -80,7 +77,6 @@ popd
 copy %CRC32C_INSTALL_PREFIX%bin\crc32c.dll .
 
 @rem update python deps and build wheels (requires CRC32C_INSTALL_PREFIX is set)
-@rem FOR %%V IN (3.5-64,3.5-32,3.6-64,3.6-32,3.7-64,3.7-32) DO (
 FOR %%V IN (3.5-32,3.6-32,3.7-32) DO (
     py -%%V -m pip install --upgrade pip setuptools wheel
     py -%%V -m pip wheel .
