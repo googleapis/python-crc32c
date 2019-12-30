@@ -24,14 +24,6 @@ env | grep KOKORO
 
 cd github/python-crc32c
 
-
 # Before running nox and such, build the extension.
 ./scripts/osx/build.sh
 ./scripts/osx/check.sh
-
-
-# # Install nox
-# python3 -m pip install --upgrade --quiet nox --user
-# python3 -m nox --version
-
-# python3 -m nox check

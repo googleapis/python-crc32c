@@ -32,10 +32,3 @@ cd github/python-crc32c
 # Before running nox and such, build the extension.
 ./scripts/manylinux/build.sh
 ./scripts/manylinux/check.sh
-
-
-# # Install nox
-# python3 -m pip install --upgrade --quiet nox --user
-# python3 -m nox --version
-
-# python3 -m nox check
