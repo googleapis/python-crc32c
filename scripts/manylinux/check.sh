@@ -16,6 +16,7 @@
 # NOTE: This assumes the host is running Linux.
 
 set -e -x
+echo "CHECKING ON LINUX"
 
 WHEEL_FILE="wheels/google_crc32c-0.0.1-cp36-cp36m-manylinux1_x86_64.whl"
 PYTHON=python3.6

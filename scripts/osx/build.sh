@@ -53,10 +53,11 @@ export PY_BIN="python3.7"
 export PY_TAG="cp37-cp37m"
 ${OSX_DIR}/build_python_wheel.sh
 
+# TODO: As of 2019-Dec-30, 3.8 is not available on our CI
 # Build wheel for Python 3.7.
-export PY_BIN="python3.8"
-export PY_TAG="cp38-cp38m"
-${OSX_DIR}/build_python_wheel.sh
+# export PY_BIN="python3.8"
+# export PY_TAG="cp38-cp38m"
+# ${OSX_DIR}/build_python_wheel.sh
 
 
 # Clean up.

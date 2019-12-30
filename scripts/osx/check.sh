@@ -67,14 +67,11 @@ venv37/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
 ${LISTDEPS_CMD} ${WHL}
 rm -fr venv37
 
-
-${PYTHON38}/python3 -m venv venv38
-curl https://bootstrap.pypa.io/get-pip.py | venv38/bin/python3
-WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp38-cp38m-macosx_10_9_x86_64.whl
-venv37/bin/pip install ${WHL}
-venv37/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
-${LISTDEPS_CMD} ${WHL}
-rm -fr venv38
-
-
-
+# TODO: As of 2019-Dec-30, 3.8 is not available on our CI
+# ${PYTHON38}/python3 -m venv venv38
+# curl https://bootstrap.pypa.io/get-pip.py | venv38/bin/python3
+# WHL=${REPO_ROOT}/wheels/google_crc32c-0.0.1-cp38-cp38m-macosx_10_9_x86_64.whl
+# venv37/bin/pip install ${WHL}
+# venv37/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
+# ${LISTDEPS_CMD} ${WHL}
+# rm -fr venv38
