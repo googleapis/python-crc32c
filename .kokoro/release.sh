@@ -4,13 +4,13 @@ set -eo pipefail
 
 
 if [ "$(uname)" == "Darwin" ]; then
-    which python
     # Mac OS
-    PYTHON_BIN=~/Library/Python/3.7/bin   
-    RELEASETOOL=${PYTHON_BIN}/releasetool
-    PYTHON=${PYTHON_BIN}/python
-    TWINE=${PYTHON_BIN}/twine
-    ${PYTHON} -m pip install gcp-releasetool --user
+    PYTHON_BIN=/Library/Frameworks/Python.framework/Versions/3.7/bin
+    PYTHON=${PYTHON_BIN}/python3
+
+    RELEASETOOL=~/Library/Python/3.7/bin/releasetool
+    TWINE=~/Library/Python/3.7/bin/twine
+    ${PYTHON} -m pip install gcp-releasetool twine --user
 
 else
     # Kokoro Linux
