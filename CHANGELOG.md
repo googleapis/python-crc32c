@@ -9,7 +9,7 @@
 03-09-2020 15:33 PDT
 
 
-### Implementation Changes
+### Packaging Changes
 - fix: add a manifest to specify other files ([#14](https://github.com/googleapis/python-crc32c/pull/14))
 
 ### Documentation
