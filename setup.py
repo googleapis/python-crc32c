@@ -56,7 +56,7 @@ def main():
 
     setuptools.setup(
         name="google-crc32c",
-        version = "0.0.2",
+        version="0.0.2",
         description="A python wrapper of the C library 'Google CRC32C'",
         long_description=readme,
         long_description_content_type="text/markdown",
@@ -68,9 +68,7 @@ def main():
         package_dir={"": "src"},
         license="Apache 2.0",
         platforms="Posix; MacOS X; Windows",
-        package_data={
-            "crc32c": [os.path.join(_EXTRA_DLL, _DLL_FILENAME)]
-        },
+        package_data={"crc32c": [os.path.join(_EXTRA_DLL, _DLL_FILENAME)]},
         zip_safe=True,
         setup_requires=[cffi_dep],
         cffi_modules=[builder],
@@ -87,9 +85,7 @@ def main():
             "Programming Language :: Python :: 3.8",
         ],
         cmdclass={"build_ext": BuildExtWithDLL},
-        extras_require={
-            "testing": ["pytest"]
-        },
+        extras_require={"testing": ["pytest"]},
     )
 
 
