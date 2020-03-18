@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@ import struct
 #       modify the search path used to locate shared libraries.
 import crc32c.__config__
 import crc32c._crc32c_cffi
+from crc32c._checksum import CommonChecksum
+
 
 def extend(crc, chunk):
     """Update an existing CRC checksum with new chunk of data.
@@ -47,7 +49,7 @@ def value(chunk):
     return crc32c._crc32c_cffi.lib.crc32c_value(chunk, len(chunk))
 
 
-class Checksum(object):
+class Checksum(CommonChecksum):
     """Hashlib-alike helper for CRC32C operations.
 
     Args:
@@ -68,49 +70,3 @@ class Checksum(object):
                 the CRC32C checksum.
         """
         self._crc = extend(self._crc, chunk)
-
-    def digest(self):
-        """Big-endian order, per RFC 4960.
-
-        See: https://cloud.google.com/storage/docs/json_api/v1/objects#crc32c
-
-        Returns:
-            bytes: An eight-byte digest string.
-        """
-        return struct.pack(">L", self._crc)
-
-    def hexdigest(self):
-        """Like :meth:`digest` except returns as a bytestring of double length.
-
-        Returns
-            bytes: A sixteen byte digest string, contaiing only hex digits.
-        """
-        return "{:08x}".format(self._crc).encode("ascii")
-
-    def copy(self):
-        """Create another checksum with the same CRC32C value.
-
-        Returns:
-            Checksum: the new instance.
-        """
-        clone = self.__class__()
-        clone._crc = self._crc
-        return clone
-
-    def consume(self, stream, chunksize):
-        """Consume chunks from a stream, extending our CRC32 checksum.
-
-        Args:
-            stream (BinaryIO): the stream to consume.
-            chunksize (int): the size of the read to perform
-
-        Returns:
-            Generator[bytes, None, None]: Tterable of the chunks read from the
-            stream.
-        """
-        while True:
-            chunk = stream.read(chunksize)
-            if not chunk:
-                break
-            self.update(chunk)
-            yield chunk

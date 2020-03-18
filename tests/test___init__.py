@@ -207,9 +207,6 @@ def _crc32c(request):
     else:
         raise ValueError("invalid internal test config")
 
-# scenario1 = ("cffi", {"crc32c": crc32c.cffi})
-# scenario2 = ("pure-python", {"crc32c": crc32c.python})
-
 
 class TestChecksum(object):
     @staticmethod
