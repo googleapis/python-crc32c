@@ -15,9 +15,9 @@
 import warnings
 
 _SLOW_CRC32C_WARNING = (
-    "Currently using crcmod in pure python form. This is a slow "
-    "implementation. If you can compile a c extension, you will have much "
-    "better performance."
+    "As the c extension couldn't be imported, `google-crc32c` is using a " 
+    "pure python implementation that is significantly slower. If possible, "
+    "please configure a c build environment and compile the extension"
 )
 
 # If available, default to CFFI Implementation, otherwise, use pure python.

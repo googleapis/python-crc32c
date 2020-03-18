@@ -18,7 +18,7 @@ import shutil
 
 import setuptools
 import setuptools.command.build_ext
-
+import warnings
 
 _EXTRA_DLL = "extra-dll"
 _DLL_FILENAME = "crc32c.dll"
@@ -90,11 +90,17 @@ def main(build_cffi=True):
 
 
 if __name__ == "__main__":
+    import sys
     try:
         main()
     except KeyboardInterrupt:
         raise
-    except Exception:
+    except SystemExit:
         # If installation fails, it is likely a compilation error with CFFI
         # Try to install again.
+        warnings.warn(
+            "Compiling the CFFI Extension crc32c has failed. Only a pure "
+            "python implementation will be usable."
+        )
         main(build_cffi=False)
+
