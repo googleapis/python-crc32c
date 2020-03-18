@@ -46,7 +46,7 @@ class BuildExtWithDLL(setuptools.command.build_ext.build_ext):
         return result
 
 
-def main():
+def main(build_cffi=True):
     build_path = os.path.join("src", "crc32c_build.py")
     builder = "{}:FFIBUILDER".format(build_path)
     cffi_dep = "cffi >= 1.0.0"
@@ -70,9 +70,9 @@ def main():
         platforms="Posix; MacOS X; Windows",
         package_data={"crc32c": [os.path.join(_EXTRA_DLL, _DLL_FILENAME)]},
         zip_safe=True,
-        setup_requires=[cffi_dep],
-        cffi_modules=[builder],
-        install_requires=[cffi_dep],
+        setup_requires=[cffi_dep] if build_cffi else [],
+        cffi_modules=[builder] if build_cffi else [],
+        install_requires=[cffi_dep] if build_cffi else [],
         classifiers=[
             "Development Status :: 2 - Pre-Alpha",
             "Intended Audience :: Developers",
@@ -90,4 +90,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        raise
+    except Exception:
+        # If installation fails, it is likely a compilation error with CFFI
+        # Try to install again.
+        main(build_cffi=False)
