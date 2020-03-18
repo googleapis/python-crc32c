@@ -51,41 +51,14 @@ def main(build_cffi=True):
     builder = "{}:FFIBUILDER".format(build_path)
     cffi_dep = "cffi >= 1.0.0"
 
-    with io.open("README.md", encoding="utf-8") as readme_file:
-        readme = readme_file.read()
-
     setuptools.setup(
-        name="google-crc32c",
-        version="0.0.2",
-        description="A python wrapper of the C library 'Google CRC32C'",
-        long_description=readme,
-        long_description_content_type="text/markdown",
-        author="Google LLC",
-        author_email="googleapis-packages@oogle.com",
-        scripts=(),
-        url="https://github.com/googleapis/python-crc32c",
         packages=["crc32c"],
         package_dir={"": "src"},
-        license="Apache 2.0",
-        platforms="Posix; MacOS X; Windows",
         package_data={"crc32c": [os.path.join(_EXTRA_DLL, _DLL_FILENAME)]},
-        zip_safe=True,
         setup_requires=[cffi_dep] if build_cffi else [],
         cffi_modules=[builder] if build_cffi else [],
         install_requires=[cffi_dep] if build_cffi else [],
-        classifiers=[
-            "Development Status :: 2 - Pre-Alpha",
-            "Intended Audience :: Developers",
-            "License :: OSI Approved :: Apache Software License",
-            "Operating System :: OS Independent",
-            "Programming Language :: Python :: 3",
-            "Programming Language :: Python :: 3.5",
-            "Programming Language :: Python :: 3.6",
-            "Programming Language :: Python :: 3.7",
-            "Programming Language :: Python :: 3.8",
-        ],
         cmdclass={"build_ext": BuildExtWithDLL},
-        extras_require={"testing": ["pytest"]},
     )
 
 
