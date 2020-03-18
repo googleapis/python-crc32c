@@ -12,12 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import struct
 import warnings
-
-# NOTE: ``__config__`` **must** be the first import because it (may)
-#       modify the search path used to locate shared libraries.
-import crc32c.__config__
 
 _SLOW_CRC32C_WARNING = (
     "Currently using crcmod in pure python form. This is a slow "
