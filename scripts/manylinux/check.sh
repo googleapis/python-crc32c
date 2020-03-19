@@ -18,7 +18,7 @@
 set -e -x
 echo "CHECKING ON LINUX"
 
-PACKAGE_VERSION=0.0.2
+PACKAGE_VERSION=0.1.0
 WHEEL_FILE="wheels/google_crc32c-${PACKAGE_VERSION}-cp36-cp36m-manylinux1_x86_64.whl"
 PYTHON=python3.6
 

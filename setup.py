@@ -52,6 +52,7 @@ def main(build_cffi=True):
     cffi_dep = "cffi >= 1.0.0"
 
     setuptools.setup(
+        version="0.1.0",
         packages=["crc32c"],
         package_dir={"": "src"},
         package_data={"crc32c": [os.path.join(_EXTRA_DLL, _DLL_FILENAME)]},
