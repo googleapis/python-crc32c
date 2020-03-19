@@ -75,7 +75,7 @@ class CommonChecksum(object):
             chunksize (int): the size of the read to perform
 
         Returns:
-            Generator[bytes, None, None]: Tterable of the chunks read from the
+            Generator[bytes, None, None]: Iterable of the chunks read from the
             stream.
         """
         while True:
