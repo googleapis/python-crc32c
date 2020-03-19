@@ -15,7 +15,7 @@
 
 set -e -x
 echo "CHECKING OSX WHEELS"
-PACKAGE_VERSION=0.0.2
+PACKAGE_VERSION=0.1.0
 
 # ``readlink -f`` is not our friend on OS X. This relies on **some**
 # ``python`` being installed.
