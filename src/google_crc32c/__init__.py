@@ -26,7 +26,7 @@ try:
     implementation = "cffi"
 except ImportError:
     from google_crc32c import python as _crc32c
-    warnings.warn(RuntimeWarning, "_SLOW_CRC32C_WARNING",)
+    warnings.warn(_SLOW_CRC32C_WARNING, RuntimeWarning)
     implementation = "python"
 
 extend = _crc32c.extend
