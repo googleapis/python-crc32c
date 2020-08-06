@@ -22,10 +22,10 @@ _SLOW_CRC32C_WARNING = (
 
 # If available, default to CFFI Implementation, otherwise, use pure python.
 try:
-    from crc32c import cffi as _crc32c
+    from google_crc32c import cffi as _crc32c
     implementation = "cffi"
 except ImportError:
-    from crc32c import python as _crc32c
+    from google_crc32c import python as _crc32c
     warnings.warn(RuntimeWarning, "_SLOW_CRC32C_WARNING",)
     implementation = "python"
 
