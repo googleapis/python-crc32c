@@ -21,7 +21,7 @@ import setuptools.command.build_ext
 import warnings
 
 _EXTRA_DLL = "extra-dll"
-_DLL_FILENAME = "google_crc32c.dll"
+_DLL_FILENAME = "crc32c.dll"
 
 
 def copy_dll(build_lib):
