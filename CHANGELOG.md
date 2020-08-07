@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-crc32c/#history
 
+### [0.1.1](https://www.github.com/googleapis/python-crc32c/compare/v0.1.0...v0.1.1) (2020-08-07)
+
+
+### Documentation
+
+* rewrap long line ([#32](https://www.github.com/googleapis/python-crc32c/issues/32)) ([30479d4](https://www.github.com/googleapis/python-crc32c/commit/30479d41997a09115aa0152b39ffef09bc97b13a))
+
 ## [0.1.0](https://www.github.com/googleapis/python-crc32c/compare/v0.0.2...v0.1.0) (2020-03-20)
 
 
