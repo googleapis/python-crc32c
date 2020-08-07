@@ -4,8 +4,10 @@
 
 [1]: https://pypi.org/project/google-crc32c/#history
 
-### [0.1.1](https://www.github.com/googleapis/python-crc32c/compare/v0.1.0...v0.1.1) (2020-08-07)
+### [1.0.0](https://www.github.com/googleapis/python-crc32c/compare/v0.1.0...v1.0.0) (2020-08-07)
 
+### Breaking Changes
+* prefix module name with 'google_' to avoid conflict with ICRAR version ([#30](https://www.github.com/googleapis/python-crc32c/issues/30)) ([b50f43e](https://www.github.com/googleapis/python-crc32c/commit/b50f43e7bc40d91ccdade9ccc577a93c0ed05f3a)), closes [#29](https://www.github.com/googleapis/python-crc32c/issues/29)
 
 ### Documentation
 
