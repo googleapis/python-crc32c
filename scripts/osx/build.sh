@@ -28,6 +28,7 @@ PYTHON35="/Library/Frameworks/Python.framework/Versions/3.5/bin"
 PYTHON36="/Library/Frameworks/Python.framework/Versions/3.6/bin"
 PYTHON37="/Library/Frameworks/Python.framework/Versions/3.7/bin"
 PYTHON38="/Library/Frameworks/Python.framework/Versions/3.8/bin"
+PYTHON39="/Library/Frameworks/Python.framework/Versions/3.9/bin"
 
 # Build and install `libcrc32c`
 export PY_BIN="python3"
@@ -53,11 +54,15 @@ export PY_BIN="python3.7"
 export PY_TAG="cp37-cp37m"
 ${OSX_DIR}/build_python_wheel.sh
 
-# TODO: As of 2019-Dec-30, 3.8 is not available on our CI
-# Build wheel for Python 3.7.
-# export PY_BIN="python3.8"
-# export PY_TAG="cp38-cp38m"
-# ${OSX_DIR}/build_python_wheel.sh
+# Build wheel for Python 3.8.
+export PY_BIN="python3.8"
+export PY_TAG="cp38-cp38m"
+${OSX_DIR}/build_python_wheel.sh
+
+# Build wheel for Python 3.9.
+export PY_BIN="python3.9"
+export PY_TAG="cp39-cp39m"
+${OSX_DIR}/build_python_wheel.sh
 
 
 # Clean up.
