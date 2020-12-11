@@ -63,7 +63,7 @@ rm -fr venv37
 
 ${PYTHON38}/python3 -m venv venv38
 curl https://bootstrap.pypa.io/get-pip.py | venv38/bin/python3
-WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp38-cp38-macosx_10_9_intel.whl
+WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp38-cp38-macosx_10_9_x86_64.whl
 venv38/bin/pip install ${WHL}
 venv38/bin/python ${REPO_ROOT}/scripts/check_cffi_crc32c.py
 ${LISTDEPS_CMD} ${WHL}
