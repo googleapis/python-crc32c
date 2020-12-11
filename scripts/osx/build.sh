@@ -54,10 +54,11 @@ export PY_BIN="python3.8"
 export PY_TAG="cp38-cp38"
 ${OSX_DIR}/build_python_wheel.sh
 
+# TODO: As of 2020-12-11, 3.9 is not available on our CI
 # Build wheel for Python 3.9.
-export PY_BIN="python3.9"
-export PY_TAG="cp39-cp39"
-${OSX_DIR}/build_python_wheel.sh
+#export PY_BIN="python3.9"
+#export PY_TAG="cp39-cp39"
+#${OSX_DIR}/build_python_wheel.sh
 
 
 # Clean up.
