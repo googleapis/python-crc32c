@@ -49,13 +49,14 @@ export PY_TAG="cp37-cp37m"
 ${OSX_DIR}/build_python_wheel.sh
 
 # Build wheel for Python 3.8.
+# Note that the 'm' SOABI flag is no longer supported for Python >= 3.8
 export PY_BIN="python3.8"
-export PY_TAG="cp38-cp38m"
+export PY_TAG="cp38-cp38"
 ${OSX_DIR}/build_python_wheel.sh
 
 # Build wheel for Python 3.9.
 export PY_BIN="python3.9"
-export PY_TAG="cp39-cp39m"
+export PY_TAG="cp39-cp39"
 ${OSX_DIR}/build_python_wheel.sh
 
 
