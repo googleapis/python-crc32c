@@ -1,14 +1,14 @@
 
 name: Build binary weheels and upload to PyPI
 
-# on:
-#   release:
-#     types: [created]
-
 on:
-  pull_request:
-    branches:
-      - master
+  release:
+    types: [created]
+
+# on:
+#   pull_request:
+#     branches:
+#       - master
 
 jobs:
   build-source-distribution:
@@ -136,15 +136,15 @@ jobs:
         uses: pypa/gh-action-pypi-publish@master
         with:
           user: __token__
-          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          password: ${{ secrets.PYPI_API_TOKEN }}
           packages_dir: dist
           skip_existing: true
-          repository_url: https://test.pypi.org/legacy/
+          # repository_url: https://test.pypi.org/legacy/
       - name: Publish Wheels
         uses: pypa/gh-action-pypi-publish@master
         with:
           user: __token__
-          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          password: ${{ secrets.PYPI_API_TOKEN }}
           packages_dir: wheels
           skip_existing: true
-          repository_url: https://test.pypi.org/legacy/
+          # repository_url: https://test.pypi.org/legacy/
