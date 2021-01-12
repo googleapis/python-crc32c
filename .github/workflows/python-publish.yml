@@ -1,14 +1,9 @@
 
-name: Build binary weheels and upload to PyPI
+name: Build binary wheels and upload to PyPI
 
 on:
   release:
     types: [created]
-
-# on:
-#   pull_request:
-#     branches:
-#       - master
 
 jobs:
   build-source-distribution:

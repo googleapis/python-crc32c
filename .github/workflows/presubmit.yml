@@ -1,5 +1,5 @@
 
-name: Build binary weheels and upload to PyPI
+name: Presubmit
 
 on:
   pull_request:
