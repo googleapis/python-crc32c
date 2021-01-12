@@ -28,7 +28,6 @@ def modify_path():
     if path is None:
         return
 
-    # 3.6, 3.7 use path
     try:
         extra_dll_dir = pkg_resources.resource_filename("google_crc32c", "extra-dll")
         if os.path.isdir(extra_dll_dir):
