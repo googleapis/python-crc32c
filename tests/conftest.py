@@ -13,19 +13,7 @@
 # limitations under the License.
 
 """py.test shared testing configuration.
-
-This
-
-* Monkey-patches ``mock`` as ``unittest.mock`` for Python 2.7.
 """
 
 import sys
 import unittest
-
-import six
-
-if six.PY2:
-    import mock
-
-    unittest.mock = mock
-    sys.modules["unittest.mock"] = unittest.mock
