@@ -28,18 +28,18 @@ branchProtectionRules:
   requiresStrictStatusChecks: true
   # List of required status check contexts that must pass for commits to be accepted to matching branches.
   requiredStatusCheckContexts:
-    - 'Presubmit / build-linux (3.6) (pull_request)'
-    - 'Presubmit / build-linux (3.7) (pull_request)'
-    - 'Presubmit / build-linux (3.8) (pull_request)'
-    - 'Presubmit / build-linux (3.9) (pull_request)'
-    - 'Presubmit / build-macos (3.6) (pull_request)'
-    - 'Presubmit / build-macos (3.7) (pull_request)'
-    - 'Presubmit / build-macos (3.8) (pull_request)'
-    - 'Presubmit / build-macos (3.9) (pull_request)'
-    - 'Presubmit / build-windows (3.6) (pull_request)'
-    - 'Presubmit / build-windows (3.7) (pull_request)'
-    - 'Presubmit / build-windows (3.8) (pull_request)'
-    - 'Presubmit / build-windows (3.9) (pull_request)'
+    - 'build-linux (3.6)'
+    - 'build-linux (3.7)'
+    - 'build-linux (3.8)'
+    - 'build-linux (3.9)'
+    - 'build-macos (3.6)'
+    - 'build-macos (3.7)'
+    - 'build-macos (3.8)'
+    - 'build-macos (3.9)'
+    - 'build-windows (3.6)'
+    - 'build-windows (3.7)'
+    - 'build-windows (3.8)'
+    - 'build-windows (3.9)'
     - 'cla/google'
 # List of explicit permissions to add (additive only)
 permissionRules:
