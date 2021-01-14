@@ -21,7 +21,9 @@ jobs:
         path: dist
 
   build-linux:
-    runs-on: ubuntu-latest
+    # aaarch images don't work on 18.04 (currently ubuntu-latest).
+    # this can be changed to ubuntu-latest once that is 20.04+
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         # 3.10 is not yet available in manylinux docker images.
