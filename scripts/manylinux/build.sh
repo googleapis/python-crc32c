@@ -39,9 +39,9 @@ docker run \
     quay.io/pypa/manylinux2014_x86_64 \
     /var/code/python-crc32c/scripts/manylinux/build_on_centos.sh
 
-docker run \
-    --rm \
-    --interactive \
-    --volume ${REPO_ROOT}:/var/code/python-crc32c/ \
-    quay.io/pypa/manylinux2014_aarch64 \
-    /var/code/python-crc32c/scripts/manylinux/build_on_centos.sh
+# docker run \
+#     --rm \
+#     --interactive \
+#     --volume ${REPO_ROOT}:/var/code/python-crc32c/ \
+#     quay.io/pypa/manylinux2014_aarch64 \
+#     /var/code/python-crc32c/scripts/manylinux/build_on_centos.sh
