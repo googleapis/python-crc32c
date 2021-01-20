@@ -1,4 +1,5 @@
 # `google-crc32c`
+![GA](https://img.shields.io/badge/support-GA-gold.svg) [<img src="https://img.shields.io/pypi/v/google-crc32c.svg">](https://pypi.org/project/google-crc32c) ![Python Versions](https://img.shields.io/pypi/pyversions/google-crc32c)
 
 This package wraps the [`google/crc32c`](https://github.com/google/crc32c)
 hardware-based implementation of the CRC32C hashing algorithm. Multiple wheels
