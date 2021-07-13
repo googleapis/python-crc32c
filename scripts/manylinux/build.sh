@@ -21,6 +21,7 @@ SCRIPTS_DIR=$(dirname ${MANYLINUX_DIR})
 REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 
 docker pull quay.io/pypa/manylinux2010_x86_64	
+docker pull quay.io/pypa/manylinux2014_x86_64
 
 cd $REPO_ROOT
 git submodule update --init --recursive 
@@ -30,4 +31,19 @@ docker run \
     --interactive \
     --volume ${REPO_ROOT}:/var/code/python-crc32c/ \
     quay.io/pypa/manylinux2010_x86_64 \
+    /var/code/python-crc32c/scripts/manylinux/build_on_centos.sh
+
+docker run \
+    --rm \
+    --interactive \
+    --volume ${REPO_ROOT}:/var/code/python-crc32c/ \
+    quay.io/pypa/manylinux2014_x86_64 \
+    /var/code/python-crc32c/scripts/manylinux/build_on_centos.sh
+
+docker run --rm --privileged hypriot/qemu-register
+docker run \
+    --rm \
+    --interactive \
+    --volume ${REPO_ROOT}:/var/code/python-crc32c/ \
+    quay.io/pypa/manylinux2014_aarch64 \
     /var/code/python-crc32c/scripts/manylinux/build_on_centos.sh
