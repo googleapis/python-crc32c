@@ -39,4 +39,4 @@ def check(session):
     session.install("--no-index", "--find-links=wheels", "google-crc32c")
 
     # Run py.test against the unit tests.
-    session.run("python", "scripts/check_cffi_crc32c.py", *session.posargs)
+    session.run("python", "scripts/check_crc32c_extension.py", *session.posargs)

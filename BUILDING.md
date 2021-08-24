@@ -23,7 +23,7 @@ pip install cffi pycparser
 pip install --no-index --find-links=wheels google-crc32c
 
 # Check the package, try and load the native library.
-python ./scripts/check_cffi_crc32c.py
+python ./scripts/check_crc32c_extension.py
 ```
 
 On OS X:
@@ -37,7 +37,7 @@ pip install cffi pycparser
 pip install --no-index --find-links=wheels google-crc32c
 
 # Check the package, try and load the native library.
-python ./scripts/check_cffi_crc32c.py
+python ./scripts/check_crc32c_extension.py
 ```
 
 On Windows:
