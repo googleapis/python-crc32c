@@ -50,6 +50,8 @@ curl https://bootstrap.pypa.io/get-pip.py | venv36/bin/python3
 WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp36-cp36m-macosx_10_9_x86_64.whl
 venv36/bin/pip install ${WHL}
 venv36/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
+venv36/bin/pip install pytest
+venv36/bin/py.test ${REPO_ROOT}/tests
 ${LISTDEPS_CMD} ${WHL}
 rm -fr venv36
 
@@ -57,6 +59,8 @@ ${PYTHON37}/python3 -m venv venv37
 curl https://bootstrap.pypa.io/get-pip.py | venv37/bin/python3
 WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp37-cp37m-macosx_10_9_x86_64.whl
 venv37/bin/pip install ${WHL}
+venv37/bin/pip install pytest
+venv37/bin/py.test ${REPO_ROOT}/tests
 venv37/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
 ${LISTDEPS_CMD} ${WHL}
 rm -fr venv37
@@ -65,6 +69,8 @@ ${PYTHON38}/python3 -m venv venv38
 curl https://bootstrap.pypa.io/get-pip.py | venv38/bin/python3
 WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp38-cp38-macosx_10_9_x86_64.whl
 venv38/bin/pip install ${WHL}
+venv38/bin/pip install pytest
+venv38/bin/py.test ${REPO_ROOT}/tests
 venv38/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
 ${LISTDEPS_CMD} ${WHL}
 rm -fr venv38

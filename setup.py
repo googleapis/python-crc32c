@@ -74,8 +74,8 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         raise
     except SystemExit:
-        # If installation fails, it is likely a compilation error with CFFI
-        # Try to install again.
+        # If installation fails, it is likely a compilation error with the
+        # C extension. Try to install again without it.
         warnings.warn(
             "Compiling the C Extension has failed. Only a pure "
             "python implementation will be usable."

@@ -33,7 +33,7 @@ cd build/
 ${MAIN_PYTHON_BIN}/cmake \
     -DCRC32C_BUILD_TESTS=no \
     -DCRC32C_BUILD_BENCHMARKS=no \
-    -DBUILD_SHARED_LIBS=yes \
+    -DBUILD_SHARED_LIBS=no \
     ..
 make all install
 

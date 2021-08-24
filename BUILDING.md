@@ -19,7 +19,6 @@ On Linux:
 
 
 # Install the wheel that was built as a result
-pip install cffi pycparser
 pip install --no-index --find-links=wheels google-crc32c
 
 # Check the package, try and load the native library.
@@ -33,7 +32,6 @@ On OS X:
 ./scripts/osx/build.sh
 
 # Install the wheel that was built as a result
-pip install cffi pycparser
 pip install --no-index --find-links=wheels google-crc32c
 
 # Check the package, try and load the native library.
@@ -66,7 +64,7 @@ $ cd google_crc32c/build
 $ ../../venv/bin/cmake \
 >   -DCRC32C_BUILD_TESTS=no \
 >   -DCRC32C_BUILD_BENCHMARKS=no \
->   -DBUILD_SHARED_LIBS=yes \
+>   -DBUILD_SHARED_LIBS=no \
 >   -DCMAKE_INSTALL_PREFIX:PATH=${CRC32C_INSTALL_PREFIX} \
 >   ..
 $ make all install

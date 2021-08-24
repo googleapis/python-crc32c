@@ -45,7 +45,6 @@ jobs:
         ./scripts/manylinux/build.sh
     - name: Test Import
       run: |
-        pip install cffi pycparser
         pip install --no-index --find-links=wheels google-crc32c
         python ./scripts/check_crc32c_extension.py
     - name: Run tests
@@ -81,7 +80,6 @@ jobs:
         ./scripts/osx/build_gh_action.sh
     - name: Test Import
       run: |
-        pip install cffi pycparser
         pip install --no-index --find-links=wheels google-crc32c
         python ./scripts/check_crc32c_extension.py
     - name: Run tests

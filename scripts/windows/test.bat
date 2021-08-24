@@ -27,7 +27,6 @@ if "%PYTHON_VERSION%"=="3.10-dev" (
 @rem FOR %%V IN (3.5-64,3.5-32,3.6-64,3.6-32,3.7-64,3.7-32) DO (
 @REM FOR %%V IN (3.9-64,3.9-32) DO (
 FOR %%V IN (%PYTHON_VERSION%-32, %PYTHON_VERSION%-64) DO (
-    py -%%V -m pip install cffi pyparser
     py -%%V -m pip install --no-index --find-links=wheels google-crc32c --force-reinstall
 
     py -%%V ./scripts/check_crc32c_extension.py
