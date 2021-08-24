@@ -12,10 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import io
 import os
 import shutil
-
 import setuptools
 import setuptools.command.build_ext
 import warnings
@@ -46,24 +44,31 @@ class BuildExtWithDLL(setuptools.command.build_ext.build_ext):
         return result
 
 
-def main(build_cffi=True):
-    build_path = os.path.join("src", "google_crc32c_build.py")
-    builder = "{}:FFIBUILDER".format(build_path)
-    cffi_dep = "cffi >= 1.0.0"
+module_path = os.path.join("src", "google_crc32c", "_crc32c.c")
+module = setuptools.Extension(
+    "google_crc32c._crc32c",
+    sources=[os.path.normcase(module_path)],
+    include_dirs=["usr/include"],
+    libraries=["crc32c", "stdc++"],
+    library_dirs=["usr/lib"],
+)
+
+
+def main(with_extension=True):
+    if with_extension:
+        ext_modules = [module]
+    else:
+        ext_modules = []
 
     setuptools.setup(
         packages=["google_crc32c"],
         package_dir={"": "src"},
-        package_data={"google_crc32c": [os.path.join(_EXTRA_DLL, _DLL_FILENAME)]},
-        setup_requires=[cffi_dep] if build_cffi else [],
-        cffi_modules=[builder] if build_cffi else [],
-        install_requires=[cffi_dep] if build_cffi else [],
+        ext_modules=ext_modules,
         cmdclass={"build_ext": BuildExtWithDLL},
     )
 
 
 if __name__ == "__main__":
-    import sys
     try:
         main()
     except KeyboardInterrupt:
@@ -72,8 +77,7 @@ if __name__ == "__main__":
         # If installation fails, it is likely a compilation error with CFFI
         # Try to install again.
         warnings.warn(
-            "Compiling the CFFI Extension crc32c has failed. Only a pure "
+            "Compiling the C Extension has failed. Only a pure "
             "python implementation will be usable."
         )
-        main(build_cffi=False)
-
+        main(with_extension=False)
