@@ -48,9 +48,7 @@ module_path = os.path.join("src", "google_crc32c", "_crc32c.c")
 module = setuptools.Extension(
     "google_crc32c._crc32c",
     sources=[os.path.normcase(module_path)],
-    include_dirs=["usr/include"],
-    libraries=["crc32c", "stdc++"],
-    library_dirs=["usr/lib"],
+    libraries=["crc32c"],
 )
 
 
@@ -69,15 +67,20 @@ def main(with_extension=True):
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        raise
-    except SystemExit:
-        # If installation fails, it is likely a compilation error with the
-        # C extension. Try to install again without it.
-        warnings.warn(
-            "Compiling the C Extension has failed. Only a pure "
-            "python implementation will be usable."
-        )
+    pure_python = os.getenv("CRC32C_PURE_PYTHON") is not None
+
+    if pure_python:
         main(with_extension=False)
+    else:
+        try:
+            main()
+        except KeyboardInterrupt:
+            raise
+        except SystemExit:
+            # If installation fails, it is likely a compilation error with the
+            # C extension. Try to install again without it.
+            warnings.warn(
+                "Compiling the C Extension has failed. Set the "
+                "'CRC32C_PURE_PYTHON' environment variable to build a pure "
+                "python implementation."
+            )

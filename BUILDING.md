@@ -64,7 +64,7 @@ $ cd google_crc32c/build
 $ ../../venv/bin/cmake \
 >   -DCRC32C_BUILD_TESTS=no \
 >   -DCRC32C_BUILD_BENCHMARKS=no \
->   -DBUILD_SHARED_LIBS=no \
+>   -DBUILD_SHARED_LIBS=yes \
 >   -DCMAKE_INSTALL_PREFIX:PATH=${CRC32C_INSTALL_PREFIX} \
 >   ..
 $ make all install
@@ -74,6 +74,10 @@ $ cd ../..
 Now, run the tests:
 
 ```bash
+$ venv/bin/python setup.py build_ext \
+    --include-dirs=$(pwd)/usr/include \
+    --library-dirs=$(pwd)/usr/lib \
+    --rpath=$(pwd)/usr/lib
 $ venv/bin/pip install -e .[testing]
 $ venv/bin/py.test tests/
 ============================= test session starts ==============================
