@@ -33,6 +33,7 @@ rm -rf build
 mkdir build
 cd build/
 ${VENV}/bin/cmake \
+    -DCMAKE_BUILD_TYPE=Release \
     -DCRC32C_BUILD_TESTS=no \
     -DCRC32C_BUILD_BENCHMARKS=no \
     -DBUILD_SHARED_LIBS=yes \

@@ -62,6 +62,7 @@ $ export CRC32C_INSTALL_PREFIX=$(pwd)/usr
 $ mkdir google_crc32c/build
 $ cd google_crc32c/build
 $ ../../venv/bin/cmake \
+>   -DCMAKE_BUILD_TYPE=Release \
 >   -DCRC32C_BUILD_TESTS=no \
 >   -DCRC32C_BUILD_BENCHMARKS=no \
 >   -DBUILD_SHARED_LIBS=yes \
