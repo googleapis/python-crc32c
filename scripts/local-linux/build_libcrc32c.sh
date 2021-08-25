@@ -15,12 +15,7 @@
 set -e -x
 
 PY_BIN=${PY_BIN:-python3.7}
-
-# Check that the REPO_ROOT variable is set.
-if [[ -z "${REPO_ROOT}" ]]; then
-    echo "REPO_ROOT environment variable should be set by the caller."
-    exit 1
-fi
+REPO_ROOT=${REPO_ROOT:-$(pwd)}
 
 CRC32C_INSTALL_PREFIX=${REPO_ROOT}/usr
 
@@ -40,7 +35,7 @@ cd build/
 ${VENV}/bin/cmake \
     -DCRC32C_BUILD_TESTS=no \
     -DCRC32C_BUILD_BENCHMARKS=no \
-    -DBUILD_SHARED_LIBS=no \
+    -DBUILD_SHARED_LIBS=yes \
     -DCMAKE_INSTALL_PREFIX:PATH=${CRC32C_INSTALL_PREFIX} \
     ..
 # Install `libcrc32c` into CRC32C_INSTALL_PREFIX.
@@ -48,6 +43,10 @@ make all install
 
 cd ${REPO_ROOT}
 
+${VENV}/bin/python setup.py build_ext \
+    --include-dirs=${REPO_ROOT}/usr/include \
+    --library-dirs=${REPO_ROOT}/usr/lib \
+    --rpath=${REPO_ROOT}/usr/lib
 ${VENV}/bin/python -m pip wheel . --wheel-dir=wheels
 
 # Clean up.
