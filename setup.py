@@ -20,6 +20,7 @@ import warnings
 
 _EXTRA_DLL = "extra-dll"
 _DLL_FILENAME = "crc32c.dll"
+CRC32C_PURE_PYTHON = os.getenv("CRC32C_PURE_PYTHON") is not None
 
 
 def copy_dll(build_lib):
@@ -52,35 +53,15 @@ module = setuptools.Extension(
 )
 
 
-def main(with_extension=True):
-    if with_extension:
-        ext_modules = [module]
-    else:
-        ext_modules = []
-
-    setuptools.setup(
-        packages=["google_crc32c"],
-        package_dir={"": "src"},
-        ext_modules=ext_modules,
-        cmdclass={"build_ext": BuildExtWithDLL},
-    )
+if CRC32C_PURE_PYTHON:
+    ext_modules = []
+else:
+    ext_modules = [module]
 
 
-if __name__ == "__main__":
-    pure_python = os.getenv("CRC32C_PURE_PYTHON") is not None
-
-    if pure_python:
-        main(with_extension=False)
-    else:
-        try:
-            main()
-        except KeyboardInterrupt:
-            raise
-        except SystemExit:
-            # If installation fails, it is likely a compilation error with the
-            # C extension. Try to install again without it.
-            warnings.warn(
-                "Compiling the C Extension has failed. Set the "
-                "'CRC32C_PURE_PYTHON' environment variable to build a pure "
-                "python implementation."
-            )
+setuptools.setup(
+    packages=["google_crc32c"],
+    package_dir={"": "src"},
+    ext_modules=ext_modules,
+    cmdclass={"build_ext": BuildExtWithDLL},
+)
