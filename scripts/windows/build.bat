@@ -39,7 +39,7 @@ py -%PYTHON_VERSION% -m pip install cmake
 
 git submodule update --init --recursive
 
-FOR %%V IN (32,64) DO (ddd
+FOR %%V IN (32,64) DO (
     set TARGET_PLATFORM="x64"
 
     if "%%V"=="32" (
@@ -74,7 +74,7 @@ FOR %%V IN (32,64) DO (ddd
 
     py -%PYTHON_VERSION%-%%V -m pip install --upgrade pip setuptools wheel
     echo "Building C extension"
-    py -%PYTHON_VERSION%-%%V setup.py build_ext --include-dirs=%CRC32C_INSTALL_PREFIX%\include --lib-dirs=%CRC32C_INSTALL_PREFIX%\lib
+    py -%PYTHON_VERSION%-%%V setup.py build_ext --include-dirs=%CRC32C_INSTALL_PREFIX%\include --library-dirs=%CRC32C_INSTALL_PREFIX%\lib
     echo "Building Wheel"
     py -%PYTHON_VERSION%-%%V -m pip wheel . --wheel-dir wheels/
 )
