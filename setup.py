@@ -33,7 +33,7 @@ def copy_dll(build_lib):
 
     installed_dll = os.path.join(install_prefix, "bin", _DLL_FILENAME)
     lib_dlls = os.path.join(build_lib, "google_crc32c", _EXTRA_DLL)
-    os.makedirs(lib_dlls)
+    os.makedirs(lib_dlls, exist_ok=True)
     relocated_dll = os.path.join(lib_dlls, _DLL_FILENAME)
     shutil.copyfile(installed_dll, relocated_dll)
 
