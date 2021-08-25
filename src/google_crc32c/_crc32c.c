@@ -10,7 +10,7 @@ _crc32c_extend(PyObject *self, PyObject *args)
     const char *chunk;
     Py_ssize_t length;
 
-    if (!PyArg_ParseTuple(args, "ls#", &crc, &chunk, &length))
+    if (!PyArg_ParseTuple(args, "ks#", &crc, &chunk, &length))
         return NULL;
 
     crc = crc32c_extend(crc, (const uint8_t*)chunk, length);
