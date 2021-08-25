@@ -15,7 +15,7 @@ _crc32c_extend(PyObject *self, PyObject *args)
 
     crc = crc32c_extend(crc, (const uint8_t*)chunk, length);
 
-    return PyLong_FromLong(crc);
+    return PyLong_FromUnsignedLong(crc);
 }
 
 
@@ -31,7 +31,7 @@ _crc32c_value(PyObject *self, PyObject *args)
 
     crc = crc32c_value((const uint8_t*)chunk, length);
 
-    return PyLong_FromLong(crc);
+    return PyLong_FromUnsignedLong(crc);
 }
 
 
