@@ -23,7 +23,7 @@ _DLL_FILENAME = "crc32c.dll"
 
 # Explicit environment variable disables pure-Python fallback
 CRC32C_PURE_PYTHON_EXPLICIT = "CRC32C_PURE_PYTHON" in os.environ
-_FALSE_OPTIONS = ("0", "false", "no", None)
+_FALSE_OPTIONS = ("0", "false", "no", "False", "No", None)
 CRC32C_PURE_PYTHON = os.getenv("CRC32C_PURE_PYTHON") not in _FALSE_OPTIONS
 
 
@@ -73,8 +73,8 @@ else:
         )
     except SystemExit:
         if "CRC32C_PURE_PYTHON" not in os.environ:
-            # If build / insall fails, it is likely a compilation error with
-            # the C extension:  adviser user how to enable th pure-Python
+            # If build / install fails, it is likely a compilation error with
+            # the C extension:  advise user how to enable the pure-Python
             # build.
             logging.error(
                 "Compiling the C Extension for the crc32c library failed. "
