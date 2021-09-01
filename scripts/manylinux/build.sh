@@ -21,12 +21,22 @@ MANYLINUX_DIR=$(echo $(cd $(dirname ${0}); pwd))
 SCRIPTS_DIR=$(dirname ${MANYLINUX_DIR})
 REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 
-docker pull quay.io/pypa/manylinux2010_x86_64	
-docker pull quay.io/pypa/manylinux2014_x86_64
 
 cd $REPO_ROOT
 git submodule update --init --recursive 
 
+# Note:  PyPA's support for the `manylinux1` image ends on 2022-01-01.
+#        See: https://github.com/pypa/manylinux/issues/994
+docker pull quay.io/pypa/manylinux1_x86_64
+docker run \
+    --rm \
+    --interactive \
+    --volume ${REPO_ROOT}:/var/code/python-crc32c/ \
+    --env BUILD_PYTHON=${BUILD_PYTHON} \
+    quay.io/pypa/manylinux1_x86_64 \
+    /var/code/python-crc32c/scripts/manylinux/build_on_centos.sh
+
+docker pull quay.io/pypa/manylinux2010_x86_64	
 docker run \
     --rm \
     --interactive \
@@ -35,6 +45,7 @@ docker run \
     quay.io/pypa/manylinux2010_x86_64 \
     /var/code/python-crc32c/scripts/manylinux/build_on_centos.sh
 
+docker pull quay.io/pypa/manylinux2014_x86_64
 docker run \
     --rm \
     --interactive \
@@ -44,6 +55,7 @@ docker run \
     /var/code/python-crc32c/scripts/manylinux/build_on_centos.sh
 
 docker run --rm --privileged hypriot/qemu-register
+docker pull quay.io/pypa/manylinux2014_aarch64
 docker run \
     --rm \
     --interactive \
