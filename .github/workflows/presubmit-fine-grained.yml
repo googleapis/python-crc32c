@@ -16,8 +16,10 @@ jobs:
             - manylinux1_x86_64
             - manylinux2010_x86_64
             - manylinux2014_x86_64
+            - manylinux2014_aarch64
     steps:
     - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
     - name: Pull Docker Image
       run: |
         docker pull quay.io/pypa/${{ matrix.manylinux }}
@@ -44,6 +46,7 @@ jobs:
             - manylinux1_x86_64
             - manylinux2010_x86_64
             - manylinux2014_x86_64
+            - manylinux2014_aarch64
         python:
             - 3.6
             - 3.7
@@ -56,6 +59,7 @@ jobs:
               python: 3.10-dev
     steps:
     - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
     - name: Download the library
       uses: actions/download-artifact@v2
       with:
