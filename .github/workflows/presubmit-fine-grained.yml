@@ -1,0 +1,79 @@
+
+name: Presubmit (fine-grained)
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  build-linux-library:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        manylinux:
+            - manylinux1_x86_64
+            - manylinux2010_x86_64
+            - manylinux2014_x86_64
+    steps:
+    - uses: actions/checkout@v2
+    - name: Pull Docker Image
+      run: |
+        docker pull quay.io/pypa/${{ matrix.manylinux }}
+    - name: Build C library
+      run: |
+        docker run \
+            --rm \
+            --interactive \
+            --volume ${{ github.workspace }}:/var/code/python-crc32c/ \
+            quay.io/pypa/${{ matrix.manylinux }} \
+            /var/code/python-crc32c/scripts/manylinux/build_c_library.sh
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.manylinux }}-c-library
+        path: ${{ github.workspace }}/usr
+
+  build-linux-wheels:
+    needs:
+      - build-linux-library
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        manylinux:
+            - manylinux1_x86_64
+            - manylinux2010_x86_64
+            - manylinux2014_x86_64
+        python:
+            - 3.6
+            - 3.7
+            - 3.8
+            - 3.9
+            - 3.10-dev
+        exclude:
+            - manylinux: manylinux1_x86_64
+              python: 3.10-dev
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download the library
+      uses: actions/download-artifact@v2
+      with:
+        name: ${{ matrix.manylinux }}-c-library
+        path: ${{ github.workspace }}/usr
+    - name: Pull Docker Image
+      run: |
+        docker pull quay.io/pypa/${{ matrix.manylinux }}
+    - name: Build Wheels
+      run: |
+        docker run \
+            --rm \
+            --interactive \
+            --volume ${{ github.workspace }}:/var/code/python-crc32c/ \
+            --env BUILD_PYTHON=${{ matrix.python }} \
+            --env GITHUB_WORKSPACE=${{ github.workspace }} \
+            quay.io/pypa/${{ matrix.manylinux }} \
+            /var/code/python-crc32c/scripts/manylinux/build_wheels.sh
+    - uses: actions/upload-artifact@v2
+      with:
+        name: python-package-distributions
+        path: ./wheels/google_crc32c*.whl
