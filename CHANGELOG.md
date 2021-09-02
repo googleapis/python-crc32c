@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-crc32c/#history
 
+### [1.1.4](https://www.github.com/googleapis/python-crc32c/compare/v1.1.4...v1.1.4) (2021-09-02)
+
+
+### Bug Fixes
+
+* use correct Python 3.10 specifier ([#88](https://www.github.com/googleapis/python-crc32c/issues/88)) ([0c1b740](https://www.github.com/googleapis/python-crc32c/commit/0c1b740c195caed8ac1e67fc38d87073223a6b3d))
+
 ### [1.1.4](https://www.github.com/googleapis/python-crc32c/compare/v1.1.3...v1.1.4) (2021-09-01)
 
 
