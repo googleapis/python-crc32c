@@ -51,6 +51,7 @@ jobs:
             - 3.9
             - 3.10-dev
         exclude:
+            # manylinux1 does not (will never) have 3.10 support.
             - manylinux: manylinux1_x86_64
               python: 3.10-dev
     steps:
