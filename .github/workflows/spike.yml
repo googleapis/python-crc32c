@@ -4,31 +4,31 @@ on: push
 
 jobs:
 
-  dump-platform-abi-tags:
-    runs-on: ${{ matrix.runner }}
-    strategy:
-      matrix:
-        python: [3.6, 3.7, 3.8, 3.9, 3.10-dev]
-        runner: ["macos-10.15", "macos-11"]
-    steps:
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python }}
-
-    - name: Dump platform / ABI
-      run: |
-        python -m pip install --upgrade setuptools pip wheel
-        python -c "import platform; print(platform.mac_ver())" > ${{ matrix.runner }}-${{ matrix.python }}.txt
-        cat ${{ matrix.runner }}-${{ matrix.python }}.txt
-        python -m pip debug --verbose >> ${{ matrix.runner }}-${{ matrix.python }}.txt
-
-    - name: Upload log file
-      uses: actions/upload-artifact@v2
-      with:
-        name: macos-pip-debug-output
-        path: ${{ matrix.runner }}-${{ matrix.python }}.txt
+# dump-platform-abi-tags:
+#   runs-on: ${{ matrix.runner }}
+#   strategy:
+#     matrix:
+#       python: [3.6, 3.7, 3.8, 3.9, 3.10-dev]
+#       runner: ["macos-10.15", "macos-11"]
+#   steps:
+#
+#   - name: Set up Python
+#     uses: actions/setup-python@v2
+#     with:
+#       python-version: ${{ matrix.python }}
+#
+#   - name: Dump platform / ABI
+#     run: |
+#       python -m pip install --upgrade setuptools pip wheel
+#       python -c "import platform; print(platform.mac_ver())" > ${{ matrix.runner }}-${{ matrix.python }}.txt
+#       cat ${{ matrix.runner }}-${{ matrix.python }}.txt
+#       python -m pip debug --verbose >> ${{ matrix.runner }}-${{ matrix.python }}.txt
+#
+#   - name: Upload log file
+#     uses: actions/upload-artifact@v2
+#     with:
+#       name: macos-pip-debug-output
+#       path: ${{ matrix.runner }}-${{ matrix.python }}.txt
 
   build-macos:
     runs-on: ${{ matrix.runner }}
