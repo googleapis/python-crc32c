@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         python: [3.6, 3.7, 3.8, 3.9, 3.10-dev]
-        runner: ["macos-10.15", "macos-11", "macos-latest"]
+        runner: ["macos-10.15", "macos-11"]
     steps:
 
     - name: Set up Python
@@ -35,32 +35,41 @@ jobs:
     strategy:
       matrix:
         python: [3.6, 3.7, 3.8, 3.9, 3.10-dev]
+        runner: ["macos-10.15", "macos-11"]
       # It is possible 3.10-dev will fail when the other versions are green.
       # Turn off fast fail so if 3.10 fails the other required versions have
       # the opportunity to pass.
       fail-fast: false
+
     steps:
+
     - uses: actions/checkout@v2
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python }}
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade setuptools pip wheel
+
     - name: Build
       env:
         CRC32C_PURE_PYTHON: "0"
       run: |
         ./scripts/osx/build_gh_action.sh
+
     - name: Test Import
       run: |
         pip install --no-index --find-links=wheels google-crc32c
         python ./scripts/check_crc32c_extension.py
+
     - name: Run tests
       run: |
         pip install pytest
         python -m pytest tests
+
     - uses: actions/upload-artifact@v2
       with:
         name: python-package-distributions
