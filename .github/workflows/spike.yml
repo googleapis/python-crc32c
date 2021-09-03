@@ -72,5 +72,5 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: python-package-distributions
+        name: wheels-built-on-${{ matrix.runner }}
         path: ./wheels/google_crc32c*.whl
