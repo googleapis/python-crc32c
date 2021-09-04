@@ -169,43 +169,17 @@ _EXPECTED = [
 ]
 
 
-@pytest.mark.parametrize("chunk, expected", _EXPECTED)
-def test_value(chunk, expected):
-    assert google_crc32c.value(bytes(chunk)) == expected
-
-
-@pytest.mark.parametrize("chunk, expected", _EXPECTED)
-def test_extends_w_initial_zero(chunk, expected):
-    assert google_crc32c.extend(EMPTY_CRC, bytes(chunk)) == expected
-
-
-def test_extend_w_empty_chunk():
-    crc = 123
-    assert google_crc32c.extend(crc, EMPTY) == crc
-
-
-def test_extend_w_multiple_chunks():
-    crc = 0
-
-    for chunk in iscsi_chunks(7):
-        chunk_bytes = bytes(chunk)
-        crc = google_crc32c.extend(crc, chunk_bytes)
-
-    assert crc == ISCSI_CRC
-
-
-def test_extend_w_reduce():
-    chunks = [bytes(chunk) for chunk in iscsi_chunks(3)]
-    assert functools.reduce(google_crc32c.extend, chunks, 0) == ISCSI_CRC
-
-
 def pytest_generate_tests(metafunc):
     if "_crc32c" in metafunc.fixturenames:
-        metafunc.parametrize("_crc32c", ["python", "cext"], indirect=True)
+        metafunc.parametrize("_crc32c", [None, "python", "cext"], indirect=True)
+
 
 @pytest.fixture
 def _crc32c(request):
-    if request.param == "python":
+    if request.param is None:
+        import google_crc32c
+        return google_crc32c
+    elif request.param == "python":
         from google_crc32c import python
         return python
     elif request.param == "cext":
@@ -213,6 +187,36 @@ def _crc32c(request):
         return cext
     else:
         raise ValueError("invalid internal test config")
+
+
+@pytest.mark.parametrize("chunk, expected", _EXPECTED)
+def test_value(_crc32c, chunk, expected):
+    assert _crc32c.value(bytes(chunk)) == expected
+
+
+@pytest.mark.parametrize("chunk, expected", _EXPECTED)
+def test_extends_w_initial_zero(_crc32c, chunk, expected):
+    assert _crc32c.extend(EMPTY_CRC, bytes(chunk)) == expected
+
+
+def test_extend_w_empty_chunk(_crc32c):
+    crc = 123
+    assert _crc32c.extend(crc, EMPTY) == crc
+
+
+def test_extend_w_multiple_chunks(_crc32c):
+    crc = 0
+
+    for chunk in iscsi_chunks(7):
+        chunk_bytes = bytes(chunk)
+        crc = _crc32c.extend(crc, chunk_bytes)
+
+    assert crc == ISCSI_CRC
+
+
+def test_extend_w_reduce(_crc32c):
+    chunks = [bytes(chunk) for chunk in iscsi_chunks(3)]
+    assert functools.reduce(_crc32c.extend, chunks, 0) == ISCSI_CRC
 
 
 class TestChecksum(object):
