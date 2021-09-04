@@ -169,9 +169,19 @@ _EXPECTED = [
 ]
 
 
+@pytest.mark.parametrize("chunk, expected", _EXPECTED)
+def test_value(chunk, expected):
+    assert google_crc32c.value(bytes(chunk)) == expected
+
+
+@pytest.mark.parametrize("chunk, expected", _EXPECTED)
+def test_extends_w_initial_zero(chunk, expected):
+    assert google_crc32c.extend(EMPTY_CRC, bytes(chunk)) == expected
+
+
 def test_extend_w_empty_chunk():
     crc = 123
-    assert google_crc32c.extend(crc, b"") == crc
+    assert google_crc32c.extend(crc, EMPTY) == crc
 
 
 def test_extend_w_multiple_chunks():
@@ -187,11 +197,6 @@ def test_extend_w_multiple_chunks():
 def test_extend_w_reduce():
     chunks = [bytes(chunk) for chunk in iscsi_chunks(3)]
     assert functools.reduce(google_crc32c.extend, chunks, 0) == ISCSI_CRC
-
-
-@pytest.mark.parametrize("chunk, expected", _EXPECTED)
-def test_value(chunk, expected):
-    assert google_crc32c.value(bytes(chunk)) == expected
 
 
 def pytest_generate_tests(metafunc):
