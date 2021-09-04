@@ -7,10 +7,10 @@ static PyObject *
 _crc32c_extend(PyObject *self, PyObject *args)
 {
     uint32_t crc;
-    const char *chunk;
+    const unsigned char *chunk;
     Py_ssize_t length;
 
-    if (!PyArg_ParseTuple(args, "ks#", &crc, &chunk, &length))
+    if (!PyArg_ParseTuple(args, "ky#", &crc, &chunk, &length))
         return NULL;
 
     crc = crc32c_extend(crc, (const uint8_t*)chunk, length);
@@ -23,10 +23,10 @@ static PyObject *
 _crc32c_value(PyObject *self, PyObject *args)
 {
     uint32_t crc;
-    const char *chunk;
+    const unsigned char *chunk;
     Py_ssize_t length;
 
-    if (!PyArg_ParseTuple(args, "s#", &chunk, &length))
+    if (!PyArg_ParseTuple(args, "y#", &chunk, &length))
         return NULL;
 
     crc = crc32c_value((const uint8_t*)chunk, length);
