@@ -62,7 +62,7 @@ jobs:
 
     - name: Test Import
       run: |
-        pip install --no-index --find-links=wheels google-crc32c
+        pip install --no-index --find-links=dist_wheels google-crc32c
         python ./scripts/check_crc32c_extension.py
 
     - name: Run tests
