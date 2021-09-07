@@ -48,7 +48,7 @@ ${VENV}/bin/python setup.py build_ext \
     --include-dirs=${REPO_ROOT}/usr/include \
     --library-dirs=${REPO_ROOT}/usr/lib \
     --rpath=${REPO_ROOT}/usr/lib
-${VENV}/bin/python -m pip wheel . --wheel-dir=wheels
+${VENV}/bin/python -m pip -v wheel . --wheel-dir=wheels
 
 # Clean up.
 rm -fr ${REPO_ROOT}/google_crc32c/build

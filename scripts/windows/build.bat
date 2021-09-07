@@ -76,5 +76,5 @@ FOR %%V IN (32,64) DO (
     echo "Building C extension"
     py -%PYTHON_VERSION%-%%V setup.py build_ext --include-dirs=%CRC32C_INSTALL_PREFIX%\include --library-dirs=%CRC32C_INSTALL_PREFIX%\lib
     echo "Building Wheel"
-    py -%PYTHON_VERSION%-%%V -m pip wheel . --wheel-dir wheels/
+    py -%PYTHON_VERSION%-%%V -m pip -v wheel . --wheel-dir wheels/
 )

@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import logging
 import os
 import shutil
 import sys
@@ -86,16 +85,22 @@ def build_cffi():
 
 
 if CRC32C_PURE_PYTHON:
+    print("Building explicitly-requested pure-Python version")
     do_setup()
     sys.exit(0)
 
 # The native C extenstion segfaults for MacOS 11 (Big Sur) where
 # Python < 3.9.  As a workaround, build the CFFI version for all MacOS
 # versions where Python < 3.9.
-if CRC32C_CFFI or (os.name == "darwin" and  sys.version_info < (3, 9)):
+if CRC32C_CFFI or (os.name == "darwin" and sys.version_info < (3, 9)):
+    if CRC32C_CFFI:
+        print("Building explicitly-requested CFFI version")
+    else:
+        print("Building CFFI version on MacOS, Python < 3.9")
     builder = build_cffi
     builder_name = "CFFI shim"
 else:
+    print("Building C extension")
     builder = build_c_extension
     builder_name = "C extension"
 
@@ -106,7 +111,7 @@ except SystemExit:
         # If build / install fails, it is likely a compilation error with
         # the C extension:  advise user how to enable the pure-Python
         # build.
-        logging.error(
+        print(
             f"Compiling the {builder_name} for the crc32c library failed. "
             "To enable building / installing a pure-Python-only version, "
             "set 'CRC32C_PURE_PYTHON=1' in the environment."
@@ -115,7 +120,7 @@ except SystemExit:
 
     # Unfortunately, this output will not be visible under pip unless
     # pip's verboseity is greater than the default.  Run `pip -v` to see it.
-    logging.info(
+    print(
         f"Compiling the {builder_name} for the crc32c library failed. "
         "Falling back to pure Python build."
     )
