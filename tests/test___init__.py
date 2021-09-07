@@ -17,8 +17,6 @@ from unittest import mock
 
 import pytest
 
-import google_crc32c
-
 EMPTY = b""
 EMPTY_CRC = 0x00000000
 
@@ -169,34 +167,10 @@ _EXPECTED = [
 ]
 
 
-def test_extend_w_empty_chunk():
-    crc = 123
-    assert google_crc32c.extend(crc, b"") == crc
-
-
-def test_extend_w_multiple_chunks():
-    crc = 0
-
-    for chunk in iscsi_chunks(7):
-        chunk_bytes = bytes(chunk)
-        crc = google_crc32c.extend(crc, chunk_bytes)
-
-    assert crc == ISCSI_CRC
-
-
-def test_extend_w_reduce():
-    chunks = [bytes(chunk) for chunk in iscsi_chunks(3)]
-    assert functools.reduce(google_crc32c.extend, chunks, 0) == ISCSI_CRC
-
-
-@pytest.mark.parametrize("chunk, expected", _EXPECTED)
-def test_value(chunk, expected):
-    assert google_crc32c.value(bytes(chunk)) == expected
-
-
 def pytest_generate_tests(metafunc):
     if "_crc32c" in metafunc.fixturenames:
-        metafunc.parametrize("_crc32c", ["python", "cext"], indirect=True)
+        metafunc.parametrize("_crc32c", ["python", "cext", "cffi"], indirect=True)
+
 
 @pytest.fixture
 def _crc32c(request):
@@ -204,34 +178,68 @@ def _crc32c(request):
         from google_crc32c import python
         return python
     elif request.param == "cext":
-        from google_crc32c import cext
+        try:
+            from google_crc32c import cext
+        except ImportError:
+            pytest.skip("C extension not present")
         return cext
+    elif request.param == "cffi":
+        try:
+            from google_crc32c import cffi
+        except ImportError:
+            pytest.skip("CFFI shim not present")
+        return cffi
     else:
         raise ValueError("invalid internal test config")
+
+@pytest.mark.parametrize("chunk, expected", _EXPECTED)
+def test_value(_crc32c, chunk, expected):
+    assert _crc32c.value(bytes(chunk)) == expected
+
+
+def test_extend_w_empty_chunk(_crc32c):
+    crc = 123
+    assert _crc32c.extend(crc, b"") == crc
+
+
+def test_extend_w_multiple_chunks(_crc32c):
+    crc = 0
+
+    for chunk in iscsi_chunks(7):
+        chunk_bytes = bytes(chunk)
+        crc = _crc32c.extend(crc, chunk_bytes)
+
+    assert crc == ISCSI_CRC
+
+
+def test_extend_w_reduce(_crc32c):
+    chunks = [bytes(chunk) for chunk in iscsi_chunks(3)]
+    assert functools.reduce(_crc32c.extend, chunks, 0) == ISCSI_CRC
+
 
 
 class TestChecksum(object):
     @staticmethod
     def test_ctor_defaults(_crc32c):
-        helper = google_crc32c.Checksum()
+        helper = _crc32c.Checksum()
         assert helper._crc == 0
 
     @staticmethod
     def test_ctor_explicit(_crc32c):
         chunk = b"DEADBEEF"
-        helper = google_crc32c.Checksum(chunk)
-        assert helper._crc == google_crc32c.value(chunk)
+        helper = _crc32c.Checksum(chunk)
+        assert helper._crc == _crc32c.value(chunk)
 
     @staticmethod
     def test_update(_crc32c):
         chunk = b"DEADBEEF"
-        helper = google_crc32c.Checksum()
+        helper = _crc32c.Checksum()
         helper.update(chunk)
-        assert helper._crc == google_crc32c.value(chunk)
+        assert helper._crc == _crc32c.value(chunk)
 
     @staticmethod
     def test_update_w_multiple_chunks(_crc32c):
-        helper = google_crc32c.Checksum()
+        helper = _crc32c.Checksum()
 
         for index in itertools.islice(range(ISCSI_LENGTH), 0, None, 7):
             chunk = ISCSI_SCSI_READ_10_COMMAND_PDU[index : index + 7]
@@ -241,30 +249,30 @@ class TestChecksum(object):
 
     @staticmethod
     def test_digest_zero(_crc32c):
-        helper = google_crc32c.Checksum()
+        helper = _crc32c.Checksum()
         assert helper.digest() == b"\x00" * 4
 
     @staticmethod
     def test_digest_nonzero(_crc32c):
-        helper = google_crc32c.Checksum()
+        helper = _crc32c.Checksum()
         helper._crc = 0x01020304
         assert helper.digest() == b"\x01\x02\x03\x04"
 
     @staticmethod
     def test_hexdigest_zero(_crc32c):
-        helper = google_crc32c.Checksum()
+        helper = _crc32c.Checksum()
         assert helper.hexdigest() == b"00" * 4
 
     @staticmethod
     def test_hexdigest_nonzero(_crc32c):
-        helper = google_crc32c.Checksum()
+        helper = _crc32c.Checksum()
         helper._crc = 0x091A3B2C
         assert helper.hexdigest() == b"091a3b2c"
 
     @staticmethod
     def test_copy(_crc32c):
         chunk = b"DEADBEEF"
-        helper = google_crc32c.Checksum(chunk)
+        helper = _crc32c.Checksum(chunk)
         clone = helper.copy()
         before = helper._crc
         helper.update(b"FACEDACE")
@@ -273,7 +281,7 @@ class TestChecksum(object):
     @staticmethod
     @pytest.mark.parametrize("chunksize", [1, 3, 5, 7, 11, 13, ISCSI_LENGTH])
     def test_consume_stream(_crc32c, chunksize):
-        helper = google_crc32c.Checksum()
+        helper = _crc32c.Checksum()
         expected = [bytes(chunk) for chunk in iscsi_chunks(chunksize)]
         stream = mock.Mock(spec=["read"])
         stream.read.side_effect = expected + [b""]
