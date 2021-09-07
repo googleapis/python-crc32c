@@ -85,22 +85,23 @@ def build_cffi():
 
 
 if CRC32C_PURE_PYTHON:
-    print("Building explicitly-requested pure-Python version")
+    print("### Building explicitly-requested pure-Python version")
     do_setup()
     sys.exit(0)
 
 # The native C extenstion segfaults for MacOS 11 (Big Sur) where
 # Python < 3.9.  As a workaround, build the CFFI version for all MacOS
 # versions where Python < 3.9.
-if CRC32C_CFFI or (os.name == "darwin" and sys.version_info < (3, 9)):
+macos_python_lt_39 = os.name == "darwin" and sys.version_info < (3, 9)
+if CRC32C_CFFI or macos_python_lt_39:
     if CRC32C_CFFI:
-        print("Building explicitly-requested CFFI version")
+        print("### Building explicitly-requested CFFI version")
     else:
-        print("Building CFFI version on MacOS, Python < 3.9")
+        print("### Building CFFI version on MacOS, Python < 3.9")
     builder = build_cffi
     builder_name = "CFFI shim"
 else:
-    print("Building C extension")
+    print("### Building C extension")
     builder = build_c_extension
     builder_name = "C extension"
 
