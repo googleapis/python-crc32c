@@ -23,7 +23,7 @@ REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 
 
 cd $REPO_ROOT
-git submodule update --init --recursive 
+git submodule update --init --recursive
 
 # Note:  PyPA's support for the 'manylinux1' image ends on 2022-01-01.
 #        See: https://github.com/pypa/manylinux/issues/994
@@ -39,7 +39,7 @@ if [[ "${BUILD_PYTHON}" != "3.10"* ]]; then
         /var/code/python-crc32c/scripts/manylinux/build_on_centos.sh
 fi
 
-docker pull quay.io/pypa/manylinux2010_x86_64	
+docker pull quay.io/pypa/manylinux2010_x86_64
 docker run \
     --rm \
     --interactive \

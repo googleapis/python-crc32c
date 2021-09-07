@@ -15,7 +15,7 @@
 import warnings
 
 _SLOW_CRC32C_WARNING = (
-    "As the c extension couldn't be imported, `google-crc32c` is using a " 
+    "As the c extension couldn't be imported, `google-crc32c` is using a "
     "pure python implementation that is significantly slower. If possible, "
     "please configure a c build environment and compile the extension"
 )
