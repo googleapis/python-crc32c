@@ -61,13 +61,6 @@ def do_setup(**kwargs):
 
 
 def build_c_extension():
-    module_path = os.path.join("src", "google_crc32c", "_crc32c.c")
-    module = setuptools.Extension(
-        "google_crc32c._crc32c",
-        sources=[os.path.normcase(module_path)],
-        libraries=["crc32c"],
-    )
-
     install_prefix = os.getenv("CRC32C_INSTALL_PREFIX")
     if install_prefix is not None:
         install_prefix = os.path.realpath(install_prefix)
@@ -84,10 +77,17 @@ def build_c_extension():
         print("#### using global install of 'crc32c'")
         kwargs = {}
 
+    module_path = os.path.join("src", "google_crc32c", "_crc32c.c")
+    module = setuptools.Extension(
+        "google_crc32c._crc32c",
+        sources=[os.path.normcase(module_path)],
+        libraries=["crc32c"],
+        **kwargs,
+    )
+
     do_setup(
         ext_modules=[module],
         cmdclass={"build_ext": BuildExtWithDLL},
-        **kwargs
     )
 
 def build_cffi():
