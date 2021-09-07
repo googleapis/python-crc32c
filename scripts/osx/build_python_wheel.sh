@@ -44,8 +44,8 @@ ${VENV}/bin/python -m pip install \
 DIST_WHEELS="${REPO_ROOT}/dist_wheels"
 mkdir -p ${DIST_WHEELS}
 cd ${REPO_ROOT}
-for build_ext_versions in "3.9" "3.10" "3.10-dev"; do
-    if [[ "${PY_BIN}" == "python${build_ext_versions}" ]]; then
+for build_ext_version in python3.{9,10,10-dev}; do
+    if [[ "${PY_BIN}" == "${build_ext_version}" ]]; then
         ${VENV}/bin/python setup.py build_ext \
             --include-dirs=${REPO_ROOT}/usr/include \
             --library-dirs=${REPO_ROOT}/usr/lib \
