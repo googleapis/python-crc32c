@@ -49,9 +49,42 @@ jobs:
         ./scripts/manylinux/build.sh
     - name: Test Import
       run: |
-        pip install "cffi>=1.0.0"
         pip install --no-index --find-links=wheels google-crc32c
         python ./scripts/check_crc32c_extension.py
+    - name: Run tests
+      run: |
+        pip install pytest
+        python -m pytest tests
+    - uses: actions/upload-artifact@v2
+      with:
+        name: linux-wheels
+        path: ./wheels/google_crc32c*.whl
+
+  build-linux-cffi:
+    # Test w/ the CFFI build, but only on Python 3.9, and without
+    # uploading the wheel.
+    runs-on: ubuntu-latest
+    strategy:
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade setuptools pip wheel
+    - name: Build
+      env:
+        BUILD_PYTHON: 3.9
+        CRC32C_PURE_PYTHON: "0"
+        CRC32C_CFFI: "1"
+      run: |
+        ./scripts/manylinux/build.sh
+    - name: Test Import
+      run: |
+        pip install "cffi>=1.0.0"
+        pip install --no-index --find-links=wheels google-crc32c
         python ./scripts/check_cffi_crc32c.py
     - name: Run tests
       run: |
@@ -59,7 +92,7 @@ jobs:
         python -m pytest tests
     - uses: actions/upload-artifact@v2
       with:
-        name: python-package-distributions
+        name: linux-cffi-wheel
         path: ./wheels/google_crc32c*.whl
 
   build-macos:
@@ -90,14 +123,13 @@ jobs:
         pip install "cffi>=1.0.0"
         pip install --no-index --find-links=wheels google-crc32c
         python ./scripts/check_crc32c_extension.py
-        python ./scripts/check_cffi_crc32c.py
     - name: Run tests
       run: |
         pip install pytest
         python -m pytest tests
     - uses: actions/upload-artifact@v2
       with:
-        name: python-package-distributions
+        name: macos-wheele
         path: ./wheels/google_crc32c*.whl
 
   build-windows:
@@ -134,5 +166,5 @@ jobs:
         ./scripts/windows/test.bat ${{ matrix.python }}
     - uses: actions/upload-artifact@v2
       with:
-        name: python-package-distributions
+        name: windows-wheele
         path: ./wheels/google_crc32c*.whl
