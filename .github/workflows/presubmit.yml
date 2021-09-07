@@ -51,6 +51,7 @@ jobs:
       run: |
         pip install --no-index --find-links=wheels google-crc32c
         python ./scripts/check_crc32c_extension.py
+        python ./scripts/check_cffi_extension.py
     - name: Run tests
       run: |
         pip install pytest
@@ -87,6 +88,7 @@ jobs:
       run: |
         pip install --no-index --find-links=wheels google-crc32c
         python ./scripts/check_crc32c_extension.py
+        python ./scripts/check_cffi_extension.py
     - name: Run tests
       run: |
         pip install pytest

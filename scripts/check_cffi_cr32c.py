@@ -13,15 +13,16 @@
 # limitations under the License.
 
 try:
-    from google_crc32c import _crc32c
+    from google_crc32c import _crc32c_cffi
 except ImportError:
-    _crc32c = None
+    _crc32c_cffi = None
 
 
 def main():
-    print("_crc32c: {}".format(_crc32c))
-    if _crc32c is not None:
-        print("dir(_crc32c): {}".format(dir(_crc32c)))
+    print("_crc32c_cffi: {}".format(_crc32c_cffi))
+    if _crc32c_cffi is not None:
+        print("_crc32c_cffi.lib: {}".format(_crc32c_cffi.lib))
+        print("dir(_crc32c_cffi.lib): {}".format(dir(_crc32c_cffi.lib)))
 
 
 if __name__ == "__main__":

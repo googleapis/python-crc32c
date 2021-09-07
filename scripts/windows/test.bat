@@ -30,6 +30,7 @@ FOR %%V IN (%PYTHON_VERSION%-32, %PYTHON_VERSION%-64) DO (
     py -%%V -m pip install --no-index --find-links=wheels google-crc32c --force-reinstall
 
     py -%%V ./scripts/check_crc32c_extension.py
+    py -%%V ./scripts/check_cffi_crc32c.py
 
     py -%%V -m pip install pytest
     py -%%V -m pytest tests
