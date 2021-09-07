@@ -64,7 +64,6 @@ jobs:
     # Test w/ the CFFI build, but only on Python 3.9, and without
     # uploading the wheel.
     runs-on: ubuntu-latest
-    strategy:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python
