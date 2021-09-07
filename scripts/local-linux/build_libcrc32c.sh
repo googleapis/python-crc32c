@@ -17,7 +17,7 @@ set -e -x
 PY_BIN=${PY_BIN:-python3.7}
 REPO_ROOT=${REPO_ROOT:-$(pwd)}
 
-CRC32C_INSTALL_PREFIX=${REPO_ROOT}/usr
+export CRC32C_INSTALL_PREFIX=${REPO_ROOT}/usr
 
 # NOTE: This assumes the local install has an up-to-date `pip`.
 # Create a virtualenv where we can install `cmake`.
@@ -44,11 +44,7 @@ make all install
 
 cd ${REPO_ROOT}
 
-${VENV}/bin/python setup.py build_ext \
-    --include-dirs=${REPO_ROOT}/usr/include \
-    --library-dirs=${REPO_ROOT}/usr/lib \
-    --rpath=${REPO_ROOT}/usr/lib
-${VENV}/bin/python -m pip wheel . --wheel-dir=wheels
+${VENV}/bin/python -m pip -v wheel . --wheel-dir=wheels
 
 # Clean up.
 rm -fr ${REPO_ROOT}/google_crc32c/build

@@ -25,9 +25,13 @@ try:
     from google_crc32c import cext as impl
     implementation = "c"
 except ImportError as exc:
-    from google_crc32c import python as impl
-    warnings.warn(_SLOW_CRC32C_WARNING, RuntimeWarning)
-    implementation = "python"
+    try:
+        from google_crc32c import cffi as impl
+        implementation = "cffi"
+    except ImportError as exc:
+        from google_crc32c import python as impl
+        warnings.warn(_SLOW_CRC32C_WARNING, RuntimeWarning)
+        implementation = "python"
 
 extend = impl.extend
 value = impl.value

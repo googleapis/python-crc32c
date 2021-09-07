@@ -80,7 +80,7 @@ for PYTHON_BIN in ${PYTHON_VERSIONS}; do
     ${PYTHON_BIN}/python -m pip install --upgrade pip
     ${PYTHON_BIN}/python -m pip install \
         --requirement ${REPO_ROOT}/scripts/dev-requirements.txt
-    ${PYTHON_BIN}/python -m pip wheel . --wheel-dir dist_wheels/
+    ${PYTHON_BIN}/python -m pip -v wheel . --wheel-dir dist_wheels/
 done
 
 # Bundle external shared libraries into the wheels

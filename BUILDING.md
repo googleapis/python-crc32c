@@ -75,10 +75,6 @@ $ cd ../..
 Now, run the tests:
 
 ```bash
-$ venv/bin/python setup.py build_ext \
-    --include-dirs=$(pwd)/usr/include \
-    --library-dirs=$(pwd)/usr/lib \
-    --rpath=$(pwd)/usr/lib
 $ venv/bin/pip install -e .[testing]
 $ venv/bin/py.test tests/
 ============================= test session starts ==============================
