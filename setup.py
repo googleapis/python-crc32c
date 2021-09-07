@@ -92,6 +92,7 @@ if CRC32C_PURE_PYTHON:
 # The native C extenstion segfaults for MacOS 11 (Big Sur) where
 # Python < 3.9.  As a workaround, build the CFFI version for all MacOS
 # versions where Python < 3.9.
+print(f"### {os.name}:{sys.version_info}")
 macos_python_lt_39 = os.name == "darwin" and sys.version_info < (3, 9)
 if CRC32C_CFFI or macos_python_lt_39:
     if CRC32C_CFFI:
