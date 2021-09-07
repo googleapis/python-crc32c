@@ -10,6 +10,7 @@
 ### Bug Fixes
 
 * revert to silent fallback to pure-Python build ([#93](https://www.github.com/googleapis/python-crc32c/issues/93)) ([789a420](https://www.github.com/googleapis/python-crc32c/commit/789a4203648d1b43f060332510177cf3867f82c4))
+* fix segfault on MacOS 11 ("Big Sur") for Python < 3.9 ([#93](https://www.github.com/googleapis/python-crc32c/issues/93)) ([789a420](https://www.github.com/googleapis/python-crc32c/commit/789a4203648d1b43f060332510177cf3867f82c4))
 
 ### [1.1.4](https://www.github.com/googleapis/python-crc32c/compare/v1.1.4...v1.1.4) (2021-09-02)
 
