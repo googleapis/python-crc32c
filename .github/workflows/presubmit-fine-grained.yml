@@ -75,7 +75,8 @@ jobs:
             --interactive \
             --volume ${{ github.workspace }}:/var/code/python-crc32c/ \
             --env BUILD_PYTHON=${{ matrix.python }} \
-            --env GITHUB_WORKSPACE=${{ github.workspace }} \
+            --env CRC32C_INSTALL_PREFIX=${{ github.workspace }} \
+            --env CRC32C_PURE_PYTHON=="0" \
             quay.io/pypa/${{ matrix.manylinux }} \
             /var/code/python-crc32c/scripts/manylinux/build_wheels.sh
     - uses: actions/upload-artifact@v2
