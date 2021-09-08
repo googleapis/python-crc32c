@@ -76,18 +76,7 @@ fi
 cd ${REPO_ROOT}
 for PYTHON_BIN in ${PYTHON_VERSIONS}; do
     ${PYTHON_BIN}/python -m pip install --upgrade setuptools pip wheel
-
-    #
-    # Github workflow: the system libraries are in the local 'usr' dir
-    #
-    if [[ -n ${GITHUB_WORKSPACE} ]]; then
-        ${PYTHON_BIN}/python setup.py build_ext \
-            --include-dirs=${REPO_ROOT}/usr/include \
-            --library-dirs=${REPO_ROOT}/usr/lib64 \
-            --rpath=${REPO_ROOT}/usr/lib64
-    fi
-
-    ${PYTHON_BIN}/python -m pip wheel . --wheel-dir dist_wheels/
+    ${PYTHON_BIN}/python -m pip -v wheel . --wheel-dir dist_wheels/
 done
 
 #
