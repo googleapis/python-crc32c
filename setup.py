@@ -62,13 +62,15 @@ def build_c_extension():
     install_prefix = os.getenv("CRC32C_INSTALL_PREFIX")
     if install_prefix is not None:
         install_prefix = os.path.realpath(install_prefix)
-        library_dirs = [f"{install_prefix}/lib"]
+        library_dirs = [
+            os.path.join(install_prefix, "lib")
+            os.path.join(install_prefix, "lib64")
+        ]
         if os.name == "nt":
-            library_dirs.append(f"{install_prefix}/bin")
+            library_dirs.append(os.path.join(install_prefix, "bin")
         kwargs = {
-            "include_dirs": [f"{install_prefix}/include"],
+            "include_dirs": [os.path.join(install_prefix, "include")],
             "library_dirs": library_dirs,
-            "rpath": os.pathsep.join(library_dirs),
         }
     else:
         kwargs = {}
