@@ -21,10 +21,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: 'recursive'
-    - uses: docker/setup-qemu-action@v1
-    - name: Pull Docker Image
-      run: |
-        docker pull quay.io/pypa/${{ matrix.manylinux }}
     - name: Get C library hash
       id: get-c-lib-hash
       run:
@@ -34,6 +30,12 @@ jobs:
       with:
         path: ${{ github.workspace }}/usr
         key: ${{ matrix.manylinux }}-${{ steps.get-c-lib-hash.outputs.hash }}
+    - uses: docker/setup-qemu-action@v1
+      if: steps.cache.outputs.cache-hit != 'true'
+    - name: Pull Docker Image
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: |
+        docker pull quay.io/pypa/${{ matrix.manylinux }}
     - name: Build C library
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
