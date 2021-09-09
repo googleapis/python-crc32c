@@ -67,7 +67,7 @@ def build_c_extension():
             os.path.join(install_prefix, "lib64"),
         ]
         if os.name == "nt":
-            library_dirs.append(os.path.join(install_prefix, "bin")
+            library_dirs.append(os.path.join(install_prefix, "bin"))
         kwargs = {
             "include_dirs": [os.path.join(install_prefix, "include")],
             "library_dirs": library_dirs,
