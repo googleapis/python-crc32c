@@ -14,6 +14,7 @@
 
 import logging
 import os
+import platform
 import shutil
 import setuptools
 import setuptools.command.build_ext
@@ -62,12 +63,14 @@ def build_c_extension():
     if install_prefix is not None:
         install_prefix = os.path.realpath(install_prefix)
         print(f"#### using local install of 'crc32c': {install_prefix}")
-        library_dirs = [
-            os.path.join(install_prefix, "lib"),
-            os.path.join(install_prefix, "lib64"),
-        ]
+        library_dirs = [os.path.join(install_prefix, "lib")]
+
+        if platform.system() == "Linux":
+            library_dirs.append(os.path.join(install_prefix, "lib64"))
+
         if os.name == "nt":
             library_dirs.append(os.path.join(install_prefix, "bin"))
+
         kwargs = {
             "include_dirs": [os.path.join(install_prefix, "include")],
             "library_dirs": library_dirs,
