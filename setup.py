@@ -64,7 +64,7 @@ def build_c_extension():
         install_prefix = os.path.realpath(install_prefix)
         library_dirs = [f"{install_prefix}/lib"]
         if os.name == "nt":
-            library_dirs.append(f"{install_prefix}/bin"]
+            library_dirs.append(f"{install_prefix}/bin")
         kwargs = {
             "include_dirs": [f"{install_prefix}/include"],
             "library_dirs": library_dirs,
