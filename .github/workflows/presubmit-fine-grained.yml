@@ -33,7 +33,7 @@ jobs:
       id: cache
       with:
         path: ${{ github.workspace }}/usr
-        key: ${{ matrix-manylinux }}-${{ steps.get-c-lib-hash.outputs.hash }}
+        key: ${{ matrix.manylinux }}-${{ steps.get-c-lib-hash.outputs.hash }}
     - name: Build C library
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
