@@ -62,7 +62,10 @@ def build_c_extension():
     if install_prefix is not None:
         install_prefix = os.path.realpath(install_prefix)
         print(f"#### using local install of 'crc32c': {install_prefix}")
-        library_dirs = [os.path.join(install_prefix, "lib")]
+        library_dirs = [
+            os.path.join(install_prefix, "lib"),
+            os.path.join(install_prefix, "lib64"),
+        ]
         if os.name == "nt":
             library_dirs.append(os.path.join(install_prefix, "bin"))
         kwargs = {
