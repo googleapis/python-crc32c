@@ -35,6 +35,8 @@ jobs:
                 -DBUILD_SHARED_LIBS=yes \
                 -DCMAKE_INSTALL_PREFIX:PATH=/project/usr &&
             make -C build all install
+        CIBW_TEST_REQUIRES: pytest
+        CIBW_TEST_COMMAND: py.test -v {project}/tests/
     - uses: actions/upload-artifact@v2
       with:
         name: python-package-distributions
