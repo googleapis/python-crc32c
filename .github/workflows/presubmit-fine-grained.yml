@@ -28,7 +28,7 @@ jobs:
     - name: Get C library hash
       id: get-c-lib-hash
       run:
-        cd google_crc32c && echo "::set-output hash=$(git log -n 1 --pretty=%H)"
+        echo "::set-output name=hash::$(git -C google_crc32c log -n 1 --pretty=%H)"
     - uses: actions/cache@v2
       id: cache
       with:
