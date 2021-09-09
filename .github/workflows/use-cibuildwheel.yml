@@ -44,10 +44,10 @@ jobs:
     - name: Build Wheels
       uses: pypa/cibuildwheel@v2.1.1
       env:
-        CIBW_ENVIRONMENT: CRC32C_INSTALL_PREFIX="{project}/usr"
+        CIBW_ENVIRONMENT: CRC32C_INSTALL_PREFIX="/project/usr"
         CIBW_BUILD_VERBOSITY: 1
         CIBW_BEFORE_BUILD: >
-            python -c "import os; print('\n'.join(os.listdir('{project}')))"
+            ls -l /project
     - uses: actions/upload-artifact@v2
       with:
         name: python-package-distributions
