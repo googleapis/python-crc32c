@@ -71,6 +71,7 @@ def build_c_extension():
         kwargs = {
             "include_dirs": [os.path.join(install_prefix, "include")],
             "library_dirs": library_dirs,
+            "runtime_library_dirs": library_dirs,
         }
     else:
         kwargs = {}
