@@ -109,19 +109,46 @@ jobs:
       with:
         submodules: 'recursive'
 
+    - name: Get C library hash
+      id: get-c-lib-hash
+      run:
+        echo "::set-output name=hash::$(git -C google_crc32c log -n 1 --pretty=%H)"
+
+    - name: Cache C library
+      uses: actions/cache@v2
+      with:
+        path: ${{ github.workspace }}\usr\${{ matrix.platform }}
+        key:
+            libcrc32c-${{ matrix.os }}-${{ matrix.platform }}-${{ steps.get-c-lib-hash.outputs.hash }}
+
     - name: Build C Library
+      if: steps.cache.outputs.cache-hit != 'true'
       run: |
+        echo "::group::Install cmake"
         python -m pip install --upgrade setuptools pip wheel
         python -m pip install cmake
+        echo "::endgroup::"
+        echo "::group::Run cmake to initialze build tree"
         cmake -S google_crc32c -B build -G "Visual Studio 16 2019" -A ${{ matrix.platform }} -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=no -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0
+        echo "::endgroup::"
+        echo "::group::Run cmake to build library"
         cmake --build build --verbose --config Release
+        echo "::endgroup::"
+        echo "::group::Run cmake to install library"
         cmake --install build --verbose --config Release --prefix=${{ github.workspace }}\usr\${{ matrix.platform }}
+        echo "::endgroup::"
+
+    # TODO: For debugging -- remove later.
+    - uses: actions/upload-artifact@v2
+      with:
+        name: libcrc32c-${{ matrix.os }}-${{ matrix.platform }}
+        path: ${{ github.workspace }}\usr\${{ matrix.platform }}
 
     - name: Build Wheels
       uses: pypa/cibuildwheel@v2.1.1
       env:
         CIBW_ARCHS: native
-        CIBW_ENVIRONMENT: CRC32C_PURE_PYTHON="0" CRC32C_INSTALL_PREFIX="${{ github.workspace }}\usr\${{ matrix.platform }}"
+        CIBW_ENVIRONMENT: CRC32C_PURE_PYTHON="0" CRC32C_INSTALL_PREFIX="D:/a/python-crc32c/python-crc32c/usr/x64"
         CIBW_BUILD_VERBOSITY: 1
         CIBW_TEST_REQUIRES: pytest
         CIBW_TEST_COMMAND: py.test -v {project}/tests

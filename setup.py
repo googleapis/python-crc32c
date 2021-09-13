@@ -64,9 +64,10 @@ def build_pure_python():
 def build_c_extension():
     install_prefix = os.getenv("CRC32C_INSTALL_PREFIX")
     if install_prefix is not None:
+        install_prefix = os.path.normcase(install_prefix)
+        print(f"#### using local install of 'crc32c': {install_prefix!r}")
+        #assert os.path.isdir(install_prefix)
         install_prefix = os.path.realpath(install_prefix)
-        print(f"#### using local install of 'crc32c': {install_prefix}")
-        assert os.path.isdir(install_prefix)
         include_dirs = [os.path.join(install_prefix, "include")]
         library_dirs = [os.path.join(install_prefix, "lib")]
 
