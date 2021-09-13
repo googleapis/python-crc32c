@@ -112,7 +112,7 @@ jobs:
         cmake -S google_crc32c -B build -G "Visual Studio 16 2019" -A ${{ matrix.platform }} -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0
         cmake --build build --verbose --config Release
         cmake --install build --verbose --config Release
-        copy ${{ github.workspace }}/usr/bin/crc32c.dll .
+        copy "C:/Program Files/Crc32c//usr/bin/crc32c.dll" .
 
     - name: Build Wheels
       uses: pypa/cibuildwheel@v2.1.1
