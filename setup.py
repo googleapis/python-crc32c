@@ -72,15 +72,17 @@ def build_c_extension():
 
         if os.name == "nt":
             library_dirs.append(os.path.join(install_prefix, "bin"))
-            runtime_library_dirs = []
+            kwargs = {
+                "include_dirs": include_dirs,
+                "library_dirs": library_dirs,
+            }
         else:
             runtime_library_dirs = library_dirs[:]
-
-        kwargs = {
-            "include_dirs": include_dirs,
-            "library_dirs": library_dirs,
-            "runtime_library_dirs": runtime_library_dirs,
-        }
+            kwargs = {
+                "include_dirs": include_dirs,
+                "library_dirs": library_dirs,
+                "runtime_library_dirs": runtime_library_dirs,
+            }
     else:
         print("#### using global install of 'crc32c'")
         kwargs = {}
