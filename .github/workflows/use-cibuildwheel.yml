@@ -120,9 +120,10 @@ jobs:
     - name: Build Wheels
       uses: pypa/cibuildwheel@v2.1.1
       env:
+        CIBW_ARCHS: native
         CIBW_ENVIRONMENT: >
             CRC32C_PURE_PYTHON="0"
-            CRC32C_INSTALL_PREFIX="${{ github.workspace }}\usr\${{ matrix.platform }}"
+            CRC32C_INSTALL_PREFIX=${{ github.workspace }}\usr\${{ matrix.platform }}
         CIBW_BUILD_VERBOSITY: 1
         CIBW_TEST_REQUIRES: pytest
         CIBW_TEST_COMMAND: py.test -v {project}/tests
