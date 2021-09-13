@@ -29,18 +29,20 @@ CRC32C_PURE_PYTHON = os.getenv("CRC32C_PURE_PYTHON") not in _FALSE_OPTIONS
 
 
 def copy_dll(build_lib):
-    if os.name != "nt":
-        return
-
     install_prefix = os.environ.get("CRC32C_INSTALL_PREFIX")
-    if install_prefix is None:
-        return
 
-    installed_dll = os.path.join(install_prefix, "bin", _DLL_FILENAME)
-    lib_dlls = os.path.join(build_lib, "google_crc32c", _EXTRA_DLL)
-    os.makedirs(lib_dlls, exist_ok=True)
-    relocated_dll = os.path.join(lib_dlls, _DLL_FILENAME)
-    shutil.copyfile(installed_dll, relocated_dll)
+    if os.name == "nt" and install_prefix is not None:
+        assert os.path.isdir(install_prefix)
+
+        installed_dll = os.path.join(install_prefix, "bin", _DLL_FILENAME)
+        assert os.path.isfile(installed_dll)
+
+        lib_dlls = os.path.join(build_lib, "google_crc32c", _EXTRA_DLL)
+        os.makedirs(lib_dlls, exist_ok=True)
+        relocated_dll = os.path.join(lib_dlls, _DLL_FILENAME)
+
+        shutil.copyfile(installed_dll, relocated_dll)
+        assert os.path.isfile(relocated_dll)
 
 
 class BuildExtWithDLL(setuptools.command.build_ext.build_ext):
