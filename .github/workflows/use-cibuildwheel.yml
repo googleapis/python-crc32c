@@ -95,6 +95,7 @@ jobs:
 
   build-wheels-windows:
     name: Build wheels on ${{ matrix.os }} ( ${{ matrix.platform }} )
+
     strategy:
       matrix:
         os:
@@ -102,7 +103,9 @@ jobs:
         platform:
         - x64
         - Win32
+
     runs-on: ${{ matrix.os }}
+
     steps:
 
     - uses: actions/checkout@v2
@@ -114,8 +117,8 @@ jobs:
       run:
         echo "::set-output name=hash::$(git -C google_crc32c log -n 1 --pretty=%H)"
 
-    - id: cache
-      name: Cache C library
+    - id: load-cache
+      name: Load cached C library
       uses: actions/cache@v2
       with:
         path: ${{ github.workspace }}\usr
@@ -123,7 +126,7 @@ jobs:
             libcrc32c-${{ matrix.os }}-${{ matrix.platform }}-${{ steps.get-c-lib-hash.outputs.hash }}
 
     - name: Build C Library
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.load-cache.outputs.cache-hit != 'true'
       run: |
         echo "::group::Install cmake"
         python -m pip install --upgrade setuptools pip wheel
@@ -145,12 +148,22 @@ jobs:
 #       name: libcrc32c-${{ matrix.os }}-${{ matrix.platform }}
 #       path: ${{ github.workspace }}\usr\${{ matrix.platform }}
 
+    - id: platform-arch
+      name: Map platform -> wheel arch
+      shell: bash
+      run: |
+        if [[ "${{ matrix.platform }}" == "Win32" ]]; then
+            echo "::set-output name=arch::x86"
+        else
+            echo "::set-output name=arch::AMD64"
+        fi
+
     - name: Build Wheels
       uses: pypa/cibuildwheel@v2.1.1
       env:
-        CIBW_ARCHS: native
+        CIBW_ARCHS_WINDOWS: ${{ steps.platform-arch.outputs.arch }}
         CIBW_ENVIRONMENT: CRC32C_PURE_PYTHON="0" CRC32C_INSTALL_PREFIX="D:/a/python-crc32c/python-crc32c/usr"
-        CIBW_BUILD_VERBOSITY: 1
+        CIBW_BUILD_VERBOSITY: 3
         CIBW_TEST_REQUIRES: pytest
         CIBW_TEST_COMMAND: py.test -v {project}/tests
 
