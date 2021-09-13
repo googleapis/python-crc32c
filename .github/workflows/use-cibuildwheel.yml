@@ -7,54 +7,118 @@ on:
 
 jobs:
 
-# build-wheels-linux:
-#   name: Build wheels on ${{ matrix.os }}
+  build-source-distribution:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+    - name: Build
+      run: python setup.py sdist
+    - uses: actions/upload-artifact@v2
+      with:
+        name: python-package-distributions
+        path: dist
+
+  build-wheels-linux:
+    name: Build wheels on ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+        - ubuntu-20.04
+    runs-on: ${{ matrix.os }}
+ 
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+ 
+    - name: Build Wheels
+      uses: pypa/cibuildwheel@v2.1.1
+      env:
+        CIBW_ENVIRONMENT: >
+            CRC32C_PURE_PYTHON="0"
+            CRC32C_INSTALL_PREFIX="$(pwd)/usr"
+        CIBW_BUILD_VERBOSITY: 1
+        # We build these inside CIBW so that the manylinux image is
+        # used to build the library;  otherwise, we wouldn't be able to
+        # link with it.
+        CIBW_BEFORE_BUILD: >
+            python -m pip install --upgrade setuptools pip wheel &&
+            python -m pip install cmake &&
+            cmake -S google_crc32c -B build \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCRC32C_BUILD_TESTS=no \
+                -DCRC32C_BUILD_BENCHMARKS=no \
+                -DBUILD_SHARED_LIBS=yes \
+                -DCMAKE_INSTALL_PREFIX:PATH=$(pwd)/usr &&
+            make -C build all install
+        CIBW_TEST_REQUIRES: pytest
+        CIBW_TEST_COMMAND: py.test -v {project}/tests/
+ 
+    - uses: actions/upload-artifact@v2
+      with:
+        name: python-package-distributions
+        path: ./wheelhouse/google_crc32c*.whl
+ 
+  build-wheels-macos:
+    name: Build wheels on ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+        - macos-10.15
+       #- macos-11
+    runs-on: ${{ matrix.os }}
+    steps:
+ 
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+ 
+    - name: Build C Library
+      run: >
+        python -m pip install --upgrade setuptools pip wheel &&
+        python -m pip install cmake &&
+        cmake -S google_crc32c -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 \
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
+            -DCRC32C_BUILD_TESTS=no \
+            -DCRC32C_BUILD_BENCHMARKS=no \
+            -DBUILD_SHARED_LIBS=yes \
+            -DCMAKE_INSTALL_PREFIX:PATH=${{ github.workspace }}/usr \
+            -DCMAKE_INSTALL_NAME_DIR:PATH=${{ github.workspace }}/usr/lib &&
+        make -C build all install
+ 
+    - name: Build Wheels
+      uses: pypa/cibuildwheel@v2.1.1
+      env:
+        CIBW_ENVIRONMENT: >
+            CRC32C_PURE_PYTHON="0"
+            CRC32C_INSTALL_PREFIX="$(pwd)/usr"
+        CIBW_BUILD_VERBOSITY: 1
+        CIBW_ARCHS_MACOS: x86_64 universal2
+        CIBW_TEST_REQUIRES: pytest
+        CIBW_TEST_COMMAND: py.test -v {project}/tests/
+ 
+    - uses: actions/upload-artifact@v2
+      with:
+        name: python-package-distributions
+        path: ./wheelhouse/google_crc32c*.whl
+
+#-----------------------------------------------------------------------
+# Sigh.  Using CIBuildWheel on Windows is failing with the following
+#        job due to link errors.  2021-09-13, TS
+#-----------------------------------------------------------------------
+# build-wheels-windows:
+#   name: Build wheels on ${{ matrix.os }} ( ${{ matrix.platform }} )
 #   strategy:
 #     matrix:
 #       os:
-#       - ubuntu-20.04
-#   runs-on: ${{ matrix.os }}
-#
-#   steps:
-#   - uses: actions/checkout@v2
-#     with:
-#       submodules: 'recursive'
-#
-#   - name: Build Wheels
-#     uses: pypa/cibuildwheel@v2.1.1
-#     env:
-#       CIBW_ENVIRONMENT: >
-#           CRC32C_PURE_PYTHON="0"
-#           CRC32C_INSTALL_PREFIX="$(pwd)/usr"
-#       CIBW_BUILD_VERBOSITY: 1
-#       # We build these inside CIBW so that the manylinux image is
-#       # used to build the library;  otherwise, we wouldn't be able to
-#       # link with it.
-#       CIBW_BEFORE_BUILD: >
-#           python -m pip install --upgrade setuptools pip wheel &&
-#           python -m pip install cmake &&
-#           cmake -S google_crc32c -B build \
-#               -DCMAKE_BUILD_TYPE=Release \
-#               -DCRC32C_BUILD_TESTS=no \
-#               -DCRC32C_BUILD_BENCHMARKS=no \
-#               -DBUILD_SHARED_LIBS=yes \
-#               -DCMAKE_INSTALL_PREFIX:PATH=$(pwd)/usr &&
-#           make -C build all install
-#       CIBW_TEST_REQUIRES: pytest
-#       CIBW_TEST_COMMAND: py.test -v {project}/tests/
-#
-#   - uses: actions/upload-artifact@v2
-#     with:
-#       name: python-package-distributions
-#       path: ./wheelhouse/google_crc32c*.whl
-#
-# build-wheels-macos:
-#   name: Build wheels on ${{ matrix.os }}
-#   strategy:
-#     matrix:
-#       os:
-#       - macos-10.15
-#      #- macos-11
+#       - windows-2019
+#       platform:
+#       #- Win32
+#       - x64
 #   runs-on: ${{ matrix.os }}
 #   steps:
 #
@@ -63,78 +127,68 @@ jobs:
 #       submodules: 'recursive'
 #
 #   - name: Build C Library
-#     run: >
-#       python -m pip install --upgrade setuptools pip wheel &&
-#       python -m pip install cmake &&
-#       cmake -S google_crc32c -B build \
-#           -DCMAKE_BUILD_TYPE=Release \
-#           -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 \
-#           -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
-#           -DCRC32C_BUILD_TESTS=no \
-#           -DCRC32C_BUILD_BENCHMARKS=no \
-#           -DBUILD_SHARED_LIBS=yes \
-#           -DCMAKE_INSTALL_PREFIX:PATH=${{ github.workspace }}/usr \
-#           -DCMAKE_INSTALL_NAME_DIR:PATH=${{ github.workspace }}/usr/lib &&
-#       make -C build all install
+#     run: |
+#       python -m pip install --upgrade setuptools pip wheel
+#       python -m pip install cmake
+#       cmake -S google_crc32c -B build -G "Visual Studio 16 2019" -A ${{ matrix.platform }} -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0
+#       cmake --build build --verbose --config Release
+#       cmake --install build --verbose --config Release
+#
+#   - name: Copy DLL into project directory
+#     run: |
+#       dir
+#       dir "C:/Program Files/Crc32c/bin/"
+#       copy "C:/Program Files/Crc32c/bin/crc32c.dll" .
+#       dir
 #
 #   - name: Build Wheels
 #     uses: pypa/cibuildwheel@v2.1.1
 #     env:
 #       CIBW_ENVIRONMENT: >
 #           CRC32C_PURE_PYTHON="0"
-#           CRC32C_INSTALL_PREFIX="$(pwd)/usr"
+#           CRC32C_INSTALL_PREFIX="C:\\Program Files\\Crc32c"
 #       CIBW_BUILD_VERBOSITY: 1
-#       CIBW_ARCHS_MACOS: x86_64 universal2
 #       CIBW_TEST_REQUIRES: pytest
-#       CIBW_TEST_COMMAND: py.test -v {project}/tests/
+#       CIBW_TEST_COMMAND: py.test -v {project}/tests
 #
 #   - uses: actions/upload-artifact@v2
 #     with:
 #       name: python-package-distributions
 #       path: ./wheelhouse/google_crc32c*.whl
 
-  build-wheels-windows:
-    name: Build wheels on ${{ matrix.os }} ( ${{ matrix.platform }} )
+  build-windows:
+    runs-on: windows-latest
     strategy:
       matrix:
-        os:
-        - windows-2019
-        platform:
-        #- Win32
-        - x64
-    runs-on: ${{ matrix.os }}
+        python: [3.6, 3.7, 3.8, 3.9, 3.10-dev]
+      # It is possible 3.10-dev will fail when the other versions are green.
+      # Turn off fast fail so if 3.10 fails the other required versions have
+      # the opportunity to pass.
+      fail-fast: false
     steps:
-
     - uses: actions/checkout@v2
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
       with:
-        submodules: 'recursive'
-
-    - name: Build C Library
+        # Use 16.x
+        vs-version: '[16.0, 17.0)'
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python }}
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade setuptools pip wheel
-        python -m pip install cmake
-        cmake -S google_crc32c -B build -G "Visual Studio 16 2019" -A ${{ matrix.platform }} -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0
-        cmake --build build --verbose --config Release
-        cmake --install build --verbose --config Release
-
-    - name: Copy DLL into project directory
-      run: |
-        dir
-        dir "C:/Program Files/Crc32c/bin/"
-        copy "C:/Program Files/Crc32c/bin/crc32c.dll" .
-        dir
-
-    - name: Build Wheels
-      uses: pypa/cibuildwheel@v2.1.1
+    - name: Build
       env:
-        CIBW_ENVIRONMENT: >
-            CRC32C_PURE_PYTHON="0"
-            CRC32C_INSTALL_PREFIX="C:\\Program Files\\Crc32c"
-        CIBW_BUILD_VERBOSITY: 1
-        CIBW_TEST_REQUIRES: pytest
-        CIBW_TEST_COMMAND: py.test -v {project}/tests
-
+        CRC32C_PURE_PYTHON: "0"
+      run: |
+        where python
+        ./scripts/windows/build.bat ${{ matrix.python }}
+    - name: Test Import
+      run: |
+        ./scripts/windows/test.bat ${{ matrix.python }}
     - uses: actions/upload-artifact@v2
       with:
         name: python-package-distributions
-        path: ./wheelhouse/google_crc32c*.whl
+        path: ./wheels/google_crc32c*.whl
