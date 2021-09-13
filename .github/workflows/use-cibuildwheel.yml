@@ -100,8 +100,8 @@ jobs:
         os:
         - windows-2019
         platform:
-        #- Win32
         - x64
+        - Win32
     runs-on: ${{ matrix.os }}
     steps:
 
@@ -117,7 +117,7 @@ jobs:
     - name: Cache C library
       uses: actions/cache@v2
       with:
-        path: ${{ github.workspace }}\usr\${{ matrix.platform }}
+        path: ${{ github.workspace }}\usr
         key:
             libcrc32c-${{ matrix.os }}-${{ matrix.platform }}-${{ steps.get-c-lib-hash.outputs.hash }}
 
@@ -135,20 +135,20 @@ jobs:
         cmake --build build --verbose --config Release
         echo "::endgroup::"
         echo "::group::Run cmake to install library"
-        cmake --install build --verbose --config Release --prefix=${{ github.workspace }}\usr\${{ matrix.platform }}
+        cmake --install build --verbose --config Release --prefix=${{ github.workspace }}\usr\
         echo "::endgroup::"
 
-    # TODO: For debugging -- remove later.
-    - uses: actions/upload-artifact@v2
-      with:
-        name: libcrc32c-${{ matrix.os }}-${{ matrix.platform }}
-        path: ${{ github.workspace }}\usr\${{ matrix.platform }}
+#   # TODO: For debugging -- remove later.
+#   - uses: actions/upload-artifact@v2
+#     with:
+#       name: libcrc32c-${{ matrix.os }}-${{ matrix.platform }}
+#       path: ${{ github.workspace }}\usr\${{ matrix.platform }}
 
     - name: Build Wheels
       uses: pypa/cibuildwheel@v2.1.1
       env:
         CIBW_ARCHS: native
-        CIBW_ENVIRONMENT: CRC32C_PURE_PYTHON="0" CRC32C_INSTALL_PREFIX="D:/a/python-crc32c/python-crc32c/usr/x64"
+        CIBW_ENVIRONMENT: CRC32C_PURE_PYTHON="0" CRC32C_INSTALL_PREFIX="D:/a/python-crc32c/python-crc32c/usr"
         CIBW_BUILD_VERBOSITY: 1
         CIBW_TEST_REQUIRES: pytest
         CIBW_TEST_COMMAND: py.test -v {project}/tests
