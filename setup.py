@@ -86,9 +86,12 @@ def build_c_extension():
         kwargs = {}
 
     module_path = os.path.join("src", "google_crc32c", "_crc32c.c")
+    sources=[os.path.normcase(module_path)]
+    print(f"##### sources: {sources}")
+    print(f"##### module kwargs: {kwargs}")
     module = setuptools.Extension(
         "google_crc32c._crc32c",
-        sources=[os.path.normcase(module_path)],
+        sources=sources,
         libraries=["crc32c"],
         **kwargs
     )
