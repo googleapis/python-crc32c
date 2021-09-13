@@ -116,7 +116,13 @@ jobs:
         cmake -S google_crc32c -B build -G "Visual Studio 16 2019" -A ${{ matrix.platform }} -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0
         cmake --build build --verbose --config Release
         cmake --install build --verbose --config Release
+
+    - name: Copy DLL into project directory
+      run: |
+        dir
+        dir "C:/Program Files/Crc32c/bin/"
         copy "C:/Program Files/Crc32c/bin/crc32c.dll" .
+        dir
 
     - name: Build Wheels
       uses: pypa/cibuildwheel@v2.1.1
@@ -127,8 +133,6 @@ jobs:
         CIBW_BUILD_VERBOSITY: 1
         CIBW_TEST_REQUIRES: pytest
         CIBW_TEST_COMMAND: py.test -v {project}/tests
-        CIBW_BEFORE_BUILD: |
-            python setup.py build_ext --include-dirs="C:/Program Files/Crc32c/include" --library-dirs="C:/Program Files/Crc32c/lib"
 
     - uses: actions/upload-artifact@v2
       with:
