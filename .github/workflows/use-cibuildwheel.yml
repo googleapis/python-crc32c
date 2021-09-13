@@ -115,14 +115,14 @@ jobs:
         python -m pip install cmake
         cmake -S google_crc32c -B build -G "Visual Studio 16 2019" -A ${{ matrix.platform }} -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=no -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0
         cmake --build build --verbose --config Release
-        cmake --install build --verbose --config Release --prefix=${{ github.workspace }}/${{ matrix.platform }}/usr
+        cmake --install build --verbose --config Release --prefix=${{ github.workspace }}/usr/${{ matrix.platform }}
 
     - name: Build Wheels
       uses: pypa/cibuildwheel@v2.1.1
       env:
         CIBW_ENVIRONMENT: >
             CRC32C_PURE_PYTHON="0"
-            CRC32C_INSTALL_PREFIX=${{ github.workspace }}/${{ matrix.platform }}/usr
+            CRC32C_INSTALL_PREFIX="${{ github.workspace }}\usr\${{ matrix.platform }}"
         CIBW_BUILD_VERBOSITY: 1
         CIBW_TEST_REQUIRES: pytest
         CIBW_TEST_COMMAND: py.test -v {project}/tests
