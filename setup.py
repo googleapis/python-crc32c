@@ -72,8 +72,9 @@ def build_c_extension():
 
         if os.name == "nt":
             library_dirs.append(os.path.join(install_prefix, "bin"))
-
-        runtime_library_dirs = library_dirs[:]
+            runtime_library_dirs = []
+        else:
+            runtime_library_dirs = library_dirs[:]
 
         kwargs = {
             "include_dirs": include_dirs,
