@@ -114,7 +114,8 @@ jobs:
       run:
         echo "::set-output name=hash::$(git -C google_crc32c log -n 1 --pretty=%H)"
 
-    - name: Cache C library
+    - id: cache
+      name: Cache C library
       uses: actions/cache@v2
       with:
         path: ${{ github.workspace }}\usr
