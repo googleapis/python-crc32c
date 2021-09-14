@@ -27,9 +27,9 @@ jobs:
             CRC32C_PURE_PYTHON="0"
             CRC32C_INSTALL_PREFIX="$(pwd)/usr"
         CIBW_BUILD_VERBOSITY: 1
-        # We build these inside CIBW so that the manylinux image is
-        # used to build the library;  otherwise, we wouldn't be able to
-        # link with it.
+        # Build the C library inside CIBW so that the manylinux image is
+        # used to link the share library;  otherwise, our extension wouldn't
+        # be able to link with it.
         CIBW_BEFORE_BUILD: >
             python -m pip install --upgrade setuptools pip wheel &&
             python -m pip install cmake &&
@@ -156,12 +156,13 @@ jobs:
         cmake --install build --verbose --config Release --prefix=${{ github.workspace }}\usr\
         echo "::endgroup::"
 
+    # Passing through ${{ github.workspace }} to CIBW_ENVIRONMENT mangles
+    # backslashes:  compute a variant which uses only forward-slashses.
     - id: crc32c-install-prefix
-      name: Try to dead-reckon a CIBW-compatible install prefix
+      name: Dead-reckon a CIBW-compatible install prefix
       shell: bash
       run: |
-        python -c "import os; print(os.getenv('GITHUB_WORKSPACE'))"
-        python -c "import os; workspace = '/'.join(r'${{ github.workspace }}'.split(os.sep)); pfx = f'{workspace}/usr'; print(f'::set-output name=prefix::{pfx}')"
+        python -c "import os; workspace = '/'.join(os.getenv('GITHUB_WORKSPACE').split(os.sep)); pfx = f'{workspace}/usr'; print(f'::set-output name=prefix::{pfx}')"
 
     - id: platform-arch
       name: Map platform -> wheel arch
