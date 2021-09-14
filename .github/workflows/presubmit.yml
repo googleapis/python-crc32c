@@ -25,6 +25,8 @@ jobs:
       env:
         # For presubmit, just build / test the most common arch
         CIBW_ARCHS: native
+        # For presubmit, skip build / test for pypy
+        CIBW_SKIP: pp37*
         CIBW_ENVIRONMENT: >
             CRC32C_PURE_PYTHON="0"
             CRC32C_INSTALL_PREFIX="$(pwd)/usr"
@@ -99,6 +101,8 @@ jobs:
       env:
         # For presubmit, just build / test the most common arch
         CIBW_ARCHS: native
+        # For presubmit, skip build / test for pypy
+        CIBW_SKIP: pp37*
         CIBW_ENVIRONMENT: >
             CRC32C_PURE_PYTHON="0"
             CRC32C_INSTALL_PREFIX="$(pwd)/usr"
@@ -184,6 +188,8 @@ jobs:
       uses: pypa/cibuildwheel@v2.1.1
       env:
         CIBW_ARCHS_WINDOWS: ${{ steps.platform-arch.outputs.arch }}
+        # For presubmit, skip build / test for pypy
+        CIBW_SKIP: pp37*
         CIBW_ENVIRONMENT: CRC32C_PURE_PYTHON="0" CRC32C_INSTALL_PREFIX="${{ steps.crc32c-install-prefix.outputs.prefix }}"
         CIBW_BUILD_VERBOSITY: 3
         CIBW_TEST_REQUIRES: pytest
