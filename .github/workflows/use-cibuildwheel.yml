@@ -162,7 +162,7 @@ jobs:
       run: |
         [[ -d "${{ github.workspace }}/usr" ]] && echo "fwd slash OK" || echo "fwd slash not OK"
         [[ -d "${{ github.workspace }}\usr" ]] && echo "backslash OK" || echo "backslash not OK"
-        python -c "import os; norm = os.path.normcase(os.path.join('${{ github.workspace }}', 'usr')); print(f'{norm}: {os.path.isdir(norm)}')"
+        python -c "import os; workspace = '/'.join('${{ github.workspace }}'.split(os.sep)); print(f'{workspace}: {os.path.isdir(workspace)}'); pfx = f'{workspace}/usr'; print(f'{pfx}: {os.path.isdir(pfx)}')"
 
     - id: platform-arch
       name: Map platform -> wheel arch
