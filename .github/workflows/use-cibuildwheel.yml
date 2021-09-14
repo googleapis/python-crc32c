@@ -1,4 +1,4 @@
-name: Build Wheels
+name: Build / test wheels (presubmit)
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
 jobs:
 
   build-wheels-linux:
-    name: Build wheels on ${{ matrix.os }}
+    name: Build / test wheels on ${{ matrix.os }}
     strategy:
       matrix:
         os:
@@ -23,6 +23,8 @@ jobs:
     - name: Build Wheels
       uses: pypa/cibuildwheel@v2.1.1
       env:
+        # For presubmit, just build / test the most common arch
+        CIBW_ARCHS: native
         CIBW_ENVIRONMENT: >
             CRC32C_PURE_PYTHON="0"
             CRC32C_INSTALL_PREFIX="$(pwd)/usr"
@@ -46,14 +48,15 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: python-package-distributions
-        path: ./wheelhouse/google_crc32c*.whl
+        path: wheelhouse/
 
   build-wheels-macos:
-    name: Build wheels on ${{ matrix.os }}
+    name: Build / test wheels on ${{ matrix.os }}
     strategy:
       matrix:
         os:
         - macos-10.15
+       # Wheels port forward
        #- macos-11
     runs-on: ${{ matrix.os }}
     steps:
@@ -94,6 +97,8 @@ jobs:
     - name: Build Wheels
       uses: pypa/cibuildwheel@v2.1.1
       env:
+        # For presubmit, just build / test the most common arch
+        CIBW_ARCHS: native
         CIBW_ENVIRONMENT: >
             CRC32C_PURE_PYTHON="0"
             CRC32C_INSTALL_PREFIX="$(pwd)/usr"
@@ -105,18 +110,19 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: python-package-distributions
-        path: ./wheelhouse/google_crc32c*.whl
+        path: wheelhouse/
 
   build-wheels-windows:
-    name: Build wheels on ${{ matrix.os }} ( ${{ matrix.platform }} )
+    name: Build / test wheels on ${{ matrix.os }} ( ${{ matrix.platform }} )
 
     strategy:
       matrix:
         os:
         - windows-2019
         platform:
+        # For presubmit, just build / test the most common platform
         - x64
-        - Win32
+       #- Win32
 
     runs-on: ${{ matrix.os }}
 
@@ -186,4 +192,4 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: python-package-distributions
-        path: ./wheelhouse/google_crc32c*.whl
+        path: wheelhouse/
