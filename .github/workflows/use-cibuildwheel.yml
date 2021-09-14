@@ -62,7 +62,21 @@ jobs:
       with:
         submodules: 'recursive'
 
+    - name: Get C library hash
+      id: get-c-lib-hash
+      run:
+        echo "::set-output name=hash::$(git -C google_crc32c log -n 1 --pretty=%H)"
+
+    - id: load-cache
+      name: Load cached C library
+      uses: actions/cache@v2
+      with:
+        path: ${{ github.workspace }}/usr
+        key:
+            libcrc32c-${{ matrix.os }}-${{ steps.get-c-lib-hash.outputs.hash }}
+
     - name: Build C Library
+      if: steps.load-cache.outputs.cache-hit != 'true'
       run: >
         python -m pip install --upgrade setuptools pip wheel &&
         python -m pip install cmake &&
@@ -107,6 +121,14 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+
+    - id: crc32c-install-prefix
+      name: Try to dead-reckon a CIBW-compatible install prefix
+      shell: bash
+      run: |
+        [[ -d "${{ github.workspace }}/usr" ]] && echo "fwd slash OK" || echo "fwd slash not OK"
+        [[ -d "${{ github.workspace }}\usr" ]] && echo "backslash OK" || echo "backslash not OK"
+        python -c "import os; norm = os.path.normcase(os.path.join('${{ github.workspace }}', 'usr')); print(f'{norm}: {os.path.isdir(norm)}')"
 
     - uses: actions/checkout@v2
       with:
