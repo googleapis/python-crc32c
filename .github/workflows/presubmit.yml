@@ -107,7 +107,6 @@ jobs:
             CRC32C_PURE_PYTHON="0"
             CRC32C_INSTALL_PREFIX="$(pwd)/usr"
         CIBW_BUILD_VERBOSITY: 1
-        CIBW_ARCHS_MACOS: x86_64 universal2
         CIBW_TEST_REQUIRES: pytest
         CIBW_TEST_COMMAND: py.test -v {project}/tests/
 
