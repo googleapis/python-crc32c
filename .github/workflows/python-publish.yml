@@ -41,7 +41,7 @@ jobs:
 
     - name: Set up QEMU for ARM64 cross compile
       id: qemu
-      uses: docker/setup-qemu-action@vi
+      uses: docker/setup-qemu-action@v1
 
     - name: Available platforms
       run: echo ${{ steps.qemu.outputs.platforms }}
