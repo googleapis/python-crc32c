@@ -5,7 +5,7 @@ on:
   # Temporary, to allow checking the build
   push:
     branches:
-    - main
+    - hack-moar-on-windoze
   release:
     types: [created]
   #schedule:
