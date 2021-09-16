@@ -2,15 +2,11 @@
 name: Build binary wheels and upload to PyPI
 
 on:
-  # Temporary, to allow checking the build
-  push:
-    branches:
-    - hack-moar-on-windoze
   release:
     types: [created]
-  #schedule:
+  schedule:
     # Build nightly at 05:43 UTC
-  #  - cron:  '43 5 * * *'
+    - cron:  '43 5 * * *'
 
 jobs:
   build-source-distribution:
