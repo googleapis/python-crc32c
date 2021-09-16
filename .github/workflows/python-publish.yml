@@ -27,11 +27,17 @@ jobs:
         path: dist/
 
   build-wheels-linux:
-    name: Build wheels on ${{ matrix.os }}
+    name: Build wheels on ${{ matrix.os }} - ${{ matrix.arch }}
+
     strategy:
       matrix:
         os:
         - ubuntu-20.04
+        arch:
+        - x86_64
+        - i686
+        - aarch64
+
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -40,16 +46,14 @@ jobs:
         submodules: 'recursive'
 
     - name: Set up QEMU for ARM64 cross compile
+      if: ${{ matrix.arch }} == 'aarch64'
       id: qemu
       uses: docker/setup-qemu-action@v1
-
-    - name: Available platforms
-      run: echo ${{ steps.qemu.outputs.platforms }}
 
     - name: Build Wheels
       uses: pypa/cibuildwheel@v2.1.1
       env:
-        CIBW_ARCHS_LINUX: x86_64 aarch64
+        CIBW_ARCHS_LINUX: ${{ matrix.arg }}
         CIBW_ENVIRONMENT: >
             CRC32C_PURE_PYTHON="0"
             CRC32C_INSTALL_PREFIX="$(pwd)/usr"
@@ -76,12 +80,15 @@ jobs:
         path: wheelhouse/
 
   build-wheels-macos:
-    name: Build wheels on ${{ matrix.os }}
+    name: Build wheels on ${{ matrix.os }} - ${{ matrix.arch }}
     strategy:
       matrix:
         os:
         - macos-10.15
        #- macos-11
+        arch:
+        - x86_64
+        - universal2
     runs-on: ${{ matrix.os }}
     steps:
 
@@ -121,7 +128,7 @@ jobs:
     - name: Build Wheels
       uses: pypa/cibuildwheel@v2.1.1
       env:
-        CIBW_ARCHS_MACOS: x86_64 universal2
+        CIBW_ARCHS_MACOS: ${{ matrix.arch }}
         CIBW_ENVIRONMENT: >
             CRC32C_PURE_PYTHON="0"
             CRC32C_INSTALL_PREFIX="$(pwd)/usr"
@@ -169,19 +176,11 @@ jobs:
     - name: Build C Library
       if: steps.load-cache.outputs.cache-hit != 'true'
       run: |
-        echo "::group::Install cmake"
         python -m pip install --upgrade setuptools pip wheel
         python -m pip install cmake
-        echo "::endgroup::"
-        echo "::group::Run cmake to initialze build tree"
         cmake -S google_crc32c -B build -G "Visual Studio 16 2019" -A ${{ matrix.platform }} -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=no -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0
-        echo "::endgroup::"
-        echo "::group::Run cmake to build library"
         cmake --build build --verbose --config Release
-        echo "::endgroup::"
-        echo "::group::Run cmake to install library"
         cmake --install build --verbose --config Release --prefix=${{ github.workspace }}\usr\
-        echo "::endgroup::"
 
     # Passing through ${{ github.workspace }} to CIBW_ENVIRONMENT mangles
     # backslashes:  compute a variant which uses only forward-slashses.
@@ -206,8 +205,8 @@ jobs:
       env:
         CIBW_ARCHS_WINDOWS: ${{ steps.platform-arch.outputs.arch }}
         CIBW_ENVIRONMENT: >
-            CRC32C_PURE_PYTHON="0"
             CRC32C_INSTALL_PREFIX="${{ steps.crc32c-install-prefix.outputs.prefix }}"
+            CRC32C_PURE_PYTHON="0"
         CIBW_BUILD_VERBOSITY: 1
         CIBW_TEST_REQUIRES: pytest
         CIBW_TEST_COMMAND: py.test -v {project}/tests
