@@ -53,7 +53,7 @@ jobs:
     - name: Build Wheels
       uses: pypa/cibuildwheel@v2.1.1
       env:
-        CIBW_ARCHS_LINUX: ${{ matrix.arg }}
+        CIBW_ARCHS_LINUX: ${{ matrix.arch }}
         CIBW_ENVIRONMENT: >
             CRC32C_PURE_PYTHON="0"
             CRC32C_INSTALL_PREFIX="$(pwd)/usr"
