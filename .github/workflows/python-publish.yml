@@ -7,7 +7,7 @@ on:
   schedule:
     # Build nightly at 05:43 UTC
     - cron:  '43 5 * * *'
-  workflow_dispaatch:  # allow running manually from 'Actions' tab
+  workflow_dispatch:  # allow running manually from 'Actions' tab
 
 jobs:
   build-source-distribution:
