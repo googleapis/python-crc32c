@@ -2,12 +2,12 @@
 name: Build binary wheels and upload to PyPI
 
 on:
-  push: # temporary to test manylinux1 builds
   release:
     types: [created]
   schedule:
     # Build nightly at 05:43 UTC
     - cron:  '43 5 * * *'
+  workflow_dispaatch:  # allow running manually from 'Actions' tab
 
 jobs:
   build-source-distribution:
