@@ -24,6 +24,9 @@ jobs:
         path: dist/
 
   build-wheels-manylinux1:
+    # Note: the 'manylinux1' image will no longer be supported by PyPA
+    # after 2022-01-01.
+    # See: https://github.com/pypa/manylinux/issues/994
     name: Build wheels on ubuntu-20.04 - x86_64 - manylinux1
 
     runs-on: ubuntu-20.04
