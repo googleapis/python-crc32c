@@ -15,13 +15,11 @@ architectures. For information on building your own, please view [BUILDING.md](B
 ## Linux
 Wheels are published for the following platforms / architectures:
 
-- `manylinux1` platform, `x86_64` architecture
-- `manylinux2010` platform, `x86_64` architecture
-- `manylinux2014` platform, `x86_64` architecture
+- `manylinux2010` platform, `x86_64` and `1686` architectures
 - `manylinux2014` platform, `aarch64` architecture
 
 ## Mac OS
-Wheels are published for `x86_64` architectures
+Wheels are published for `x86_64` and `universal2` architectures.
 
 ## Windows
 Wheels are published for `win32` and `win_amd64` architectures.
