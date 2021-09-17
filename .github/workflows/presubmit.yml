@@ -8,7 +8,7 @@ on:
 jobs:
 
   build-wheels-linux:
-    name: Build / test wheels on ${{ matrix.os }}
+    name: ${{ matrix.os }}
     strategy:
       matrix:
         os:
@@ -53,7 +53,7 @@ jobs:
         path: wheelhouse/
 
   build-wheels-macos:
-    name: Build / test wheels on ${{ matrix.os }}
+    name: ${{ matrix.os }}
     strategy:
       matrix:
         os:
@@ -116,7 +116,7 @@ jobs:
         path: wheelhouse/
 
   build-wheels-windows:
-    name: Build / test wheels on ${{ matrix.os }} ( ${{ matrix.platform }} )
+    name: ${{ matrix.os }} ( ${{ matrix.platform }} )
 
     strategy:
       matrix:
