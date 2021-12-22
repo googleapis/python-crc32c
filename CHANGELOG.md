@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-crc32c/#history
 
+## [1.4.0](https://www.github.com/googleapis/python-crc32c/compare/v1.3.0...v1.4.0) (2021-12-22)
+
+
+### Features
+
+* add 'py.typed' declaration ([#119](https://www.github.com/googleapis/python-crc32c/issues/119)) ([f1c91c2](https://www.github.com/googleapis/python-crc32c/commit/f1c91c277f1baac2ca8d60dd1e45361551ad3140))
+
 ## [1.3.0](https://www.github.com/googleapis/python-crc32c/compare/v1.2.0...v1.3.0) (2021-10-05)
 
 
