@@ -10,9 +10,9 @@ jobs:
   mypy:
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: "3.6"
     - name: Install nox
@@ -32,12 +32,12 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         submodules: 'recursive'
 
     - name: Build Wheels
-      uses: pypa/cibuildwheel@v2.1.1
+      uses: pypa/cibuildwheel@v2.3.1
       env:
         # For presubmit, just build / test the most common arch
         CIBW_ARCHS: native
@@ -63,7 +63,7 @@ jobs:
         CIBW_TEST_REQUIRES: pytest
         CIBW_TEST_COMMAND: py.test -v {project}/tests/
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: python-package-distributions
         path: wheelhouse/
@@ -79,7 +79,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         submodules: 'recursive'
 
@@ -113,7 +113,7 @@ jobs:
         make -C build all install
 
     - name: Build Wheels
-      uses: pypa/cibuildwheel@v2.1.1
+      uses: pypa/cibuildwheel@v2.3.1
       env:
         # For presubmit, just build / test the most common arch
         CIBW_ARCHS: native
@@ -126,7 +126,7 @@ jobs:
         CIBW_TEST_REQUIRES: pytest
         CIBW_TEST_COMMAND: py.test -v {project}/tests/
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: python-package-distributions
         path: wheelhouse/
@@ -147,7 +147,7 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         submodules: 'recursive'
 
@@ -200,7 +200,7 @@ jobs:
         fi
 
     - name: Build Wheels
-      uses: pypa/cibuildwheel@v2.1.1
+      uses: pypa/cibuildwheel@v2.3.1
       env:
         CIBW_ARCHS_WINDOWS: ${{ steps.platform-arch.outputs.arch }}
         # For presubmit, skip build / test for pypy
@@ -210,7 +210,7 @@ jobs:
         CIBW_TEST_REQUIRES: pytest
         CIBW_TEST_COMMAND: py.test -v {project}/tests
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: python-package-distributions
         path: wheelhouse/
