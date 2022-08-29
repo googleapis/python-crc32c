@@ -51,7 +51,7 @@ jobs:
         # be able to link with it.
         CIBW_BEFORE_BUILD: >
             python -m pip install --upgrade setuptools pip wheel &&
-            python -m pip install --only-binary cmake cmake &&
+            python -m pip install --only-binary cmake &&
             cmake -S google_crc32c -B build \
                 -DCMAKE_BUILD_TYPE=Release \
                 -DCRC32C_BUILD_TESTS=no \
