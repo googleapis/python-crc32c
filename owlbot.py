@@ -35,6 +35,7 @@ s.move(
     excludes=[
         ".github/workflows",
         ".gitignore",
+        ".kokoro/release.sh",
         "CONTRIBUTING.rst",
         "docs/**/*",
         "MANIFEST.in",

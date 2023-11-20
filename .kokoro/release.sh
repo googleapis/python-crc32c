@@ -22,8 +22,10 @@ python3 -m releasetool publish-reporter-script > /tmp/publisher-script; source /
 # Disable buffering, so that the logs stream through.
 export PYTHONUNBUFFERED=1
 
-# Move into the package, build the distribution and upload.
-TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-1")
 cd github/python-crc32c
-python3 setup.py sdist bdist_wheel
-twine upload --username __token__ --password "${TWINE_PASSWORD}" dist/*
+python3 setup.py sdist
+
+
+# # Move into the package, build the distribution and upload.
+# TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-1")
+# twine upload --username __token__ --password "${TWINE_PASSWORD}" dist/*
