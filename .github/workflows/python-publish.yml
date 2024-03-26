@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-python@v5
     - name: Build
       run: python setup.py sdist
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: python-package-distributions
         path: dist/
@@ -48,7 +48,7 @@ jobs:
       uses: docker/setup-qemu-action@v3
 
     - name: Build Wheels
-      uses: pypa/cibuildwheel@v2.16.2
+      uses: pypa/cibuildwheel@v2.17.0
       env:
         CIBW_ARCHS_LINUX: ${{ matrix.arch }}
         CIBW_ENVIRONMENT: >
@@ -70,7 +70,7 @@ jobs:
         CIBW_TEST_REQUIRES: pytest
         CIBW_TEST_COMMAND: py.test -v {project}/tests/
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: python-package-distributions
         path: wheelhouse/
@@ -99,7 +99,7 @@ jobs:
 
     - id: load-cache
       name: Load cached C library
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ github.workspace }}/usr
         key:
@@ -121,7 +121,7 @@ jobs:
         make -C build all install
 
     - name: Build Wheels
-      uses: pypa/cibuildwheel@v2.16.2
+      uses: pypa/cibuildwheel@v2.17.0
       env:
         CIBW_ARCHS_MACOS: ${{ matrix.arch }}
         CIBW_ENVIRONMENT: >
@@ -131,7 +131,7 @@ jobs:
         CIBW_TEST_REQUIRES: pytest
         CIBW_TEST_COMMAND: py.test -v {project}/tests/
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: python-package-distributions
         path: wheelhouse/
@@ -162,7 +162,7 @@ jobs:
 
     - id: load-cache
       name: Load cached C library
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ github.workspace }}\usr
         key:
@@ -195,7 +195,7 @@ jobs:
         fi
 
     - name: Build Wheels
-      uses: pypa/cibuildwheel@v2.16.2
+      uses: pypa/cibuildwheel@v2.17.0
       env:
         CIBW_ARCHS_WINDOWS: ${{ steps.platform-arch.outputs.arch }}
         CIBW_ENVIRONMENT: >
@@ -205,7 +205,7 @@ jobs:
         CIBW_TEST_REQUIRES: pytest
         CIBW_TEST_COMMAND: py.test -v {project}/tests
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: python-package-distributions
         path: wheelhouse/
@@ -221,12 +221,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download all the dists
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: python-package-distributions
           path: dist/
       - name: Download all the wheels
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: python-package-distributions
           path: wheelhouse/
