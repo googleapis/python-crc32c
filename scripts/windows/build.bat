@@ -38,20 +38,34 @@ py -0
 py -%PYTHON_VERSION% -m pip install cmake
 
 git submodule update --init --recursive
+mkdir build
 
-FOR %%V IN (32,64) DO (
-    set TARGET_PLATFORM="x64"
+@REM 64 Bit Builds.
+@REM removed -DCRC32C_BUILD_TESTS=no
+set CMAKE_GENERATOR="Visual Studio 15 2017"
+C:\Python37\Scripts\cmake -G %CMAKE_GENERATOR% -A x64 -DCRC32C_BUILD_BENCHMARKS=no -DBUILD_SHARED_LIBS=yes ^
+-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% .
 
-    if "%%V"=="32" (
-        set TARGET_PLATFORM="Win32"
-    )
-    echo "Target Platform: !TARGET_PLATFORM!"
+C:\Python37\Scripts\cmake --build . --config RelWithDebInfo --target install
+dir %CRC32C_INSTALL_PREFIX% /b /s
+popd
 
-    pushd google_crc32c
+copy %CRC32C_INSTALL_PREFIX%bin\google_crc32c.dll .
 
-    @rem reset hard to cleanup any changes done by a previous build.
-    git reset --hard
-    git clean -fxd
+@rem update python deps and build wheels (requires CRC32C_INSTALL_PREFIX is set)
+FOR %%V IN (3.6-64,3.7-64) DO (
+    py -%%V -m pip install --upgrade pip setuptools wheel
+    py -%%V -m pip wheel . --wheel-dir wheels/
+)
+
+
+@REM 32 Bit Builds.
+@REM removed -DCRC32C_BUILD_TESTS=no
+
+set CMAKE_GENERATOR="Visual Studio 15 2017"
+pushd google_crc32c
+@rem reset hard to cleanup any changes done by 64-bit build.
+git reset --hard
 
     del /s /q CMakeFiles\
     del CMakeCache.txt
@@ -73,8 +87,7 @@ FOR %%V IN (32,64) DO (
     copy %CRC32C_INSTALL_PREFIX%\bin\crc32c.dll .
 
     py -%PYTHON_VERSION%-%%V -m pip install --upgrade pip setuptools wheel
-    echo "Building C extension"
-    py -%PYTHON_VERSION%-%%V setup.py build_ext --include-dirs=%CRC32C_INSTALL_PREFIX%\include --library-dirs=%CRC32C_INSTALL_PREFIX%\lib
-    echo "Building Wheel"
     py -%PYTHON_VERSION%-%%V -m pip wheel . --wheel-dir wheels/
 )
+
+

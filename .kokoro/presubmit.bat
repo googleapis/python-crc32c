@@ -11,19 +11,25 @@
 @rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 @rem See the License for the specific language governing permissions and
 @rem limitations under the License.
-set PYTHON_VERSION=%1
-if "%PYTHON_VERSION%"=="" (
-  echo "Python version was not provided, using Python 3.9"
-  set PYTHON_VERSION=3.9
-)
 
-@rem update python deps and build wheels (requires CRC32C_INSTALL_PREFIX is set)
-@REM FOR %%V IN (3.9-64,3.9-32) DO (
-FOR %%V IN (%PYTHON_VERSION%-32, %PYTHON_VERSION%-64) DO (
-    py -%%V -m pip install --no-index --find-links=wheels google-crc32c --force-reinstall
+@echo "Starting Windows build"
 
-    py -%%V ./scripts/check_crc32c_extension.py
+cd /d %~dp0
+cd ..
 
-    py -%%V -m pip install pytest
-    py -%%V -m pytest tests
-)
+@rem as this package uses submodules make sure we have all content
+call git submodule update --recursive || goto :error
+
+@echo "Build Wheel"
+call scripts\windows\build.bat || goto :error
+
+@echo "Run Tests"
+call scripts\windows\test.bat || goto :error
+
+
+for /r %%a in (*.whl) do xcopy "%%a" %KOKORO_ARTIFACTS_DIR% /i
+ 
+goto :EOF
+
+:error
+exit /b 1
