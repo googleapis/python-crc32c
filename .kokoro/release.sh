@@ -33,7 +33,7 @@ else
 
     # add python3 to path, used by tooling
     PATH=/opt/python/cp38-cp38/bin:$PATH
-    mv /keys/73713_google_cloud_pypi_password /73713_google_cloud_pypi_password
+    # mv /keys/73713_google_cloud_pypi_password /73713_google_cloud_pypi_password
 
     PYTHON_BIN=/opt/python/cp38-cp38/bin
     RELEASETOOL=${PYTHON_BIN}/releasetool
@@ -60,8 +60,8 @@ export PYTHONUNBUFFERED=1
 
 # TODO: ONE OF THE BELOW WORKS
 # Move into the package, build the distribution and upload.
-TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-1")
-TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google_cloud_pypi_password")
+# TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-1")
+# TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google_cloud_pypi_password")
 # cd github/python-crc32c
 # python3 setup.py sdist bdist_wheel
 # twine upload --username __token__ --password "${TWINE_PASSWORD}" dist/*
