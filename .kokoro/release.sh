@@ -15,10 +15,6 @@
 
 set -eo pipefail
 
-# Start the releasetool reporter
-python3 -m pip install --require-hashes -r github/python-crc32c/.kokoro/requirements.txt
-python3 -m releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
-
 if [ "$(uname)" == "Darwin" ]; then
     # Mac OS
     PYTHON_BIN=/Library/Frameworks/Python.framework/Versions/3.9/bin
@@ -50,6 +46,7 @@ fi
 
 
 # Start the releasetool reporter
+${PYTHON} -m pip install --require-hashes -r github/python-crc32c/.kokoro/requirements.txt
 ${RELEASETOOL} publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
 
 # Ensure that we have the latest versions of Twine, Wheel, and Setuptools.
