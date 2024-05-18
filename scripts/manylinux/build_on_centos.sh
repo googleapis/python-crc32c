@@ -24,6 +24,7 @@ ${MAIN_PYTHON_BIN}/python -m pip install --upgrade pip
 # Install `cmake` (i.e. non-Python build dependency).
 ${MAIN_PYTHON_BIN}/python -m pip install "cmake >= 3.12.0"
 # Install Python build dependencies.
+"$MAIN_PYTHON_BIN/pip" install .
 ${MAIN_PYTHON_BIN}/python -m pip install \
     --requirement ${REPO_ROOT}/scripts/dev-requirements.txt
 
