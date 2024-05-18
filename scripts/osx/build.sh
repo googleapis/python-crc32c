@@ -40,28 +40,28 @@ git submodule update --init --recursive
 ${OSX_DIR}/build_c_lib.sh
 
 # Build wheel for Python 3.7.
-export PY_BIN=PYTHON37
+export PY_BIN=$PYTHON37
 export PY_TAG="cp37-cp37m"
 ${OSX_DIR}/build_python_wheel.sh
 
 # Build wheel for Python 3.8.
 # Note that the 'm' SOABI flag is no longer supported for Python >= 3.8
-export PY_BIN=PYTHON38
+export PY_BIN=$PYTHON38
 export PY_TAG="cp38-cp38"
 ${OSX_DIR}/build_python_wheel.sh
 
 # Build wheel for Python 3.9.
-export PY_BIN=PYTHON39
+export PY_BIN=$PYTHON39
 export PY_TAG="cp39-cp39"
 ${OSX_DIR}/build_python_wheel.sh
 
 # Build wheel for Python 3.10.
-export PY_BIN=PYTHON310
+export PY_BIN=$PYTHON310
 export PY_TAG="cp310-cp310"
 ${OSX_DIR}/build_python_wheel.sh
 
 # Build wheel for Python 3.11.
-export PY_BIN=PYTHON311
+export PY_BIN=$PYTHON311
 export PY_TAG="cp311-cp311"
 ${OSX_DIR}/build_python_wheel.sh
 
