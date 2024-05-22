@@ -23,6 +23,7 @@ OSX_DIR=$(dirname ${SCRIPT_FI})
 SCRIPTS_DIR=$(dirname ${OSX_DIR})
 export REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 
+# set up pyenv & shell environment for switching across python versions
 eval "$(pyenv init -)"
 eval "$(pyenv init --path)"
 
@@ -77,6 +78,12 @@ ${OSX_DIR}/build_python_wheel.sh
 install_python_pyenv 3.11
 export PY_BIN="python3.11"
 export PY_TAG="cp311-cp311"
+${OSX_DIR}/build_python_wheel.sh
+
+# Build wheel for Python 3.12.
+install_python_pyenv 3.12
+export PY_BIN="python3.12"
+export PY_TAG="cp312-cp312"
 ${OSX_DIR}/build_python_wheel.sh
 
 # Clean up.

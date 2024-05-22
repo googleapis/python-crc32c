@@ -17,11 +17,11 @@ set -eo pipefail
 
 if [ "$(uname)" == "Darwin" ]; then
     # Mac OS
-    PYTHON_BIN=/Library/Frameworks/Python.framework/Versions/3.9/bin
-    PYTHON=${PYTHON_BIN}/python3
+    PYTHON=$(PYENV_VERSION=3.9 pyenv which python)
+    PYTHON_BIN=$(dirname ${PYTHON})
 
-    RELEASETOOL=~/Library/Python/3.9/bin/releasetool
-    TWINE=~/Library/Python/3.9/bin/twine
+    RELEASETOOL=${PYTHON_BIN}/releasetool
+    TWINE=${PYTHON_BIN}/twine
     ${PYTHON} -m pip install gcp-releasetool twine --user
 
 else
