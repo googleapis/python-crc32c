@@ -66,6 +66,7 @@ ${VENV}/bin/cmake \
     -DBUILD_SHARED_LIBS=yes \
     -DCMAKE_INSTALL_PREFIX:PATH=${CRC32C_INSTALL_PREFIX} \
     -DCMAKE_INSTALL_NAME_DIR:PATH=${CRC32C_INSTALL_PREFIX}/lib \
+    --log-level=DEBUG \
     .
 
 # Install `libcrc32c` into CRC32C_INSTALL_PREFIX.
