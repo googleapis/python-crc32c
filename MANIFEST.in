@@ -1,2 +1,3 @@
 include src/google_crc32c_build.py
 include LICENSE
+include src/google_c2c32c/py.typed
