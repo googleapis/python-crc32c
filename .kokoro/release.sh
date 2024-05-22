@@ -23,7 +23,7 @@ if [ "$(uname)" == "Darwin" ]; then
     RELEASETOOL=${PYTHON_BIN}/releasetool
     TWINE=${PYTHON_BIN}/twine
     ${PYTHON} -m pip install gcp-releasetool twine --user
-    cd /var/code/python-crc32c/
+    cd "${PROJECT_ROOT}"
 
 else
     # Kokoro Linux
