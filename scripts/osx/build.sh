@@ -23,32 +23,16 @@ OSX_DIR=$(dirname ${SCRIPT_FI})
 SCRIPTS_DIR=$(dirname ${OSX_DIR})
 export REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 
-# NOTE: These are the Python.org versions of Python.
-PYTHON37="/Library/Frameworks/Python.framework/Versions/3.7/bin"
-PYTHON38="/Library/Frameworks/Python.framework/Versions/3.8/bin"
-PYTHON39="/Library/Frameworks/Python.framework/Versions/3.9/bin"
-PYTHON310="/Library/Frameworks/Python.framework/Versions/3.10/bin"
-PYTHON311="/Library/Frameworks/Python.framework/Versions/3.11/bin"
-
-# # install brew
-# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# # # add brew to path
-# (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/arch/.bashrc
-# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-# # install pyenv
-# brew install pyenv # focus on directly installing python $version
+eval "$(pyenv init -)"
+eval "$(pyenv init --path)"
 
 install_python_pyenv() {
     version=$1
-    PYTHON_PATH="/Library/Frameworks/Python.framework/Versions/$version/bin"
 
-    if [ ! -d "$PYTHON_PATH" ]; then
+    if [ -z "$(command -v python$version)" ]; then
         echo "Python $version is not installed. Installing..."
         pyenv install $version
-        sudo mkdir -p $PYTHON_PATH
-        sudo ln -s $(pyenv root)/versions/$version/bin/python3 $PYTHON_PATH/python$version
+        pyenv shell $version
         echo "Python $version installed."
     else
         echo "Python $version is already installed."
