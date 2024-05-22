@@ -34,7 +34,7 @@ if [[ -z "${PY_TAG}" ]]; then
 fi
 
 # Create a virtualenv where we can install Python build dependencies.
-VENV=${REPO_ROOT}/venv/${PY_BIN}
+VENV=${REPO_ROOT}/venv${PY_BIN}
 ${PY_BIN} -m venv ${VENV}
 curl https://bootstrap.pypa.io/get-pip.py | ${VENV}/bin/python
 ${VENV}/bin/python -m pip install \

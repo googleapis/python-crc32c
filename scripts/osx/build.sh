@@ -30,6 +30,31 @@ PYTHON39="/Library/Frameworks/Python.framework/Versions/3.9/bin"
 PYTHON310="/Library/Frameworks/Python.framework/Versions/3.10/bin"
 PYTHON311="/Library/Frameworks/Python.framework/Versions/3.11/bin"
 
+# # install brew
+# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# # # add brew to path
+# (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/arch/.bashrc
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# # install pyenv
+# brew install pyenv # focus on directly installing python $version
+
+install_python_pyenv() {
+    version=$1
+    PYTHON_PATH="/Library/Frameworks/Python.framework/Versions/$version/bin"
+
+    if [ ! -d "$PYTHON_PATH" ]; then
+        echo "Python $version is not installed. Installing..."
+        pyenv install $version
+        sudo mkdir -p $PYTHON_PATH
+        sudo ln -s $(pyenv root)/versions/$version/bin/python3 $PYTHON_PATH/python$version
+        echo "Python $version installed."
+    else
+        echo "Python $version is already installed."
+    fi
+}
+
 # Build and install `libcrc32c`
 export PY_BIN="${PY_BIN:-python3}"
 export CRC32C_INSTALL_PREFIX="${REPO_ROOT}/usr"
@@ -40,28 +65,33 @@ git submodule update --init --recursive
 ${OSX_DIR}/build_c_lib.sh
 
 # Build wheel for Python 3.7.
-export PY_BIN=$PYTHON37
+install_python_pyenv 3.7
+export PY_BIN="python3.7"
 export PY_TAG="cp37-cp37m"
 ${OSX_DIR}/build_python_wheel.sh
 
 # Build wheel for Python 3.8.
 # Note that the 'm' SOABI flag is no longer supported for Python >= 3.8
-export PY_BIN=$PYTHON38
+install_python_pyenv 3.8
+export PY_BIN="python3.8"
 export PY_TAG="cp38-cp38"
 ${OSX_DIR}/build_python_wheel.sh
 
 # Build wheel for Python 3.9.
-export PY_BIN=$PYTHON39
+install_python_pyenv 3.9
+export PY_BIN="python3.9"
 export PY_TAG="cp39-cp39"
 ${OSX_DIR}/build_python_wheel.sh
 
 # Build wheel for Python 3.10.
-export PY_BIN=$PYTHON310
+install_python_pyenv 3.10
+export PY_BIN="python3.10"
 export PY_TAG="cp310-cp310"
 ${OSX_DIR}/build_python_wheel.sh
 
 # Build wheel for Python 3.11.
-export PY_BIN=$PYTHON311
+install_python_pyenv 3.11
+export PY_BIN="python3.11"
 export PY_TAG="cp311-cp311"
 ${OSX_DIR}/build_python_wheel.sh
 
