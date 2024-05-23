@@ -96,3 +96,5 @@ done
 # Clean up.
 rm -fr ${REPO_ROOT}/google_crc32c/build/
 rm -fr ${REPO_ROOT}/dist_wheels/
+
+echo "Centos Build completed"

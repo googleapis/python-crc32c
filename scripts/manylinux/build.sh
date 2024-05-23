@@ -23,9 +23,9 @@ REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 
 
 cd $REPO_ROOT
-git submodule update --init --recursive 
+git submodule update --init --recursive
 
-docker pull quay.io/pypa/manylinux2010_x86_64	
+docker pull quay.io/pypa/manylinux2010_x86_64
 docker run \
     --rm \
     --interactive \
@@ -52,3 +52,5 @@ docker run \
     --env BUILD_PYTHON=${BUILD_PYTHON} \
     quay.io/pypa/manylinux2014_aarch64 \
     /var/code/python-crc32c/scripts/manylinux/build_on_centos.sh
+
+echo "Build completed"

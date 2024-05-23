@@ -14,6 +14,7 @@
 # limitations under the License.
 
 set -eo pipefail
+echo "Release script started"
 
 if [ "$(uname)" == "Darwin" ]; then
     # Mac OS
@@ -45,6 +46,7 @@ else
     cd /var/code/python-crc32c/
 fi
 
+echo "Download dependencies for release script"
 
 # Start the releasetool reporter
 ${PYTHON} -m pip install --require-hashes -r github/python-crc32c/.kokoro/requirements.txt
