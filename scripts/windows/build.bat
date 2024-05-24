@@ -22,11 +22,11 @@ set CRC32C_INSTALL_PREFIX=%cd%\build\%CONFIGURATION%
 @rem Path to cmake, env var to make it easier to point to a specific version
 set cmake=cmake
 
-@rem python version should be set as an argument, if not, default to python 3.9
+@rem python version should be set as an argument, if not, default to python 3.10
 set PYTHON_VERSION=%1
 if "%PYTHON_VERSION%"=="" (
-  echo "Python version was not provided, using Python 3.9"
-  set PYTHON_VERSION=3.9
+  echo "Python version was not provided, using Python 3.10"
+  set PYTHON_VERSION=3.10
 
 )
 

@@ -13,8 +13,8 @@
 @rem limitations under the License.
 set PYTHON_VERSION=%1
 if "%PYTHON_VERSION%"=="" (
-  echo "Python version was not provided, using Python 3.9"
-  set PYTHON_VERSION=3.9
+  echo "Python version was not provided, using Python 3.10"
+  set PYTHON_VERSION=3.10
 )
 
 @rem update python deps and build wheels (requires CRC32C_INSTALL_PREFIX is set)
