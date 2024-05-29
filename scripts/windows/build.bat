@@ -37,6 +37,9 @@ if "%PYTHON_VERSION%"=="3.10-dev" (
 py -0
 py -%PYTHON_VERSION% -m pip install cmake
 
+@rem Add directory as safe to avoid "detected dubious ownership" fatal issue
+@REM git config --global --add safe.directory C:/tmpfs/src/github/python-crc32c
+git config --global --add safe.directory '*'
 git submodule update --init --recursive
 mkdir build
 
@@ -53,7 +56,7 @@ popd
 copy %CRC32C_INSTALL_PREFIX%bin\google_crc32c.dll .
 
 @rem update python deps and build wheels (requires CRC32C_INSTALL_PREFIX is set)
-FOR %%V IN (3.6-64,3.7-64) DO (
+FOR %%V IN (3.10-64,3.6-64,3.7-64) DO (
     py -%%V -m pip install --upgrade pip setuptools wheel
     py -%%V -m pip wheel . --wheel-dir wheels/
 )
