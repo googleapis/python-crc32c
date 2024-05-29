@@ -49,7 +49,7 @@ fi
 echo "Download dependencies for release script"
 
 # Start the releasetool reporter
-${PYTHON} -m pip install --require-hashes -r github/python-crc32c/.kokoro/requirements.txt
+${PYTHON} -m pip install --require-hashes -r ${REPO_ROOT}/github/python-crc32c/.kokoro/requirements.txt
 ${RELEASETOOL} publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
 
 # Ensure that we have the latest versions of Twine, Wheel, and Setuptools.
