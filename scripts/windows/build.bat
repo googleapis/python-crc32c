@@ -27,11 +27,6 @@ set PYTHON_VERSION=%1
 if "%PYTHON_VERSION%"=="" (
   echo "Python version was not provided, using Python 3.10"
   set PYTHON_VERSION=3.10
-
-)
-
-if "%PYTHON_VERSION%"=="3.10-dev" (
-   set PYTHON_VERSION=3.10
 )
 
 py -0
@@ -41,34 +36,20 @@ py -%PYTHON_VERSION% -m pip install cmake
 @REM git config --global --add safe.directory C:/tmpfs/src/github/python-crc32c
 git config --global --add safe.directory '*'
 git submodule update --init --recursive
-mkdir build
 
-@REM 64 Bit Builds.
-@REM removed -DCRC32C_BUILD_TESTS=no
-set CMAKE_GENERATOR="Visual Studio 15 2017"
-C:\Python37\Scripts\cmake -G %CMAKE_GENERATOR% -A x64 -DCRC32C_BUILD_BENCHMARKS=no -DBUILD_SHARED_LIBS=yes ^
--DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% .
+FOR %%V IN (32,64) DO (
+    set TARGET_PLATFORM="x64"
 
-C:\Python37\Scripts\cmake --build . --config RelWithDebInfo --target install
-dir %CRC32C_INSTALL_PREFIX% /b /s
-popd
+    if "%%V"=="32" (
+        set TARGET_PLATFORM="Win32"
+    )
+    echo "Target Platform: !TARGET_PLATFORM!"
 
-copy %CRC32C_INSTALL_PREFIX%bin\google_crc32c.dll .
+    pushd google_crc32c
 
-@rem update python deps and build wheels (requires CRC32C_INSTALL_PREFIX is set)
-FOR %%V IN (3.10-64,3.6-64,3.7-64) DO (
-    py -%%V -m pip install --upgrade pip setuptools wheel
-    py -%%V -m pip wheel . --wheel-dir wheels/
-)
-
-
-@REM 32 Bit Builds.
-@REM removed -DCRC32C_BUILD_TESTS=no
-
-set CMAKE_GENERATOR="Visual Studio 15 2017"
-pushd google_crc32c
-@rem reset hard to cleanup any changes done by 64-bit build.
-git reset --hard
+    @rem reset hard to cleanup any changes done by a previous build.
+    git reset --hard
+    git clean -fxd
 
     del /s /q CMakeFiles\
     del CMakeCache.txt
@@ -78,7 +59,7 @@ git reset --hard
 
     echo "Running cmake with Generator:  %CMAKE_GENERATOR%, Platform: !TARGET_PLATFORM!, Install Prefix: %CRC32C_INSTALL_PREFIX%"
 
-    %cmake% -G %CMAKE_GENERATOR% -A !TARGET_PLATFORM! -DCMAKE_BUILD_TYPE=Release -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0 -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ..
+    %cmake% -G %CMAKE_GENERATOR% -A !TARGET_PLATFORM! -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0 -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ..
 
     %cmake% --build . --config "%CONFIGURATION%" --target install
 
@@ -92,5 +73,3 @@ git reset --hard
     py -%PYTHON_VERSION%-%%V -m pip install --upgrade pip setuptools wheel
     py -%PYTHON_VERSION%-%%V -m pip wheel . --wheel-dir wheels/
 )
-
-
