@@ -34,7 +34,7 @@ py -%PYTHON_VERSION% -m pip install cmake
 
 @rem Add directory as safe to avoid "detected dubious ownership" fatal issue
 @REM git config --global --add safe.directory C:/tmpfs/src/github/python-crc32c
-git config --global --add safe.directory '*'
+git config --global --add safe.directory C:/tmpfs/src/github/python-crc32c
 git submodule update --init --recursive
 
 FOR %%V IN (32,64) DO (
@@ -45,8 +45,8 @@ FOR %%V IN (32,64) DO (
     )
     echo "Target Platform: !TARGET_PLATFORM!"
 
+    git config --global --add safe.directory C:/tmpfs/src/github/python-crc32c/google_crc32c
     pushd google_crc32c
-
     @rem reset hard to cleanup any changes done by a previous build.
     git reset --hard
     git clean -fxd
