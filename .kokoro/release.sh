@@ -30,10 +30,10 @@ else
     # Kokoro Linux
 
     # add python3 to path, used by tooling
-    PATH=/opt/python/cp38-cp38/bin:$PATH
+    PATH=/venv/bin/python3:$PATH
     # mv /keys/73713_google_cloud_pypi_password /73713_google_cloud_pypi_password
 
-    PYTHON_BIN=/opt/python/cp38-cp38/bin
+    PYTHON_BIN=/venv/bin
     RELEASETOOL=${PYTHON_BIN}/releasetool
     PYTHON=${PYTHON_BIN}/python
     TWINE=${PYTHON_BIN}/twine
