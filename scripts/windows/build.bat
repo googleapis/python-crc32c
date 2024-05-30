@@ -73,3 +73,5 @@ FOR %%V IN (32,64) DO (
     py -%PYTHON_VERSION%-%%V -m pip install --upgrade pip setuptools wheel
     py -%PYTHON_VERSION%-%%V -m pip wheel . --wheel-dir wheels/
 )
+
+echo "Windows build for has completed successfully..."

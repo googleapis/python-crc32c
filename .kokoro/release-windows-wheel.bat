@@ -12,7 +12,7 @@
 @rem See the License for the specific language governing permissions and
 @rem limitations under the License.
 
-@echo "Starting Windows build"
+@echo "Starting Windows release"
 
 cd /d %~dp0
 cd ..
