@@ -8,4 +8,5 @@ cd github/python-crc32c
 # Build for OSX
 ./scripts/osx/build.sh
 
+# REPO_ROOT=$(pwd)
 ./.kokoro/release.sh
