@@ -28,12 +28,10 @@ if [ "$(uname)" == "Darwin" ]; then
 
 else
     # Kokoro Linux
-
-    # add python3 to path, used by tooling
-    PATH=/venv/bin/python3:$PATH
     # mv /keys/73713_google_cloud_pypi_password /73713_google_cloud_pypi_password
 
-    PYTHON_BIN=/venv/bin
+    PATH=/opt/python/cp39-cp39/bin/:$PATH
+    PYTHON_BIN=/opt/python/cp39-cp39/bin/
     RELEASETOOL=${PYTHON_BIN}/releasetool
     PYTHON=${PYTHON_BIN}/python
     TWINE=${PYTHON_BIN}/twine
@@ -57,7 +55,8 @@ ${PYTHON} -m pip install --upgrade twine wheel setuptools --user
 
 # Disable buffering, so that the logs stream through.
 export PYTHONUNBUFFERED=1
-
+echo "## RELASE WORKFLOW SUCCESSFUL ##"
+echo "## Uploading Wheels ##"
 # TODO: ONE OF THE BELOW WORKS
 # Move into the package, build the distribution and upload.
 # TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-1")
