@@ -24,7 +24,11 @@ if [ "$(uname)" == "Darwin" ]; then
     RELEASETOOL=${PYTHON_BIN}/releasetool
     TWINE=${PYTHON_BIN}/twine
     ${PYTHON} -m pip install gcp-releasetool twine --user
+
+    echo "Change to code directory"
+    REPO_ROOT=$(pwd)
     cd "${REPO_ROOT}"
+    ls
 
 else
     # Kokoro Linux
@@ -37,11 +41,11 @@ else
     TWINE=${PYTHON_BIN}/twine
     ${PYTHON} -m pip install gcp-releasetool twine
 
-    ls ${PYTHON_BIN}
-
-
     echo "Change to code directory"
-    cd /var/code/python-crc32c/
+    REPO_ROOT=/var/code/python-crc32c/
+    cd "${REPO_ROOT}"
+    ls
+
 fi
 
 echo "Download dependencies for release script"
