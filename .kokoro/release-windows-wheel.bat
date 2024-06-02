@@ -22,13 +22,16 @@ call scripts\windows\build.bat || goto :error
 
 @echo "Start the releasetool reporter"
 call py -3 -m pip install gcp-releasetool || goto :error
-call py -3 -m releasetool publish-reporter-script > /tmp/publisher-script || goto :error
+call py -3 -m releasetool publish-reporter-script > C:\temp\publisher-script || goto :error
 
 @echo "Ensure that we have the latest versions of Twine, Wheel, and Setuptools."
 call py -3 -m pip install --upgrade twine wheel setuptools || goto :error
 
 @echo "Disable buffering, so that the logs stream through."
 set PYTHONUNBUFFERED=1
+
+@echo "## RELASE WORKFLOW SUCCESSFUL ##"
+@echo "## Uploading Wheels ##"
 
 @echo "Move into the package, build the distribution and upload."
 @REM set /p TWINE_PASSWORD=<%KOKORO_KEYSTORE_DIR%/73713_google_cloud_pypi_password
