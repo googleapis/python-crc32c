@@ -26,6 +26,7 @@ if [ "$(uname)" == "Darwin" ]; then
     ${PYTHON} -m pip install gcp-releasetool twine --user
 
     echo "Change to code directory"
+    REPO_ROOT=$(pwd)
     cd "${REPO_ROOT}"
     ls
 
@@ -41,6 +42,7 @@ else
     ${PYTHON} -m pip install gcp-releasetool twine
 
     echo "Change to code directory"
+    REPO_ROOT=/var/code/python-crc32c/
     cd "${REPO_ROOT}"
     ls
 
