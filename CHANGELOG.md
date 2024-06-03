@@ -4,6 +4,20 @@
 
 [1]: https://pypi.org/project/google-crc32c/#history
 
+## [1.6.0.dev0](https://github.com/googleapis/python-crc32c/compare/v1.4.0...v1.6.0.dev0) (2024-06-03)
+
+
+### Features
+
+* Add support for python 3.12 ([#177](https://github.com/googleapis/python-crc32c/issues/177)) ([5ff1207](https://github.com/googleapis/python-crc32c/commit/5ff1207e7b60256e7a32932324ccb9ad4ec265d2))
+
+
+### Bug Fixes
+
+* Remove manylinux1 which is no longer supported by PyPA ([#186](https://github.com/googleapis/python-crc32c/issues/186)) ([79edb3f](https://github.com/googleapis/python-crc32c/commit/79edb3fd3cda0e4193a6fb6a8346058398df43de))
+* Update CI to use kokoro and build for OSX, Windows, Linux ([#214](https://github.com/googleapis/python-crc32c/pull/214))
+
+
 ## [1.5.0](https://github.com/googleapis/python-crc32c/compare/v1.4.0...v1.5.0) (2022-08-31)
 
 
