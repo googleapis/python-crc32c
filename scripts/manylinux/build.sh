@@ -23,6 +23,8 @@ REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 
 
 cd $REPO_ROOT
+# Add directory as safe to avoid "detected dubious ownership" fatal issue1
+git config --global --add safe.directory $REPO_ROOT
 git submodule update --init --recursive
 
 docker pull quay.io/pypa/manylinux2010_x86_64

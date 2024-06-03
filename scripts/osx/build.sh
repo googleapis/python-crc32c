@@ -45,6 +45,8 @@ export PY_BIN="${PY_BIN:-python3}"
 export CRC32C_INSTALL_PREFIX="${REPO_ROOT}/usr"
 
 cd ${REPO_ROOT}
+# Add directory as safe to avoid "detected dubious ownership" fatal issue
+git config --global --add safe.directory $REPO_ROOT
 git submodule update --init --recursive
 
 ${OSX_DIR}/build_c_lib.sh

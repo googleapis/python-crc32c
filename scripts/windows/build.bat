@@ -33,7 +33,6 @@ py -0
 py -%PYTHON_VERSION% -m pip install cmake
 
 @rem Add directory as safe to avoid "detected dubious ownership" fatal issue
-@REM git config --global --add safe.directory C:/tmpfs/src/github/python-crc32c
 git config --global --add safe.directory C:/tmpfs/src/github/python-crc32c
 git submodule update --init --recursive
 
