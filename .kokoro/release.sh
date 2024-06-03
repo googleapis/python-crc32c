@@ -32,7 +32,7 @@ if [ "$(uname)" == "Darwin" ]; then
 
 else
     # Kokoro Linux
-    # mv /keys/73713_google_cloud_pypi_password /73713_google_cloud_pypi_password
+    mv /keys/73713_google-cloud-pypi-token-keystore-1 /73713_google-cloud-pypi-token-keystore-1
 
     PATH=/opt/python/cp39-cp39/bin/:$PATH
     PYTHON_BIN=/opt/python/cp39-cp39/bin/
@@ -63,11 +63,10 @@ echo "## RELASE WORKFLOW SUCCESSFUL ##"
 echo "## Uploading Wheels ##"
 # TODO: ONE OF THE BELOW WORKS
 # Move into the package, build the distribution and upload.
-# TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-1")
-# TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google_cloud_pypi_password")
-# cd github/python-crc32c
-# python3 setup.py sdist bdist_wheel
-# twine upload --username __token__ --password "${TWINE_PASSWORD}" dist/*
+TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-1")
+cd github/python-crc32c
+python3 setup.py sdist bdist_wheel
+#twine upload --username __token__ --password "${TWINE_PASSWORD}" dist/*
 
 ${PYTHON} setup.py sdist
 # ${TWINE} upload --skip-existing --username gcloudpypi --password "${TWINE_PASSWORD}" dist/* wheels/*

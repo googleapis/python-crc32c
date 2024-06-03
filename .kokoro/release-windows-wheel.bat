@@ -34,7 +34,7 @@ set PYTHONUNBUFFERED=1
 @echo "## Uploading Wheels ##"
 
 @echo "Move into the package, build the distribution and upload."
-@REM set /p TWINE_PASSWORD=<%KOKORO_KEYSTORE_DIR%/73713_google_cloud_pypi_password
+set /p TWINE_PASSWORD=<%KOKORO_KEYSTORE_DIR%/73713_google-cloud-pypi-token-keystore-1
 call py -3 setup.py sdist || goto :error
 @REM call py -3 -m twine upload --skip-existing --username gcloudpypi --password "%TWINE_PASSWORD%" dist/* wheels/google_crc32c* || goto :error
 
