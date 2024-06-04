@@ -18,6 +18,7 @@ cd /d %~dp0
 cd ..
 
 @rem as this package uses submodules make sure we have all content
+call git config --global --add safe.directory C:/tmpfs/src/github/python-crc32c
 call git submodule update --recursive || goto :error
 
 @echo "Build Wheel"
