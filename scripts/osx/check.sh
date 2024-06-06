@@ -43,6 +43,7 @@ ${PYTHON37} -m pip install --upgrade delocate
 LISTDEPS_CMD="${PYTHON37}/delocate-listdeps --all --depending"
 VIRTUALENV_CMD="${PYTHON37}/python3 -m venv"
 
+pyenv local 3.7
 ${PYTHON37} -m venv venv37
 curl https://bootstrap.pypa.io/get-pip.py | venv37/bin/python3
 WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp37-cp37m-macosx_10_9_x86_64.whl
@@ -53,6 +54,7 @@ venv37/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
 ${LISTDEPS_CMD} ${WHL}
 rm -fr venv37
 
+pyenv local 3.8
 ${PYTHON38} -m venv venv38
 curl https://bootstrap.pypa.io/get-pip.py | venv38/bin/python3
 WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp38-cp38-macosx_10_9_x86_64.whl
@@ -63,6 +65,7 @@ venv38/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
 ${LISTDEPS_CMD} ${WHL}
 rm -fr venv38
 
+pyenv local 3.9
 ${PYTHON39} -m venv venv39
 curl https://bootstrap.pypa.io/get-pip.py | venv39/bin/python3
 WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp39-cp39-macosx_10_9_x86_64.whl
@@ -71,6 +74,7 @@ venv39/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
 ${LISTDEPS_CMD} ${WHL}
 rm -fr venv39
 
+pyenv local 3.10
 ${PYTHON310} -m venv venv310
 curl https://bootstrap.pypa.io/get-pip.py | venv310/bin/python3
 WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp310-cp310-macosx_10_9_x86_64.whl
@@ -79,6 +83,7 @@ venv310/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
 ${LISTDEPS_CMD} ${WHL}
 rm -fr venv310
 
+pyenv local 3.11
 ${PYTHON311} -m venv venv311
 curl https://bootstrap.pypa.io/get-pip.py | venv311/bin/python3
 WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp311-cp311-macosx_10_9_x86_64.whl
@@ -87,7 +92,7 @@ venv311/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
 ${LISTDEPS_CMD} ${WHL}
 rm -fr venv311
 
-
+pyenv local 3.12
 ${PYTHON312} -m venv venv312
 curl https://bootstrap.pypa.io/get-pip.py | venv312/bin/python3
 WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp312-cp312-macosx_10_9_x86_64.whl
