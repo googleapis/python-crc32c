@@ -26,6 +26,9 @@ export REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 # set up pyenv & shell environment for switching across python versions
 eval "$(pyenv init -)"
 eval "$(pyenv init --path)"
+# install required packages for pyenv
+# https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+brew install openssl readline sqlite3 xz zlib tcl-tk
 
 install_python_pyenv() {
     version=$1
