@@ -68,19 +68,3 @@ if [[ -n "${NOX_SESSION:-}" ]]; then
 else
     python3 -m nox
 fi
-# Find out if this package was modified.
-# Temporarily use Thea's fork of ci-diff-helper w/ Kokoro support.
-# python3.6 -m pip install --quiet git+https://github.com/theacodes/ci-diff-helper.git
-# python3.6 test_utils/scripts/get_target_packages_kokoro.py > ~/target_packages
-# cat ~/target_packages
-
-# if [[ ! -n $(grep -x "$PACKAGE" ~/target_packages) ]]; then
-#     echo "$PACKAGE was not modified, returning."
-#     exit;
-# fi
-
-# cd "$PACKAGE"
-
-# Some system tests require indexes. Use gcloud to create them.
-gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=$PROJECT_ID
-#gcloud --quiet --verbosity=debug datastore indexes create tests/system/index.yaml
