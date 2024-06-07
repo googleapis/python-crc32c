@@ -34,7 +34,7 @@ SUPPORTED_PYTHON_VERSIONS=("3.7" "3.8" "3.9" "3.10" "3.11" "3.12")
 
 for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
     PYTHON="python${PYTHON_VERSION}"
-    pyenv local $PYTHON_VERSION
+    pyenv shell $PYTHON_VERSION
     # Make sure virtualenv and delocate.
     ${PYTHON} -m pip install --upgrade delocate
     LISTDEPS_CMD="${PYTHON}/delocate-listdeps --all --depending"
