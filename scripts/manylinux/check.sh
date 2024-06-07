@@ -20,25 +20,28 @@ echo "CHECKING ON LINUX"
 
 VERSION=$(awk "/version \= ([0-9.]+)/" setup.cfg)
 PACKAGE_VERSION=${VERSION:10}
-WHEEL_FILE="wheels/google_crc32c-${PACKAGE_VERSION}-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
-PYTHON=python3.9
 
-# Using pyenv, set 3.9 as a local python version.
-# pyenv versions
-pyenv local 3.9
+SUPPORTED_PYTHON_VERSIONS=("3.7" "3.8" "3.9" "3.10" "3.11" "3.12")
 
-# Make sure we can create a virtual environment.
-${PYTHON} -m pip install --upgrade setuptools pip wheel
+for PYTHON_VERSION in "${SUPPORTED_PYTHON_VERSIONS[@]}"; do
+    PYTHON=python${PYTHON_VERSION}
+    pyenv local ${PYTHON_VERSION}
+    ${PYTHON} -m pip install --upgrade setuptools pip wheel
 
-# Create a virtual environment.
-${PYTHON} -m venv venv
+    # Make sure we can create a virtual environment.
+    ${PYTHON} -m pip install --upgrade setuptools pip wheel
 
-# Install the wheel.
-venv/bin/pip install ${WHEEL_FILE}
+    # Create a virtual environment.
+    ${PYTHON} -m venv venv
 
-# Verify that the module is installed and peek at contents.
-venv/bin/python scripts/check_crc32c_extension.py
-unzip -l ${WHEEL_FILE}
+    # Install the wheel.
+    WHEEL_FILE="wheels/google_crc32c-${PACKAGE_VERSION}-cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+    venv/bin/pip install ${WHEEL_FILE}
 
-# Clean up.
-rm -fr venv/
+    # Verify that the module is installed and peek at contents.
+    venv/bin/python scripts/check_crc32c_extension.py
+    unzip -l ${WHEEL_FILE}
+
+    # Clean up.
+    rm -fr venv/
+done
