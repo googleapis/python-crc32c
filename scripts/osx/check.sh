@@ -27,76 +27,27 @@ export REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 
 ls ${REPO_ROOT}/wheels
 
-# NOTE: These are the Python.org versions of Python.
-PYTHON37="python3.7"
-PYTHON38="python3.8"
-PYTHON39="python3.9"
-PYTHON310="python3.10"
-PYTHON311="python3.11"
-PYTHON311="python3.12"
-
 # Make sure we have an updated `pip`.
 curl https://bootstrap.pypa.io/get-pip.py | ${PYTHON37}
 
-# Make sure virtualenv and delocate.
-${PYTHON37} -m pip install --upgrade delocate
-LISTDEPS_CMD="${PYTHON37}/delocate-listdeps --all --depending"
-VIRTUALENV_CMD="${PYTHON37}/python3 -m venv"
+SUPPORTED_PYTHON_VERSIONS=("3.7" "3.8" "3.9" "3.10" "3.11" "3.12")
 
-pyenv local 3.7
-${PYTHON37} -m venv venv37
-curl https://bootstrap.pypa.io/get-pip.py | venv37/bin/python3
-WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp37-cp37m-macosx_10_9_x86_64.whl
-venv37/bin/pip install ${WHL}
-venv37/bin/pip install pytest
-venv37/bin/py.test ${REPO_ROOT}/tests
-venv37/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
-${LISTDEPS_CMD} ${WHL}
-rm -fr venv37
+for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
+    PYTHON="python${PYTHON_VERSION}"
+    pyenv local $PYTHON_VERSION
+    # Make sure virtualenv and delocate.
+    ${PYTHON} -m pip install --upgrade delocate
+    LISTDEPS_CMD="${PYTHON}/delocate-listdeps --all --depending"
+    VIRTUALENV="venv${PYTHON_VERSION//.}"
+    ${PYTHON} -m venv ${VIRTUALENV}
 
-pyenv local 3.8
-${PYTHON38} -m venv venv38
-curl https://bootstrap.pypa.io/get-pip.py | venv38/bin/python3
-WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp38-cp38-macosx_10_9_x86_64.whl
-venv38/bin/pip install ${WHL}
-venv38/bin/pip install pytest
-venv38/bin/py.test ${REPO_ROOT}/tests
-venv38/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
-${LISTDEPS_CMD} ${WHL}
-rm -fr venv38
+    curl https://bootstrap.pypa.io/get-pip.py | ${VIRTUALENV}/bin/python3
+    WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp37-cp37m-macosx_10_9_x86_64.whl
+    ${VIRTUALENV}/bin/pip install ${WHL}
+    ${VIRTUALENV}/bin/pip install pytest
+    ${VIRTUALENV}/bin/py.test ${REPO_ROOT}/tests
+    ${VIRTUALENV}/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
+    ${LISTDEPS_CMD} ${WHL}
+    rm -fr ${VIRTUALENV}
 
-pyenv local 3.9
-${PYTHON39} -m venv venv39
-curl https://bootstrap.pypa.io/get-pip.py | venv39/bin/python3
-WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp39-cp39-macosx_10_9_x86_64.whl
-venv39/bin/pip install ${WHL}
-venv39/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
-${LISTDEPS_CMD} ${WHL}
-rm -fr venv39
-
-pyenv local 3.10
-${PYTHON310} -m venv venv310
-curl https://bootstrap.pypa.io/get-pip.py | venv310/bin/python3
-WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp310-cp310-macosx_10_9_x86_64.whl
-venv310/bin/pip install ${WHL}
-venv310/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
-${LISTDEPS_CMD} ${WHL}
-rm -fr venv310
-
-pyenv local 3.11
-${PYTHON311} -m venv venv311
-curl https://bootstrap.pypa.io/get-pip.py | venv311/bin/python3
-WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp311-cp311-macosx_10_9_x86_64.whl
-venv311/bin/pip install ${WHL}
-venv311/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
-${LISTDEPS_CMD} ${WHL}
-rm -fr venv311
-
-pyenv local 3.12
-${PYTHON312} -m venv venv312
-curl https://bootstrap.pypa.io/get-pip.py | venv312/bin/python3
-WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp312-cp312-macosx_10_9_x86_64.whl
-venv312/bin/pip install ${WHL}
-venv312/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
-${LISTDEPS_CMD} ${WHL}
-rm -fr venv312
+done
