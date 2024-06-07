@@ -27,21 +27,19 @@ export REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 
 ls ${REPO_ROOT}/wheels
 
-# Make sure we have an updated `pip`.
-curl https://bootstrap.pypa.io/get-pip.py | ${PYTHON37}
-
 SUPPORTED_PYTHON_VERSIONS=("3.7" "3.8" "3.9" "3.10" "3.11" "3.12")
 
 for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
     PYTHON="python${PYTHON_VERSION}"
     pyenv shell $PYTHON_VERSION
+    VIRTUALENV="venv${PYTHON_VERSION//.}"
+    # Make sure we have an updated `pip`.
+    curl https://bootstrap.pypa.io/get-pip.py | ${PYTHON}
     # Make sure virtualenv and delocate.
     ${PYTHON} -m pip install --upgrade delocate
     LISTDEPS_CMD="${PYTHON}/delocate-listdeps --all --depending"
-    VIRTUALENV="venv${PYTHON_VERSION//.}"
     ${PYTHON} -m venv ${VIRTUALENV}
 
-    curl https://bootstrap.pypa.io/get-pip.py | ${VIRTUALENV}/bin/python3
     WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp37-cp37m-macosx_10_9_x86_64.whl
     ${VIRTUALENV}/bin/pip install ${WHL}
     ${VIRTUALENV}/bin/pip install pytest

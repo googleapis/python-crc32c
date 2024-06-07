@@ -28,9 +28,6 @@ for PYTHON_VERSION in "${SUPPORTED_PYTHON_VERSIONS[@]}"; do
     pyenv shell ${PYTHON_VERSION}
     ${PYTHON} -m pip install --upgrade setuptools pip wheel
 
-    # Make sure we can create a virtual environment.
-    ${PYTHON} -m pip install --upgrade setuptools pip wheel
-
     # Create a virtual environment.
     ${PYTHON} -m venv venv
 
