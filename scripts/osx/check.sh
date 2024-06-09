@@ -25,6 +25,9 @@ OSX_DIR=$(dirname ${SCRIPT_FI})
 SCRIPTS_DIR=$(dirname ${OSX_DIR})
 export REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 
+# set up pyenv & shell environment for switching across python versions
+eval "$(pyenv init -)"
+eval "$(pyenv init --path)"
 ls ${REPO_ROOT}/wheels
 
 SUPPORTED_PYTHON_VERSIONS=("3.7" "3.8" "3.9" "3.10" "3.11" "3.12")
