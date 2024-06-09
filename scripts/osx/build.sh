@@ -55,42 +55,20 @@ git submodule update --init --recursive
 
 ${OSX_DIR}/build_c_lib.sh
 
-# Build wheel for Python 3.7.
-install_python_pyenv 3.7
-export PY_BIN="python3.7"
-export PY_TAG="cp37-cp37m"
-${OSX_DIR}/build_python_wheel.sh
+SUPPORTED_PYTHON_VERSIONS=("3.7" "3.8" "3.9" "3.10" "3.11" "3.12")
 
-# Build wheel for Python 3.8.
-# Note that the 'm' SOABI flag is no longer supported for Python >= 3.8
-install_python_pyenv 3.8
-export PY_BIN="python3.8"
-export PY_TAG="cp38-cp38"
-${OSX_DIR}/build_python_wheel.sh
+for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
+    echo "Build wheel for Python ${PYTHON_VERSION}"
+    SOABI_FLAG="m"
+    if [ "${PYTHON_VERSION}" != "3.7" ]; then
+        SOABI_FLAG=""
+    fi
+    install_python_pyenv $PYTHON_VERSION
+    export PY_BIN="python${PYTHON_VERSION}"
+    export PY_TAG="cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}${SOABI_FLAG}"
+    ${OSX_DIR}/build_python_wheel.sh
 
-# Build wheel for Python 3.9.
-install_python_pyenv 3.9
-export PY_BIN="python3.9"
-export PY_TAG="cp39-cp39"
-${OSX_DIR}/build_python_wheel.sh
-
-# Build wheel for Python 3.10.
-install_python_pyenv 3.10
-export PY_BIN="python3.10"
-export PY_TAG="cp310-cp310"
-${OSX_DIR}/build_python_wheel.sh
-
-# Build wheel for Python 3.11.
-install_python_pyenv 3.11
-export PY_BIN="python3.11"
-export PY_TAG="cp311-cp311"
-${OSX_DIR}/build_python_wheel.sh
-
-# Build wheel for Python 3.12.
-install_python_pyenv 3.12
-export PY_BIN="python3.12"
-export PY_TAG="cp312-cp312"
-${OSX_DIR}/build_python_wheel.sh
+done
 
 # Clean up.
 rm -fr ${CRC32C_INSTALL_PREFIX}
