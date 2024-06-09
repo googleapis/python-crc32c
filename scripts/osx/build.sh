@@ -36,11 +36,11 @@ install_python_pyenv() {
     if [ -z "$(command -v python$version)" ]; then
         echo "Python $version is not installed. Installing..."
         pyenv install $version
-        pyenv shell $version
         echo "Python $version installed."
     else
         echo "Python $version is already installed."
     fi
+    pyenv shell $version
 }
 
 # Build and install `libcrc32c`
