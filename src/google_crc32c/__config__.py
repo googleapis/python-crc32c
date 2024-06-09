@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os
-
+import sys
 
 def modify_path():
     """Modify the module search path."""
@@ -41,6 +41,5 @@ def modify_path():
                 os.add_dll_directory(extra_dll_dir)
     except ImportError:
         pass
-
 
 modify_path()
