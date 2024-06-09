@@ -21,6 +21,9 @@ echo "CHECKING ON LINUX"
 VERSION=$(awk "/version \= ([0-9.]+)/" setup.cfg)
 PACKAGE_VERSION=${VERSION:10}
 
+# set up pyenv & shell environment for switching across python versions
+eval "$(pyenv init -)"
+eval "$(pyenv init --path)"
 SUPPORTED_PYTHON_VERSIONS=("3.7" "3.8" "3.9" "3.10" "3.11" "3.12")
 
 for PYTHON_VERSION in "${SUPPORTED_PYTHON_VERSIONS[@]}"; do
