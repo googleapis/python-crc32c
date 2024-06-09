@@ -33,7 +33,7 @@ brew install openssl readline sqlite3 xz zlib tcl-tk
 install_python_pyenv() {
     version=$1
 
-    if [ -z "$(command -v python$version)" ]; then
+    if [ -z "$(pyenv versions --bare | grep $version)" ]; then
         echo "Python $version is not installed. Installing..."
         pyenv install $version
         echo "Python $version installed."
