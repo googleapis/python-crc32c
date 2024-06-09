@@ -43,7 +43,7 @@ for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
     LISTDEPS_CMD="${PYTHON}/delocate-listdeps --all --depending"
     ${PYTHON} -m venv ${VIRTUALENV}
 
-    WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp37-cp37m-macosx_10_9_x86_64.whl
+    WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp37-cp37m-macosx_14_3_x86_64.whl
     ${VIRTUALENV}/bin/pip install ${WHL}
     ${VIRTUALENV}/bin/pip install pytest
     ${VIRTUALENV}/bin/py.test ${REPO_ROOT}/tests
