@@ -47,8 +47,14 @@ for PYTHON_VERSION in "${SUPPORTED_PYTHON_VERSIONS[@]}"; do
     # Create a virtual environment.
     ${PYTHON} -m venv venv
 
+    # Note that the 'm' SOABI flag is no longer supported for Python >= 3.8
+    SOABI_FLAG="m"
+    if [ "${PYTHON_VERSION}" != "3.7" ]; then
+        SOABI_FLAG=""
+    fi
+
     # Install the wheel.
-    WHEEL_FILE="wheels/google_crc32c-${PACKAGE_VERSION}-cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+    WHEEL_FILE="wheels/google_crc32c-${PACKAGE_VERSION}-cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}${SOABI_FLAG}-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
     venv/bin/pip install ${WHEEL_FILE}
 
     # Verify that the module is installed and peek at contents.

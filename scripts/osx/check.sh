@@ -43,7 +43,12 @@ for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
     LISTDEPS_CMD="${PYTHON}/delocate-listdeps --all --depending"
     ${PYTHON} -m venv ${VIRTUALENV}
 
-    WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp37-cp37m-macosx_14_3_x86_64.whl
+    # Note that the 'm' SOABI flag is no longer supported for Python >= 3.8
+    SOABI_FLAG="m"
+    if [ "${PYTHON_VERSION}" != "3.7" ]; then
+        SOABI_FLAG=""
+    fi
+    WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}${SOABI_FLAG}-macosx_14_3_x86_64.whl
     ${VIRTUALENV}/bin/pip install ${WHL}
     ${VIRTUALENV}/bin/pip install pytest
     ${VIRTUALENV}/bin/py.test ${REPO_ROOT}/tests
