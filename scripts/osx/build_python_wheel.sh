@@ -33,9 +33,27 @@ if [[ -z "${PY_TAG}" ]]; then
     exit 1
 fi
 
+# set up pyenv & shell environment for switching across python versions
+eval "$(pyenv init -)"
+eval "$(pyenv init --path)"
+
+install_python_pyenv() {
+    version=$1
+
+    if [ -z "$(pyenv versions --bare | grep $version)" ]; then
+        echo "Python $version is not installed. Installing..."
+        pyenv install $version
+        echo "Python $version installed."
+    else
+        echo "Python $version is already installed."
+    fi
+    pyenv shell $version
+}
+install_python_pyenv ${PY_BIN}
+
 # Create a virtualenv where we can install Python build dependencies.
 VENV=${REPO_ROOT}/venv${PY_BIN}
-${PY_BIN} -m venv ${VENV}
+"python${PY_BIN}" -m venv ${VENV}
 curl https://bootstrap.pypa.io/get-pip.py | ${VENV}/bin/python
 ${VENV}/bin/python -m pip install \
     --requirement ${REPO_ROOT}/scripts/dev-requirements.txt
