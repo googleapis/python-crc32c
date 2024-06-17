@@ -77,3 +77,8 @@ FOR %%V IN (32,64) DO (
 )
 
 echo "Windows build has completed successfully"
+
+@REM TODO: REMOVE AFTER TESTING
+@REM TODO: upload wheels to GCS for testing
+gsutil cp ${REPO_ROOT}/wheels/* gs://python_crc32c/win_wheels/
+
