@@ -49,7 +49,9 @@ for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
         SOABI_FLAG=""
     fi
     WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}${SOABI_FLAG}-macosx_14_3_x86_64.whl
-    ${VIRTUALENV}/bin/pip install ${WHL}
+    ## TODO: check if other wheels match the platform
+    # ${VIRTUALENV}/bin/pip install ${WHL}
+    ${VIRTUALENV}/bin/pip install --no-index --find-links=${REPO_ROOT}/wheels google-crc32c --force-reinstall
     ${VIRTUALENV}/bin/pip install pytest
     ${VIRTUALENV}/bin/py.test ${REPO_ROOT}/tests
     ${VIRTUALENV}/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
