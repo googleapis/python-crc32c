@@ -57,3 +57,11 @@ docker run \
     /var/code/python-crc32c/scripts/manylinux/build_on_centos.sh
 
 echo "Build completed"
+
+# TODO: REMOVE AFTER TESTING
+# TODO: upload wheels to GCS for testing
+export GOOGLE_APPLICATION_CREDENTIALS=${KOKORO_GFILE_DIR}/service-account.json
+gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+ls ${REPO_ROOT}/wheels/
+gsutil cp ${REPO_ROOT}/wheels/* gs://python_crc32c/linux_wheels/
+echo "Linux wheels uploaded successfully"

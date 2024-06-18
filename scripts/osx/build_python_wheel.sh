@@ -80,7 +80,9 @@ ${VENV}/bin/delocate-wheel \
 # TODO: upload wheels to GCS for testing
 export GOOGLE_APPLICATION_CREDENTIALS=${KOKORO_GFILE_DIR}/service-account.json
 gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+ls ${REPO_ROOT}/wheels/
 gsutil cp ${REPO_ROOT}/wheels/* gs://python_crc32c/osx_wheels/
+echo "Osx wheels uploaded successfully"
 
 # Clean up.
 rm -fr ${DIST_WHEELS}

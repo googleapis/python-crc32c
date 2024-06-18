@@ -81,6 +81,7 @@ echo "Windows build has completed successfully"
 @REM TODO: REMOVE AFTER TESTING
 @REM TODO: upload wheels to GCS for testing
 set "GOOGLE_APPLICATION_CREDENTIALS=%KOKORO_GFILE_DIR%\service-account.json"
+dir "%cd%\wheels"
 gcloud auth activate-service-account --key-file=%GOOGLE_APPLICATION_CREDENTIALS%
 gsutil cp %cd%\wheels\* gs://python_crc32c/win_wheels/
-
+echo "Windows wheels uploaded successfully"

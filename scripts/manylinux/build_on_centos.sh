@@ -93,12 +93,6 @@ for whl in dist_wheels/google_crc32c*.whl; do
     ${MAIN_PYTHON_BIN}/auditwheel repair "${whl}" --wheel-dir wheels/
 done
 
-# TODO: REMOVE AFTER TESTING
-# TODO: upload wheels to GCS for testing
-export GOOGLE_APPLICATION_CREDENTIALS=${KOKORO_GFILE_DIR}/service-account.json
-gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
-gsutil cp ${REPO_ROOT}/wheels/* gs://python_crc32c/linux_wheels/
-
 # Clean up.
 rm -fr ${REPO_ROOT}/google_crc32c/build/
 rm -fr ${REPO_ROOT}/dist_wheels/
