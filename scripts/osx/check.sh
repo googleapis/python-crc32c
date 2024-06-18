@@ -48,10 +48,6 @@ for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
     if [ "${PYTHON_VERSION}" != "3.7" ]; then
         SOABI_FLAG=""
     fi
-    # TODO: REMOVE AFTER TESTING
-    # TODO: upload wheels to GCS for testing
-    export GOOGLE_APPLICATION_CREDENTIALS=${KOKORO_GFILE_DIR}/service-account.json
-    gsutil cp ${REPO_ROOT}/wheels/* gs://python_crc32c/osx_wheels/
     WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}${SOABI_FLAG}-macosx_14_3_x86_64.whl
     ${VIRTUALENV}/bin/pip install ${WHL}
     ${VIRTUALENV}/bin/pip install pytest

@@ -64,8 +64,3 @@ for PYTHON_VERSION in "${SUPPORTED_PYTHON_VERSIONS[@]}"; do
     # Clean up.
     rm -fr venv/
 done
-
-# TODO: REMOVE AFTER TESTING
-# TODO: upload wheels to GCS for testing
-export GOOGLE_APPLICATION_CREDENTIALS=${KOKORO_GFILE_DIR}/service-account.json
-gsutil cp ${REPO_ROOT}/wheels/* gs://python_crc32c/linux_wheels/
