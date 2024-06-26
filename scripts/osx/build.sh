@@ -39,18 +39,13 @@ git submodule update --init --recursive
 
 ${OSX_DIR}/build_c_lib.sh
 
-SUPPORTED_PYTHON_VERSIONS=("3.7" "3.8" "3.9" "3.10" "3.11" "3.12")
+SUPPORTED_PYTHON_VERSIONS=("3.8" "3.9" "3.10" "3.11" "3.12")
 
 for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
     echo "Build wheel for Python ${PYTHON_VERSION}"
-    SOABI_FLAG="m"
-    if [ "${PYTHON_VERSION}" != "3.7" ]; then
-        SOABI_FLAG=""
-    fi
     export PY_BIN=$PYTHON_VERSION
-    export PY_TAG="cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}${SOABI_FLAG}"
+    export PY_TAG="cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}"
     ${OSX_DIR}/build_python_wheel.sh
-
 done
 
 # Clean up.

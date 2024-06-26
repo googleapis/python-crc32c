@@ -65,15 +65,18 @@ cd ${REPO_ROOT}
 ${VENV}/bin/python setup.py build_ext \
     --include-dirs=${REPO_ROOT}/usr/include \
     --library-dirs=${REPO_ROOT}/usr/lib \
-    --rpath=${REPO_ROOT}/usr/lib
+    --rpath=${REPO_ROOT}/usr/lib \
+    --plat-name=macosx-10.9-universal2
 ${VENV}/bin/python -m pip wheel ${REPO_ROOT} --wheel-dir ${DIST_WHEELS}
 
-# Delocate the wheel. removed --check-archs. We don't build i386.
+# Delocate the wheel.
 FIXED_WHEELS="${REPO_ROOT}/wheels"
 mkdir -p ${FIXED_WHEELS}
 ${VENV}/bin/delocate-wheel \
     --wheel-dir ${FIXED_WHEELS} \
     --verbose \
+    --check-archs \
+    --require-archs=universal2 \
     ${DIST_WHEELS}/google_crc32c*${PY_TAG}*.whl
 
 # TODO: REMOVE AFTER TESTING
