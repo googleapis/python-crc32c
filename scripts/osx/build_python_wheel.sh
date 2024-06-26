@@ -54,6 +54,8 @@ install_python_pyenv ${PY_BIN}
 # Create a virtualenv where we can install Python build dependencies.
 VENV=${REPO_ROOT}/venv${PY_BIN}
 "python${PY_BIN}" -m venv ${VENV}
+echo "Running lipo on Python version"
+lipo -info `which "python${PY_BIN}"`
 curl https://bootstrap.pypa.io/get-pip.py | ${VENV}/bin/python
 ${VENV}/bin/python -m pip install \
     --requirement ${REPO_ROOT}/scripts/dev-requirements.txt
