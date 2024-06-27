@@ -66,8 +66,7 @@ cd ${REPO_ROOT}
 ${VENV}/bin/python setup.py build_ext \
     --include-dirs=${REPO_ROOT}/usr/include \
     --library-dirs=${REPO_ROOT}/usr/lib \
-    --rpath=${REPO_ROOT}/usr/lib \
-    --plat-name=macosx-10.9-universal2
+    --rpath=${REPO_ROOT}/usr/lib
 ${VENV}/bin/python -m pip wheel ${REPO_ROOT} --wheel-dir ${DIST_WHEELS}
 
 # Delocate the wheel.
@@ -77,7 +76,6 @@ ${VENV}/bin/delocate-wheel \
     --wheel-dir ${FIXED_WHEELS} \
     --verbose \
     --check-archs \
-    --require-archs=universal2 \
     ${DIST_WHEELS}/google_crc32c*${PY_TAG}*.whl
 
 # TODO: REMOVE AFTER TESTING
@@ -85,7 +83,7 @@ ${VENV}/bin/delocate-wheel \
 export GOOGLE_APPLICATION_CREDENTIALS=${KOKORO_GFILE_DIR}/service-account.json
 gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
 ls ${REPO_ROOT}/wheels/
-gsutil cp ${REPO_ROOT}/wheels/* gs://python_crc32c/osx_wheels/
+gsutil cp ${REPO_ROOT}/wheels/* gs://python_crc32c/
 echo "Osx wheels uploaded successfully"
 
 # Clean up.
