@@ -16,6 +16,9 @@
 set -e -x
 echo "BUILDING FOR OSX"
 
+# set deployment target
+export MACOSX_DEPLOYMENT_TARGET=12
+
 # ``readlink -f`` is not our friend on OS X. This relies on **some**
 # ``python`` being installed.
 SCRIPT_FI=$(python -c "import os; print(os.path.realpath('${0}'))")

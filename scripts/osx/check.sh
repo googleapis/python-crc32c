@@ -30,7 +30,7 @@ eval "$(pyenv init -)"
 eval "$(pyenv init --path)"
 ls ${REPO_ROOT}/wheels
 
-SUPPORTED_PYTHON_VERSIONS=("3.7" "3.8" "3.9" "3.10" "3.11" "3.12")
+SUPPORTED_PYTHON_VERSIONS=("3.8" "3.9" "3.10" "3.11" "3.12")
 
 for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
     PYTHON="python${PYTHON_VERSION}"
@@ -43,15 +43,17 @@ for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
     LISTDEPS_CMD="${PYTHON}/delocate-listdeps --all --depending"
     ${PYTHON} -m venv ${VIRTUALENV}
 
-    # Note that the 'm' SOABI flag is no longer supported for Python >= 3.8
-    SOABI_FLAG="m"
-    if [ "${PYTHON_VERSION}" != "3.7" ]; then
-        SOABI_FLAG=""
+    OS_VERSION_STR="12_0"
+    if [ "${PYTHON_VERSION}" == "3.12" ]; then
+        OS_VERSION_STR="14.0"
     fi
-    WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}${SOABI_FLAG}-macosx_14_3_x86_64.whl
-    ## TODO: check if other wheels match the platform
-    # ${VIRTUALENV}/bin/pip install ${WHL}
-    ${VIRTUALENV}/bin/pip install --no-index --find-links=${REPO_ROOT}/wheels google-crc32c --force-reinstall
+
+    WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}-macosx_${OS_VERSION_STR}_x86_64.whl
+    ${VIRTUALENV}/bin/pip install ${WHL} --force-reinstall
+
+    # Alternate method of finding the package that does not verify OS version is as expected
+    # ${VIRTUALENV}/bin/pip install --no-index --find-links=${REPO_ROOT}/wheels google-crc32c --force-reinstall  
+
     ${VIRTUALENV}/bin/pip install pytest
     ${VIRTUALENV}/bin/py.test ${REPO_ROOT}/tests
     ${VIRTUALENV}/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
