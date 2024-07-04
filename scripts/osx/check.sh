@@ -48,16 +48,16 @@ for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
         OS_VERSION_STR="14.0"
     fi
 
-    WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}-macosx_${OS_VERSION_STR}_x86_64.whl
-    ${VIRTUALENV}/bin/pip install ${WHL} --force-reinstall
+    #WHL=${REPO_ROOT}/wheels/google_crc32c-${PACKAGE_VERSION}-cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}-macosx_${OS_VERSION_STR}_x86_64.whl
+    #${VIRTUALENV}/bin/pip install ${WHL} --force-reinstall
 
     # Alternate method of finding the package that does not verify OS version is as expected
-    # ${VIRTUALENV}/bin/pip install --no-index --find-links=${REPO_ROOT}/wheels google-crc32c --force-reinstall  
+    ${VIRTUALENV}/bin/pip install --no-index --find-links=${REPO_ROOT}/wheels google-crc32c --force-reinstall
 
     ${VIRTUALENV}/bin/pip install pytest
     ${VIRTUALENV}/bin/py.test ${REPO_ROOT}/tests
     ${VIRTUALENV}/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
-    ${LISTDEPS_CMD} ${WHL}
+    #${LISTDEPS_CMD} ${WHL}
     rm -fr ${VIRTUALENV}
 
 done

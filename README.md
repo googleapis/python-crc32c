@@ -28,7 +28,7 @@ See https://github.com/pypa/manylinux/issues/994.
 
 ## Mac OS
 
-Wheels are published for `x86_64` and `universal2` architectures.
+Wheels are published for `x86_64` and `arm64` architectures.
 
 
 ## Windows
