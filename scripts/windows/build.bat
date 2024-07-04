@@ -78,11 +78,11 @@ FOR %%V IN (32,64) DO (
 
 echo "Windows build has completed successfully"
 
-@REM TODO: REMOVE AFTER TESTING
-@REM TODO: upload wheels to GCS for testing
+@REM Upload wheels to GCS for testing. Uncomment only when needed.
+
 set "GOOGLE_APPLICATION_CREDENTIALS=%KOKORO_GFILE_DIR%\service-account.json"
 dir "%cd%\wheels"
-gcloud auth activate-service-account --key-file=%GOOGLE_APPLICATION_CREDENTIALS% || true
+gcloud auth activate-service-account --key-file=%GOOGLE_APPLICATION_CREDENTIALS%
 echo "Windows wheels uploading ..."
-gsutil cp "%cd%\wheels\*" gs://python_crc32c/win_wheels/ || true
+gsutil cp "%cd%\wheels\*" gs://python_crc32c/win_wheels/
 echo "Windows wheels uploaded successfully"

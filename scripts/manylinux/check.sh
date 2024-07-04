@@ -37,7 +37,7 @@ install_python_pyenv() {
     pyenv shell $version
 }
 
-SUPPORTED_PYTHON_VERSIONS=("3.7" "3.8" "3.9" "3.10" "3.11" "3.12")
+SUPPORTED_PYTHON_VERSIONS=("3.8" "3.9" "3.10" "3.11" "3.12")
 
 for PYTHON_VERSION in "${SUPPORTED_PYTHON_VERSIONS[@]}"; do
     PYTHON=python${PYTHON_VERSION}
