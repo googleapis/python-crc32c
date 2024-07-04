@@ -29,7 +29,7 @@ call scripts\windows\test.bat || goto :error
 
 
 for /r %%a in (*.whl) do xcopy "%%a" %KOKORO_ARTIFACTS_DIR% /i
- 
+
 goto :EOF
 
 :error
