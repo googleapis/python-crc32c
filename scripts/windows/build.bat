@@ -23,12 +23,16 @@ set CRC32C_INSTALL_PREFIX=%cd%\build\%CONFIGURATION%
 set cmake=cmake
 
 @rem Iterate through supported Python versions.
-@rem Historical note: a previous version of this script accepted the version as
-@rem an argument.
-FOR %%P IN (3.8, 3.9, 3.10, 3.11, 3.12) DO (
+@rem Unfortunately pyenv for Windows has an out-of-date versions list, and
+@rem choco won't install multiple versions at the same time. As a
+@rem workaround, we will fully uninstall and reinstall Python every iteration.
+FOR %%P IN (3.8.19, 3.9.19, 3.10.14, 3.11.9, 3.12.4) DO (
 
-    echo "Listing Python versions"
-    py -0
+    echo "Uninstalling existing Python"
+    choco uninstall python
+
+    echo "Installing Python version %%P"
+    choco install python --version=%%P -y
 
     echo "Installing cmake for Python %%P"
     py -%%P -m pip install cmake
@@ -37,45 +41,39 @@ FOR %%P IN (3.8, 3.9, 3.10, 3.11, 3.12) DO (
     git config --global --add safe.directory C:/tmpfs/src/github/python-crc32c
     git submodule update --init --recursive
 
-    FOR %%V IN (32,64) DO (
-        set TARGET_PLATFORM="x64"
+    git config --global --add safe.directory C:/tmpfs/src/github/python-crc32c/google_crc32c
+    pushd google_crc32c
+    @rem reset hard to cleanup any changes done by a previous build.
+    git reset --hard
+    git clean -fxd
 
-        if "%%V"=="32" (
-            set TARGET_PLATFORM="Win32"
-        )
-        echo "Target Platform: !TARGET_PLATFORM!"
+    del /s /q CMakeFiles\
+    del CMakeCache.txt
 
-        git config --global --add safe.directory C:/tmpfs/src/github/python-crc32c/google_crc32c
-        pushd google_crc32c
-        @rem reset hard to cleanup any changes done by a previous build.
-        git reset --hard
-        git clean -fxd
+    mkdir build
+    cd build
 
-        del /s /q CMakeFiles\
-        del CMakeCache.txt
+    echo "Running cmake with Generator:  %CMAKE_GENERATOR%, Platform: x64, Install Prefix: %CRC32C_INSTALL_PREFIX%"
 
-        mkdir build
-        cd build
+    %cmake% -G %CMAKE_GENERATOR% -A x64 -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0 -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ..
 
-        echo "Running cmake with Generator:  %CMAKE_GENERATOR%, Platform: !TARGET_PLATFORM!, Install Prefix: %CRC32C_INSTALL_PREFIX%"
+    %cmake% --build . --config "%CONFIGURATION%" --target install
 
-        %cmake% -G %CMAKE_GENERATOR% -A !TARGET_PLATFORM! -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0 -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ..
+    dir %CRC32C_INSTALL_PREFIX% /b /s
+    popd
 
-        %cmake% --build . --config "%CONFIGURATION%" --target install
+    dir  %CRC32C_INSTALL_PREFIX%\bin
+    echo "Copying Binary to root: %CRC32C_INSTALL_PREFIX%\bin\crc32c.dll"
+    copy %CRC32C_INSTALL_PREFIX%\bin\crc32c.dll .
 
-        dir %CRC32C_INSTALL_PREFIX% /b /s
-        popd
+    py -%%P-%%V -m pip install --upgrade pip setuptools wheel
+    echo "Building C extension"
+    py -%%P-%%V setup.py build_ext -v --include-dirs=%CRC32C_INSTALL_PREFIX%\include --library-dirs=%CRC32C_INSTALL_PREFIX%\lib
+    echo "Building Wheel"
+    py -%%P-%%V -m pip wheel . --wheel-dir wheels/
 
-        dir  %CRC32C_INSTALL_PREFIX%\bin
-        echo "Copying Binary to root: %CRC32C_INSTALL_PREFIX%\bin\crc32c.dll"
-        copy %CRC32C_INSTALL_PREFIX%\bin\crc32c.dll .
-
-        py -%%P-%%V -m pip install --upgrade pip setuptools wheel
-        echo "Building C extension"
-        py -%%P-%%V setup.py build_ext -v --include-dirs=%CRC32C_INSTALL_PREFIX%\include --library-dirs=%CRC32C_INSTALL_PREFIX%\lib
-        echo "Building Wheel"
-        py -%%P-%%V -m pip wheel . --wheel-dir wheels/
-    )
+    echo "Running tests for Python %%P"
+    call %~dp0\test.bat %%P
 )
 
 echo "Windows build has completed successfully"
