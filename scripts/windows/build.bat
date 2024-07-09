@@ -22,7 +22,7 @@ set CRC32C_INSTALL_PREFIX=%cd%\build\%CONFIGURATION%
 @rem Iterate through supported Python versions.
 @rem Unfortunately pyenv for Windows has an out-of-date versions list. Choco's
 @rem installer seems to have some problems with installing multiple versions at
-@rem once, but it can be coaxed to try anyways with --force.
+@rem once, so as a workaround, we will install and then uninstall every version.
 FOR %%P IN (3.8.10, 3.9.13, 3.10.11, 3.11.9, 3.12.4) DO (
 
     echo "Installing Python version %%P"
@@ -65,6 +65,12 @@ FOR %%P IN (3.8.10, 3.9.13, 3.10.11, 3.11.9, 3.12.4) DO (
     py -%%P setup.py build_ext -v --include-dirs=%CRC32C_INSTALL_PREFIX%\include --library-dirs=%CRC32C_INSTALL_PREFIX%\lib
     echo "Building Wheel"
     py -%%P -m pip wheel . --wheel-dir wheels/
+
+    echo "Built wheel, now running tests."
+    call %~dp0/test.bat
+
+    echo "Finished with Python version %%P, now uninstalling"
+    choco uninstall python -y
 )
 
 echo "Windows build has completed successfully"

@@ -15,11 +15,15 @@
 @rem This test file runs for one Python version at a time, and is intended to
 @rem be called from within the build loop.
 
-FOR %%P IN (3.8.10, 3.9.13, 3.10.11, 3.11.9, 3.12.4) DO (
-    py -%%P -m pip install --no-index --find-links=wheels google-crc32c --force-reinstall
-
-    py -%%P ./scripts/check_crc32c_extension.py
-
-    py -%%P -m pip install pytest
-    py -%%P -m pytest tests
+set PYTHON_VERSION=%1
+if "%PYTHON_VERSION%"=="" (
+  echo "Python version was not provided, using Python 3.10"
+  set PYTHON_VERSION=3.10
 )
+
+py -%PYTHON_VERSION% -m pip install --no-index --find-links=wheels google-crc32c --force-reinstall
+
+py -%PYTHON_VERSION% ./scripts/check_crc32c_extension.py
+
+py -%PYTHON_VERSION% -m pip install pytest
+py -%PYTHON_VERSION% -m pytest tests

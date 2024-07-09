@@ -21,12 +21,8 @@ cd ..
 call git config --global --add safe.directory C:/tmpfs/src/github/python-crc32c
 call git submodule update --recursive || goto :error
 
-@echo "Build Wheels"
+@echo "Build Wheels and Run Tests"
 call scripts\windows\build.bat || goto :error
-
-@echo "Run Tests"
-call scripts\windows\test.bat || goto :error
-
 
 for /r %%a in (*.whl) do xcopy "%%a" %KOKORO_ARTIFACTS_DIR% /i
 
