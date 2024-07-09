@@ -25,7 +25,7 @@ set cmake=cmake
 @rem Iterate through supported Python versions.
 @rem Historical note: a previous version of this script accepted the version as
 @rem an argument.
-FOR %%P IN ("3.8", "3.9", "3.10", "3.11", "3.12") DO (
+FOR %%P IN (3.8, 3.9, 3.10, 3.11, 3.12) DO (
 
     echo "Listing Python versions"
     py -0
