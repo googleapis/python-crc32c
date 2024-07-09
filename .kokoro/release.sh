@@ -64,7 +64,7 @@ echo "## Uploading Wheels ##"
 # TODO: ONE OF THE BELOW WORKS
 # Move into the package, build the distribution and upload.
 TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-1")
-cd github/python-crc32c
+cd ${REPO_ROOT}
 python3 setup.py sdist bdist_wheel
 #twine upload --username __token__ --password "${TWINE_PASSWORD}" dist/*
 
