@@ -21,7 +21,7 @@ cd ..
 call git config --global --add safe.directory C:/tmpfs/src/github/python-crc32c
 call git submodule update --recursive || goto :error
 
-@echo "Build Wheel"
+@echo "Build Wheels"
 call scripts\windows\build.bat || goto :error
 
 @echo "Run Tests"

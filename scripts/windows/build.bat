@@ -19,20 +19,14 @@ set CMAKE_GENERATOR="Visual Studio 17 2022"
 set CONFIGURATION=RelWithDebInfo
 set CRC32C_INSTALL_PREFIX=%cd%\build\%CONFIGURATION%
 
-@rem Path to cmake, env var to make it easier to point to a specific version
-set cmake=cmake
-
 @rem Iterate through supported Python versions.
-@rem Unfortunately pyenv for Windows has an out-of-date versions list, and
-@rem choco won't install multiple versions at the same time. As a
-@rem workaround, we will fully uninstall and reinstall Python every iteration.
-FOR %%P IN (3.8.19, 3.9.19, 3.10.14, 3.11.9, 3.12.4) DO (
-
-    echo "Uninstalling existing Python"
-    choco uninstall python
+@rem Unfortunately pyenv for Windows has an out-of-date versions list. Choco's
+@rem installer seems to have some problems with installing multiple versions at
+@rem once, but it can be coaxed to try anyways with --force.
+FOR %%P IN (3.8.10, 3.9.13, 3.10.11, 3.11.9, 3.12.4) DO (
 
     echo "Installing Python version %%P"
-    choco install python --version=%%P -y
+    choco install python --version=%%P -y --force --no-progress
 
     echo "Installing cmake for Python %%P"
     py -%%P -m pip install cmake
@@ -55,9 +49,9 @@ FOR %%P IN (3.8.19, 3.9.19, 3.10.14, 3.11.9, 3.12.4) DO (
 
     echo "Running cmake with Generator:  %CMAKE_GENERATOR%, Platform: x64, Install Prefix: %CRC32C_INSTALL_PREFIX%"
 
-    %cmake% -G %CMAKE_GENERATOR% -A x64 -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0 -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ..
+    cmake -G %CMAKE_GENERATOR% -A x64 -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0 -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ..
 
-    %cmake% --build . --config "%CONFIGURATION%" --target install
+    cmake --build . --config "%CONFIGURATION%" --target install
 
     dir %CRC32C_INSTALL_PREFIX% /b /s
     popd
@@ -66,14 +60,11 @@ FOR %%P IN (3.8.19, 3.9.19, 3.10.14, 3.11.9, 3.12.4) DO (
     echo "Copying Binary to root: %CRC32C_INSTALL_PREFIX%\bin\crc32c.dll"
     copy %CRC32C_INSTALL_PREFIX%\bin\crc32c.dll .
 
-    py -%%P-%%V -m pip install --upgrade pip setuptools wheel
+    py -%%P -m pip install --upgrade pip setuptools wheel
     echo "Building C extension"
-    py -%%P-%%V setup.py build_ext -v --include-dirs=%CRC32C_INSTALL_PREFIX%\include --library-dirs=%CRC32C_INSTALL_PREFIX%\lib
+    py -%%P setup.py build_ext -v --include-dirs=%CRC32C_INSTALL_PREFIX%\include --library-dirs=%CRC32C_INSTALL_PREFIX%\lib
     echo "Building Wheel"
-    py -%%P-%%V -m pip wheel . --wheel-dir wheels/
-
-    echo "Running tests for Python %%P"
-    call %~dp0\test.bat %%P
+    py -%%P -m pip wheel . --wheel-dir wheels/
 )
 
 echo "Windows build has completed successfully"
