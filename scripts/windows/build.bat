@@ -34,10 +34,10 @@ FOR %%P IN (3.8, 3.9, 3.10, 3.11, 3.12) DO (
     py -%%P-64 -m pip install --upgrade pip
 
     set TARGET=%cd%\%%P-install\
-    mkdir %TARGET%
+    mkdir !TARGET!
 
     echo "Installing cmake for Python %%P"
-    py -%%P-64 -m pip install cmake --target=%TARGET%
+    py -%%P-64 -m pip install cmake --target=!TARGET!
 
     @rem Add directory as safe to avoid "detected dubious ownership" fatal issue
     git config --global --add safe.directory %cd%
@@ -57,11 +57,11 @@ FOR %%P IN (3.8, 3.9, 3.10, 3.11, 3.12) DO (
     mkdir build
     cd build
 
-    echo "Running cmake at %TARGET%\Scripts\cmake with Generator:  %CMAKE_GENERATOR%, Platform: x64, Install Prefix: %CRC32C_INSTALL_PREFIX%"
+    echo "Running cmake at !TARGET!\Scripts\cmake with Generator:  %CMAKE_GENERATOR%, Platform: x64, Install Prefix: %CRC32C_INSTALL_PREFIX%"
 
-    %TARGET%\Scripts\cmake -G %CMAKE_GENERATOR% -A x64 -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0 -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ..
+    !TARGET!\Scripts\cmake -G %CMAKE_GENERATOR% -A x64 -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0 -DCMAKE_INSTALL_PREFIX:PATH=%CRC32C_INSTALL_PREFIX% ..
 
-    %TARGET%\Scripts\cmake --build . --config "%CONFIGURATION%" --target install
+    !TARGET!\Scripts\cmake --build . --config "%CONFIGURATION%" --target install
 
     dir %CRC32C_INSTALL_PREFIX% /b /s
     popd
