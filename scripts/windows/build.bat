@@ -81,12 +81,3 @@ FOR %%P IN (3.8, 3.9, 3.10, 3.11, 3.12) DO (
 )
 
 echo "Windows build has completed successfully"
-
-@REM Upload wheels to GCS for testing. Uncomment only when needed.
-
-set "GOOGLE_APPLICATION_CREDENTIALS=%KOKORO_GFILE_DIR%\service-account.json"
-dir "%cd%\wheels"
-call gcloud auth activate-service-account --key-file=%GOOGLE_APPLICATION_CREDENTIALS%
-echo "Windows wheels uploading ..."
-gsutil cp "%cd%\wheels\*" gs://python_crc32c/
-echo "Windows wheels uploaded successfully"

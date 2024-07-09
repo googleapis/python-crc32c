@@ -4,7 +4,7 @@
 
 [1]: https://pypi.org/project/google-crc32c/#history
 
-## [1.6.0.dev1](https://github.com/googleapis/python-crc32c/compare/v1.5.0...v1.6.0.dev1) (2024-07-09)
+## [1.6.0.dev2](https://github.com/googleapis/python-crc32c/compare/v1.5.0...v1.6.0.dev2) (2024-07-09)
 
 
 ### Features
