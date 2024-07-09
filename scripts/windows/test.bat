@@ -21,9 +21,9 @@ if "%PYTHON_VERSION%"=="" (
   set PYTHON_VERSION=3.10
 )
 
-py -%PYTHON_VERSION% -m pip install --no-index --find-links=wheels google-crc32c --force-reinstall
+py -V:%PYTHON_VERSION% -m pip install --no-index --find-links=wheels google-crc32c --force-reinstall
 
-py -%PYTHON_VERSION% ./scripts/check_crc32c_extension.py
+py -V:%PYTHON_VERSION% ./scripts/check_crc32c_extension.py
 
-py -%PYTHON_VERSION% -m pip install pytest
-py -%PYTHON_VERSION% -m pytest tests
+py -V:%PYTHON_VERSION% -m pip install pytest
+py -V:%PYTHON_VERSION% -m pytest tests
