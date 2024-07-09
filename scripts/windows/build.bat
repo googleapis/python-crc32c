@@ -23,7 +23,7 @@ set CRC32C_INSTALL_PREFIX=%cd%\build\%CONFIGURATION%
 @rem Unfortunately pyenv for Windows has an out-of-date versions list. Choco's
 @rem installer seems to have some problems with installing multiple versions at
 @rem once, so as a workaround, we will install and then uninstall every version.
-FOR %%P IN (3.8.10, 3.9.13, 3.10.11, 3.11.9, 3.12.4) DO (
+FOR %%P IN (3.8, 3.9, 3.10, 3.11, 3.12) DO (
 
     echo "Installing Python version %%P"
     choco install python --version=%%P -y --no-progress
@@ -32,7 +32,7 @@ FOR %%P IN (3.8.10, 3.9.13, 3.10.11, 3.11.9, 3.12.4) DO (
     py -0
 
     echo "Installing cmake for Python %%P"
-    py -V:%%P -m pip install cmake
+    py -%%P-64 -m pip install cmake
 
     @rem Add directory as safe to avoid "detected dubious ownership" fatal issue
     git config --global --add safe.directory .
@@ -63,11 +63,11 @@ FOR %%P IN (3.8.10, 3.9.13, 3.10.11, 3.11.9, 3.12.4) DO (
     echo "Copying Binary to root: %CRC32C_INSTALL_PREFIX%\bin\crc32c.dll"
     copy %CRC32C_INSTALL_PREFIX%\bin\crc32c.dll .
 
-    py -V:%%P -m pip install --upgrade pip setuptools wheel
+    py -%%P-64 -m pip install --upgrade pip setuptools wheel
     echo "Building C extension"
-    py -V:%%P setup.py build_ext -v --include-dirs=%CRC32C_INSTALL_PREFIX%\include --library-dirs=%CRC32C_INSTALL_PREFIX%\lib
+    py -%%P-64 setup.py build_ext -v --include-dirs=%CRC32C_INSTALL_PREFIX%\include --library-dirs=%CRC32C_INSTALL_PREFIX%\lib
     echo "Building Wheel"
-    py -V:%%P -m pip wheel . --wheel-dir wheels/
+    py -%%P-64 -m pip wheel . --wheel-dir wheels/
 
     echo "Built wheel, now running tests."
     call %~dp0/test.bat
