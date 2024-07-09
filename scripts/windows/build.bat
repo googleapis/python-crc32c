@@ -33,18 +33,20 @@ FOR %%P IN (3.8, 3.9, 3.10, 3.11, 3.12) DO (
 
     py -%%P-64 -m pip install --upgrade pip
 
-    set PIP_TARGET=%cd%\%%P-install\
-    MKDIR %PIP_TARGET%
+    set TARGET=%cd%\%%P-install\
+    mkdir %TARGET%
 
     echo "Installing cmake for Python %%P"
     py -%%P-64 -m pip install cmake --target=%PIP_TARGET%
-    set cmake=%PIP_TARGET%\Scripts\cmake
+    set cmake=%TARGET%\Scripts\cmake
 
     @rem Add directory as safe to avoid "detected dubious ownership" fatal issue
     git config --global --add safe.directory %cd%
+    git config --global --add C:/tmpfs/src/github/python-crc32c
     git submodule update --init --recursive
 
     git config --global --add safe.directory %cd%\google_crc32c
+    git config --global --add C:/tmpfs/src/github/python-crc32c/google_crc32c
     pushd google_crc32c
     @rem reset hard to cleanup any changes done by a previous build.
     git reset --hard
