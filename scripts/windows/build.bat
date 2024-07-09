@@ -72,7 +72,7 @@ FOR %%P IN (3.8, 3.9, 3.10, 3.11, 3.12) DO (
     py -%%P-64 -m pip wheel . --wheel-dir wheels/
 
     echo "Built wheel, now running tests."
-    call %~dp0/test.bat
+    %~dp0/test.bat
 
     echo "Finished with Python version %%P, now uninstalling"
     choco uninstall python -y
