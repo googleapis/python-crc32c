@@ -66,7 +66,7 @@ echo "## Uploading Wheels ##"
 TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-1")
 cd ${REPO_ROOT}
 python3 setup.py sdist bdist_wheel
-#twine upload --username __token__ --password "${TWINE_PASSWORD}" dist/*
+twine upload --username __token__ --password "${TWINE_PASSWORD}" dist/*
 
 ${PYTHON} setup.py sdist
-# ${TWINE} upload --skip-existing --username gcloudpypi --password "${TWINE_PASSWORD}" dist/* wheels/*
+${TWINE} upload --skip-existing --username gcloudpypi --password "${TWINE_PASSWORD}" dist/* wheels/*
