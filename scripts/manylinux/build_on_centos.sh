@@ -87,12 +87,6 @@ done
 
 # Bundle external shared libraries into the wheels
 for whl in dist_wheels/google_crc32c*.whl; do
-    # Remove *-linux_x86_64.whl wheels which cannot be pushed to PyPI.
-    # Other we get, `Binary wheel has an unsupported platform tag 'linux_x86_64'`.
-    if [[ $whl == *-linux_x86_64.whl ]]; then
-        rm -rf "${whl}"
-        continue
-    fi
     ${MAIN_PYTHON_BIN}/auditwheel repair "${whl}" --wheel-dir wheels/
 done
 
