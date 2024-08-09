@@ -87,7 +87,7 @@ done
 
 # Bundle external shared libraries into the wheels
 for whl in dist_wheels/google_crc32c*.whl; do
-    ${MAIN_PYTHON_BIN}/auditwheel repair "${whl}" --wheel-dir wheels/ --plat manylinux_2_24_x86_64
+    ${MAIN_PYTHON_BIN}/auditwheel repair "${whl}" --wheel-dir wheels/
 done
 
 # Clean up.
