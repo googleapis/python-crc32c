@@ -5,8 +5,7 @@ set -eo pipefail
 REPO_ROOT=$(pwd)/github/python-crc32c
 cd github/python-crc32c
 
-# Build for OSX
-./scripts/osx/build.sh
+export PUBLISH_WHEELS="true"
 
-# REPO_ROOT=$(pwd)
-./.kokoro/release.sh
+# Build and publish for OSX
+./scripts/osx/build.sh

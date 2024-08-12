@@ -1,0 +1,28 @@
+#!/bin/bash
+# Copyright 2024 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+set -eo pipefail
+
+# Start the releasetool reporter
+${PY_BIN} -m pip install --require-hashes -r github/python-crc32c/.kokoro/requirements.txt
+${PY_BIN} -m releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
+
+# Disable buffering, so that the logs stream through.
+export PYTHONUNBUFFERED=1
+
+RELEASETOOL=${PY_BIN}/releasetool
+TWINE=${PY_BIN}/twine
+
+ls ${REPO_ROOT}/wheels
