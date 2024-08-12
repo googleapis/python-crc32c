@@ -20,7 +20,7 @@ if [ "$(uname)" == "Darwin" ]; then
     SCRIPT_FI=$(python -c "import os; print(os.path.realpath('${0}'))")
     OSX_DIR=$(dirname ${SCRIPT_FI})
     SCRIPTS_DIR=$(dirname ${OSX_DIR})
-    export REPO_ROOT=$(dirname ${SCRIPTS_DIR})
+    export WHEELS_ROOT=$(dirname ${SCRIPTS_DIR})
 
     # Mac OS
     PYTHON=$(PYENV_VERSION=3.9 pyenv which python)
@@ -30,9 +30,10 @@ if [ "$(uname)" == "Darwin" ]; then
     TWINE=${PYTHON_BIN}/twine
     ${PYTHON} -m pip install gcp-releasetool twine --user
 
+    REPO_ROOT=$(pwd)
     cd "${REPO_ROOT}"
     ls
-
+    ls "${WHEELS_ROOT}"/wheels
 else
     # Kokoro Linux
     mv /keys/73713_google-cloud-pypi-token-keystore-1 /73713_google-cloud-pypi-token-keystore-1
