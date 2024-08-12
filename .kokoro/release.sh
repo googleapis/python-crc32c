@@ -66,11 +66,11 @@ echo "## Uploading Wheels ##"
 TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-1")
 cd ${REPO_ROOT}
 ${PYTHON} setup.py sdist bdist_wheel
-${TWINE} upload --username __token__ --password "${TWINE_PASSWORD}" dist/*
+#${TWINE} upload --username __token__ --password "${TWINE_PASSWORD}" dist/*
 
 ${PYTHON} setup.py sdist
 # Remove *-linux_x86_64.whl wheels which cannot be pushed to PyPI.
 # Other we get, `Binary wheel has an unsupported platform tag 'linux_x86_64'`.
 rm -rf wheels/*-linux_x86_64.whl
 echo "Skipping *-linux_x86_64.whl wheels"
-${TWINE} upload --skip-existing --username gcloudpypi --password "${TWINE_PASSWORD}" dist/* wheels/*
+#${TWINE} upload --skip-existing --username gcloudpypi --password "${TWINE_PASSWORD}" dist/* wheels/*
