@@ -48,7 +48,7 @@ for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
     echo "Build wheel for Python ${PYTHON_VERSION}"
     export PY_BIN=$PYTHON_VERSION
     export PY_TAG="cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}"
-    . ./${OSX_DIR}/build_python_wheel.sh
+    . .${OSX_DIR}/build_python_wheel.sh
 done
 
 # Clean up.
