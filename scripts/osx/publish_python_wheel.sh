@@ -15,8 +15,6 @@
 
 set -eo pipefail
 
-VENV=${REPO_ROOT}/venv${PY_BIN}
-
 # Start the releasetool reporter
 ${VENV}/bin/python -m pip install --require-hashes -r github/python-crc32c/.kokoro/requirements.txt
 ${VENV}/bin/python -m releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
