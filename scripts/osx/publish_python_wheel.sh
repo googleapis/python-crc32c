@@ -15,9 +15,15 @@
 
 set -eo pipefail
 
+PYTHON=$(PYENV_VERSION=3.9 pyenv which python)
+PYTHON_BIN=$(dirname ${PYTHON})
+
 # Start the releasetool reporter
-python -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
-python -m releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
+${PYTHON} -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
+${PYTHON} -m releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
+
+RELEASETOOL=${PYTHON_BIN}/releasetool
+TWINE=${PYTHON_BIN}/twine
 
 # Disable buffering, so that the logs stream through.
 export PYTHONUNBUFFERED=1
