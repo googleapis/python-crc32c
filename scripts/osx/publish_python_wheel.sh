@@ -25,4 +25,4 @@ export PYTHONUNBUFFERED=1
 RELEASETOOL=${VENV}/bin/python/releasetool
 TWINE=${VENV}/bin/python/twine
 
-ls ${REPO_ROOT}/dist_wheels
+${TWINE} upload --skip-existing --username gcloudpypi --password "${TWINE_PASSWORD}" ${REPO_ROOT}/dist_wheels/*
