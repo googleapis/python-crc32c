@@ -28,4 +28,4 @@ TWINE=${PYTHON_BIN}/twine
 # Disable buffering, so that the logs stream through.
 export PYTHONUNBUFFERED=1
 
-twine upload --skip-existing --username gcloudpypi --password "${TWINE_PASSWORD}" ${REPO_ROOT}/dist_wheels/*
+python3 -m twine upload --skip-existing --username gcloudpypi --password "${TWINE_PASSWORD}" ${REPO_ROOT}/dist_wheels/*
