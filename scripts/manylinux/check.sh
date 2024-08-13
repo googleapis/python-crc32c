@@ -37,7 +37,7 @@ install_python_pyenv() {
     pyenv shell $version
 }
 
-SUPPORTED_PYTHON_VERSIONS=("3.8" "3.9" "3.10" "3.11" "3.12")
+SUPPORTED_PYTHON_VERSIONS=("3.9" "3.10" "3.11" "3.12")
 
 for PYTHON_VERSION in "${SUPPORTED_PYTHON_VERSIONS[@]}"; do
     PYTHON=python${PYTHON_VERSION}
@@ -47,14 +47,8 @@ for PYTHON_VERSION in "${SUPPORTED_PYTHON_VERSIONS[@]}"; do
     # Create a virtual environment.
     ${PYTHON} -m venv venv
 
-    # Note that the 'm' SOABI flag is no longer supported for Python >= 3.8
-    SOABI_FLAG="m"
-    if [ "${PYTHON_VERSION}" != "3.7" ]; then
-        SOABI_FLAG=""
-    fi
-
     # Install the wheel.
-    WHEEL_FILE="wheels/google_crc32c-${PACKAGE_VERSION}-cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}${SOABI_FLAG}-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+    WHEEL_FILE="wheels/google_crc32c-${PACKAGE_VERSION}-cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
     venv/bin/pip install ${WHEEL_FILE}
 
     # Verify that the module is installed and peek at contents.
