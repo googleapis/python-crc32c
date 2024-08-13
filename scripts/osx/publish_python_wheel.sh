@@ -16,13 +16,13 @@
 set -eo pipefail
 
 # Start the releasetool reporter
-${PY_BIN} -m pip install --require-hashes -r github/python-crc32c/.kokoro/requirements.txt
-${PY_BIN} -m releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
+${VENV}/bin/python -m pip install --require-hashes -r github/python-crc32c/.kokoro/requirements.txt
+${VENV}/bin/python -m releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
 
 # Disable buffering, so that the logs stream through.
 export PYTHONUNBUFFERED=1
 
-RELEASETOOL=${PY_BIN}/releasetool
-TWINE=${PY_BIN}/twine
+RELEASETOOL=${VENV}/bin/python/releasetool
+TWINE=${VENV}/bin/python/twine
 
 ls ${REPO_ROOT}/wheels

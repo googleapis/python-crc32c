@@ -52,7 +52,7 @@ install_python_pyenv() {
 install_python_pyenv ${PY_BIN}
 
 # Create a virtualenv where we can install Python build dependencies.
-VENV=${REPO_ROOT}/venv${PY_BIN}
+export VENV=${REPO_ROOT}/venv${PY_BIN}
 "python${PY_BIN}" -m venv ${VENV}
 
 curl https://bootstrap.pypa.io/get-pip.py | ${VENV}/bin/python
