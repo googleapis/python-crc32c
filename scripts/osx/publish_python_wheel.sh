@@ -16,13 +16,10 @@
 set -eo pipefail
 
 # Start the releasetool reporter
-${VENV}/bin/python pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
-${VENV}/bin/python releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
+python -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
+python -m releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
 
 # Disable buffering, so that the logs stream through.
 export PYTHONUNBUFFERED=1
 
-RELEASETOOL=${VENV}/bin/python/releasetool
-TWINE=${VENV}/bin/python/twine
-
-${TWINE} upload --skip-existing --username gcloudpypi --password "${TWINE_PASSWORD}" ${REPO_ROOT}/dist_wheels/*
+twine upload --skip-existing --username gcloudpypi --password "${TWINE_PASSWORD}" ${REPO_ROOT}/dist_wheels/*
