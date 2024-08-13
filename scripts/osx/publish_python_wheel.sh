@@ -16,8 +16,8 @@
 set -eo pipefail
 
 # Start the releasetool reporter
-${VENV}/bin/python -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
-${VENV}/bin/python -m releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
+${VENV}/bin/python pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
+${VENV}/bin/python releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
 
 # Disable buffering, so that the logs stream through.
 export PYTHONUNBUFFERED=1
