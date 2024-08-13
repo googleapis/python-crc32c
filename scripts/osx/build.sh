@@ -49,9 +49,6 @@ for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
     export PY_BIN=$PYTHON_VERSION
     export PY_TAG="cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}"
     ${OSX_DIR}/build_python_wheel.sh
-    if [[ "${PUBLISH_WHEELS}" == "true" ]]; then
-        . /${OSX_DIR}/publish_python_wheel.sh
-    fi
 done
 
 # Clean up.

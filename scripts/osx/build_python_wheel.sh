@@ -69,6 +69,10 @@ ${VENV}/bin/python setup.py build_ext \
     --rpath=${REPO_ROOT}/usr/lib
 ${VENV}/bin/python -m pip wheel ${REPO_ROOT} --wheel-dir ${DIST_WHEELS}
 
+if [[ "${PUBLISH_WHEELS}" == "true" ]]; then
+    . /${OSX_DIR}/publish_python_wheel.sh
+fi
+
 # Delocate the wheel.
 FIXED_WHEELS="${REPO_ROOT}/wheels"
 mkdir -p ${FIXED_WHEELS}
