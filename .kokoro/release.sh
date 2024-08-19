@@ -69,7 +69,7 @@ echo "## Uploading Wheels ##"
 # Move into the package, build the distribution and upload.
 # Remove *-linux_x86_64.whl wheels which cannot be pushed to PyPI.
 # Other we get, `Binary wheel has an unsupported platform tag 'linux_x86_64'`.
-rm -rf wheels/*-linux_x86_64.whl
+rm -rf dist_wheels/*-linux_x86_64.whl
 echo "Skipping *-linux_x86_64.whl wheels"
 
 ls dist
