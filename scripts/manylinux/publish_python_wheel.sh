@@ -15,14 +15,11 @@
 
 set -eo pipefail
 
-MAIN_PYTHON_BIN="/opt/python/cp39-cp39/bin/"
-
 # Start the releasetool reporter
-${MAIN_PYTHON_BIN}/python -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
-TWINE=${MAIN_PYTHON_BIN}/twine
+python -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
 
 # Disable buffering, so that the logs stream through.
 export PYTHONUNBUFFERED=1
 
 TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-1")
-${MAIN_PYTHON_BIN}/python -m twine upload --skip-existing --username gcloudpypi --password "${TWINE_PASSWORD}" ${REPO_ROOT}/wheels/*
+python -m twine upload --skip-existing --username gcloudpypi --password "${TWINE_PASSWORD}" ${REPO_ROOT}/wheels/*
