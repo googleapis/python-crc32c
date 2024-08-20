@@ -15,6 +15,8 @@
 
 set -eo pipefail
 
+MAIN_PYTHON_BIN="/opt/python/cp39-cp39/bin/"
+
 # Start the releasetool reporter
 ${MAIN_PYTHON_BIN}/python -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
 TWINE=${MAIN_PYTHON_BIN}/twine
