@@ -58,14 +58,6 @@ docker run \
 
 echo "Build completed"
 
-# Upload wheels to GCS for debugging. Uncomment only when needed.
-
-export GOOGLE_APPLICATION_CREDENTIALS=${KOKORO_GFILE_DIR}/service-account.json
-gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
-ls ${REPO_ROOT}/wheels/
-gsutil cp ${REPO_ROOT}/wheels/* gs://python_crc32c/
-echo "Manylinux wheels uploaded successfully"
-
 if [[ "${PUBLISH_WHEELS}" == "true" ]]; then
     . /${MANYLINUX_DIR}/publish_python_wheel.sh
 fi
