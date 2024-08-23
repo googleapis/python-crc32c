@@ -21,6 +21,9 @@ MANYLINUX_DIR=$(echo $(cd $(dirname ${0}); pwd))
 SCRIPTS_DIR=$(dirname ${MANYLINUX_DIR})
 REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 
+sudo apt-get update
+sudo apt-get install -y python3.9
+
 cd $REPO_ROOT
 # Add directory as safe to avoid "detected dubious ownership" fatal issue1
 git config --global --add safe.directory $REPO_ROOT
