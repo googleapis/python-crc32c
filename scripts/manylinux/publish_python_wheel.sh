@@ -15,6 +15,8 @@
 
 set -eo pipefail
 
+python3.9 -m pip install setuptools
+
 # Start the releasetool reporter
 python3.9 -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
 
