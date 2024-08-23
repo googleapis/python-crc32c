@@ -22,4 +22,4 @@ python3 -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
 export PYTHONUNBUFFERED=1
 
 TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-1")
-python3 -m twine upload --skip-existing --username gcloudpypi --password "${TWINE_PASSWORD}" ${REPO_ROOT}/wheels/*
+#python3 -m twine upload --skip-existing --username gcloudpypi --password "${TWINE_PASSWORD}" ${REPO_ROOT}/wheels/*
