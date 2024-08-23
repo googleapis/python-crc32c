@@ -16,7 +16,7 @@
 set -eo pipefail
 
 # Start the releasetool reporter
-python3.9 -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
+python3 -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
 
 # Disable buffering, so that the logs stream through.
 export PYTHONUNBUFFERED=1
