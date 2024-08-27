@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import os
-import sys
 
 def modify_path():
     """Modify the module search path."""
