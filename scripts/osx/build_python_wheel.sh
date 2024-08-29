@@ -78,6 +78,9 @@ ${VENV}/bin/delocate-wheel \
     --check-archs \
     ${DIST_WHEELS}/google_crc32c*${PY_TAG}*.whl
 
+# Remove the 'unfixed' wheels
+rm -rf $DIST_WHEELS
+
 if [[ "${PUBLISH_WHEELS}" == "true" ]]; then
     . /${OSX_DIR}/publish_python_wheel.sh
 fi
