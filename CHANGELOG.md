@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-crc32c/#history
 
+## [1.7.0](https://github.com/googleapis/python-crc32c/compare/v1.6.0...v1.7.0) (2024-09-05)
+
+
+### Features
+
+* Add Python 3.13 trove classifier ([#233](https://github.com/googleapis/python-crc32c/issues/233)) ([b125257](https://github.com/googleapis/python-crc32c/commit/b1252575f21d0dde1e131f5251a989f56fb2c0d5))
+
 ## [1.6.0](https://github.com/googleapis/python-crc32c/compare/v1.5.0...v1.6.0) (2024-08-29)
 
 
