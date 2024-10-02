@@ -42,14 +42,14 @@ git submodule update --init --recursive
 
 ${OSX_DIR}/build_c_lib.sh
 
+export CRC32C_PURE_PYTHON=0
+export CRC32C_LIMITED_API=1
 SUPPORTED_PYTHON_VERSIONS=("3.9" "3.10" "3.11" "3.12")
-
-for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
-    echo "Build wheel for Python ${PYTHON_VERSION}"
-    export PY_BIN=$PYTHON_VERSION
-    export PY_TAG="cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}"
-    . /${OSX_DIR}/build_python_wheel.sh
-done
+PYTHON_VERSION=${SUPPORTED_PYTHON_VERSIONS[0]};
+echo "Build wheel for Python ${PYTHON_VERSION}"
+export PY_BIN=$PYTHON_VERSION
+export PY_TAG="cp${PYTHON_VERSION//.}-abi3"
+. /${OSX_DIR}/build_python_wheel.sh
 
 # Clean up.
 rm -fr ${CRC32C_INSTALL_PREFIX}
