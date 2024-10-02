@@ -39,45 +39,15 @@ ${MAIN_PYTHON_BIN}/cmake \
     ..
 make all install
 
-PYTHON_VERSIONS=""
-if [[ -z ${BUILD_PYTHON} ]]; then
-    # Collect all target Python versions.
-    for PYTHON_BIN in /opt/python/*/bin; do
-        # H/T: https://stackoverflow.com/a/229606/1068170
-        if [[ "${PYTHON_BIN}" == *"39"* ]]; then
-            PYTHON_VERSIONS="${PYTHON_VERSIONS} ${PYTHON_BIN}"
-            continue
-        elif [[ "${PYTHON_BIN}" == *"310"* ]]; then
-            PYTHON_VERSIONS="${PYTHON_VERSIONS} ${PYTHON_BIN}"
-            continue
-        elif [[ "${PYTHON_BIN}" == *"311"* ]]; then
-            PYTHON_VERSIONS="${PYTHON_VERSIONS} ${PYTHON_BIN}"
-            continue
-        elif [[ "${PYTHON_BIN}" == *"312"* ]]; then
-            PYTHON_VERSIONS="${PYTHON_VERSIONS} ${PYTHON_BIN}"
-            continue
-        else
-            echo "Ignoring unsupported version: ${PYTHON_BIN}"
-            echo "====================================="
-        fi
-    done
-else
-    STRIPPED_PYTHON=$(echo ${BUILD_PYTHON} | sed -e "s/\.//g" | sed -e "s/-dev$//")
-    for PYTHON_BIN in /opt/python/*/bin; do
-        if [[ "${PYTHON_BIN}" == *"${STRIPPED_PYTHON}"* ]]; then
-            PYTHON_VERSIONS="${PYTHON_VERSIONS} ${PYTHON_BIN}"
-        fi
-    done
-fi
 
-# Build the wheels.
+# Build the wheel.
+export CRC32C_PURE_PYTHON=0
+export CRC32C_LIMITED_API=1
 cd ${REPO_ROOT}
-for PYTHON_BIN in ${PYTHON_VERSIONS}; do
-    ${PYTHON_BIN}/python -m pip install --upgrade pip
-    ${PYTHON_BIN}/python -m pip install \
-        --requirement ${REPO_ROOT}/scripts/dev-requirements.txt
-    ${PYTHON_BIN}/python -m pip wheel . --wheel-dir dist_wheels/
-done
+${MAIN_PYTHON_BIN}/python -m pip install --upgrade pip
+${MAIN_PYTHON_BIN}/python -m pip install \
+    --requirement ${REPO_ROOT}/scripts/dev-requirements.txt
+${MAIN_PYTHON_BIN}/python -m pip wheel . --wheel-dir dist_wheels/
 
 # Bundle external shared libraries into the wheels
 for whl in dist_wheels/google_crc32c*.whl; do
