@@ -39,6 +39,9 @@ install_python_pyenv() {
 
 SUPPORTED_PYTHON_VERSIONS=("3.9" "3.10" "3.11" "3.12")
 
+PYTHON_VERSION_MIN=${SUPPORTED_PYTHON_VERSIONS[0]}
+PY_TAG="cp${PYTHON_VERSION_MIN//.}-abi3"
+
 for PYTHON_VERSION in "${SUPPORTED_PYTHON_VERSIONS[@]}"; do
     PYTHON=python${PYTHON_VERSION}
     install_python_pyenv ${PYTHON_VERSION}
@@ -48,7 +51,7 @@ for PYTHON_VERSION in "${SUPPORTED_PYTHON_VERSIONS[@]}"; do
     ${PYTHON} -m venv venv
 
     # Install the wheel.
-    WHEEL_FILE="wheels/google_crc32c-${PACKAGE_VERSION}-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+    WHEEL_FILE="wheels/google_crc32c-${PACKAGE_VERSION}-${PY_TAG}-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
     venv/bin/pip install ${WHEEL_FILE}
 
     # Verify that the module is installed and peek at contents.
