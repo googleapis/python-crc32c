@@ -40,6 +40,11 @@ eval "$(pyenv init --path)"
 install_python_pyenv() {
     version=$1
 
+    # special-case handle old version of pyenv in current Kokoro image
+    if ["$version" == "3.13"]; then
+        version=3.13.0rc2
+    fi
+
     if [ -z "$(pyenv versions --bare | grep $version)" ]; then
         echo "Python $version is not installed. Installing..."
         pyenv install $version
