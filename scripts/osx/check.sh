@@ -44,7 +44,7 @@ for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
     ${PYTHON} -m venv ${VIRTUALENV}
 
     OS_VERSION_STR="12_0"
-    if [ "${PYTHON_VERSION}" == "3.12"] || ["${PYTHON_VERSION}" == "3.13"]; then
+    if [ "${PYTHON_VERSION}" == "3.12" ] || [ "${PYTHON_VERSION}" == "3.13" ]; then
         OS_VERSION_STR="14.0"
     fi
 
