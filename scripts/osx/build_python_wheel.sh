@@ -42,7 +42,7 @@ install_python_pyenv() {
 
     # special-case handle old version of pyenv in current Kokoro image
     if ["$version" == "3.13"]; then
-        version=3.13.0rc2
+        version="3.13.0rc2"
     fi
 
     if [ -z "$(pyenv versions --bare | grep $version)" ]; then
