@@ -39,7 +39,6 @@ ${MAIN_PYTHON_BIN}/cmake \
     ..
 make all install
 
-
 # Build the wheel.
 export CRC32C_PURE_PYTHON=0
 export CRC32C_LIMITED_API=1

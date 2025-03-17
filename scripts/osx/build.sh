@@ -30,6 +30,10 @@ export REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 # https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 brew install openssl readline sqlite3 xz zlib tcl-tk
 
+# Replace the old version of pyenv with the latest version.
+rm -rf /Users/kbuilder/.pyenv
+git clone https://github.com/pyenv/pyenv.git /Users/kbuilder/.pyenv
+
 # Build and install `libcrc32c`
 export PY_BIN="${PY_BIN:-python3}"
 export CRC32C_INSTALL_PREFIX="${REPO_ROOT}/usr"
@@ -44,12 +48,13 @@ ${OSX_DIR}/build_c_lib.sh
 
 export CRC32C_PURE_PYTHON=0
 export CRC32C_LIMITED_API=1
-SUPPORTED_PYTHON_VERSIONS=("3.9" "3.10" "3.11" "3.12")
+SUPPORTED_PYTHON_VERSIONS=("3.9" "3.10" "3.11" "3.12", "3.13")
 PYTHON_VERSION=${SUPPORTED_PYTHON_VERSIONS[0]};
 echo "Build wheel for Python ${PYTHON_VERSION}"
 export PY_BIN=$PYTHON_VERSION
 export PY_TAG="cp${PYTHON_VERSION//.}-abi3"
 . /${OSX_DIR}/build_python_wheel.sh
+
 
 # Clean up.
 rm -fr ${CRC32C_INSTALL_PREFIX}
