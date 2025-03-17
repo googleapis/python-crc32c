@@ -26,6 +26,8 @@ _DLL_FILENAME = "crc32c.dll"
 CRC32C_PURE_PYTHON_EXPLICIT = "CRC32C_PURE_PYTHON" in os.environ
 _FALSE_OPTIONS = ("0", "false", "no", "False", "No", None)
 CRC32C_PURE_PYTHON = os.getenv("CRC32C_PURE_PYTHON") not in _FALSE_OPTIONS
+# Wether or not we want to build using limited API (ABI3)
+CRC32C_LIMITED_API = os.getenv("CRC32C_LIMITED_API") not in _FALSE_OPTIONS
 
 
 def copy_dll(build_lib):
@@ -90,6 +92,13 @@ def build_c_extension():
         print("#### using global install of 'crc32c'")
         kwargs = {}
 
+    if CRC32C_LIMITED_API:
+        kwargs["define_macros"] = [("Py_LIMITED_API", "0x03090000")]
+        kwargs["py_limited_api"] = True
+        options = {"bdist_wheel": {"py_limited_api": "cp39"}}
+    else:
+        options = {}
+
     module_path = os.path.join("src", "google_crc32c", "_crc32c.c")
     sources=[os.path.normcase(module_path)]
     print(f"##### sources: {sources}")
@@ -106,7 +115,7 @@ def build_c_extension():
         package_dir={"": "src"},
         ext_modules=[module],
         cmdclass={"build_ext": BuildExtWithDLL},
-        install_requires=["importlib_resources>=1.3 ; python_version < '3.9' and os_name == 'nt'"],
+        options=options,
     )
 
 
