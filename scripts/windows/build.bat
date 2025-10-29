@@ -18,6 +18,9 @@ setlocal ENABLEDELAYEDEXPANSION
 set CMAKE_GENERATOR="Visual Studio 17 2022"
 set CONFIGURATION=RelWithDebInfo
 set CRC32C_INSTALL_PREFIX=%cd%\build\%CONFIGURATION%
+set CRC32C_PURE_PYTHON=0
+set CRC32C_LIMITED_API=1
+set BUILT=0
 
 @rem Iterate through supported Python versions.
 @rem Unfortunately pyenv for Windows has an out-of-date versions list. Choco's
@@ -35,6 +38,8 @@ FOR %%P IN (3.9, 3.10, 3.11, 3.12, 3.13.1) DO (
     set python_version_trimmed=!python_version:~0,4!
 
     py -!python_version_trimmed!-64 -m pip install --upgrade pip
+
+    if "%BUILT%"=="1" (goto test)
 
     echo "Installing cmake for Python %%P"
     py -!python_version_trimmed!-64 -m pip install cmake
@@ -76,6 +81,9 @@ FOR %%P IN (3.9, 3.10, 3.11, 3.12, 3.13.1) DO (
     echo "Building Wheel"
     py -!python_version_trimmed!-64 -m pip wheel . --wheel-dir wheels/
 
+    set BUILT=1
+
+:test
     echo "Built wheel, now running tests."
     call %~dp0/test.bat !python_version_trimmed! || goto :error
 
