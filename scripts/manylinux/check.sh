@@ -48,8 +48,14 @@ for PYTHON_VERSION in "${SUPPORTED_PYTHON_VERSIONS[@]}"; do
     ${PYTHON} -m venv venv
 
     # Install the wheel.
-    WHEEL_FILE="wheels/google_crc32c-${PACKAGE_VERSION}-cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
-    venv/bin/pip install ${WHEEL_FILE}
+    WHEEL_FILES=(wheels/google_crc32c-${PACKAGE_VERSION}-cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}*.whl)
+    if [ ${#WHEEL_FILES[@]} -ne 1 ]; then
+        echo "Expected one wheel file, but found ${#WHEEL_FILES[@]}"
+        ls wheels
+        exit 1
+    fi
+    WHEEL_FILE="${WHEEL_FILES[0]}"
+    venv/bin/pip install "${WHEEL_FILE}"
 
     # Verify that the module is installed and peek at contents.
     venv/bin/python scripts/check_crc32c_extension.py

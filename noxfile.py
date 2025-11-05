@@ -52,7 +52,7 @@ def check(session):
 @nox.session(python="3.13")
 def mypy(session):
     """Verify type hints are mypy compatible."""
-    session.install("-e", ".")
+    session.install(".")
     session.install(
         "mypy",
         "types-mock",

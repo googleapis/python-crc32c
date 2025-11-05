@@ -31,11 +31,14 @@ cd ${REPO_ROOT}/google_crc32c/
 rm -rf build
 mkdir build
 cd build/
+# TODO(https://github.com/googleapis/python-crc32c/issues/303):
+# Remove `-DCMAKE_POLICY_VERSION_MINIMUM=3.5` once this bug is fixed
 ${MAIN_PYTHON_BIN}/cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DCRC32C_BUILD_TESTS=no \
     -DCRC32C_BUILD_BENCHMARKS=no \
     -DBUILD_SHARED_LIBS=yes \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     ..
 make all install
 
