@@ -18,6 +18,7 @@ import platform
 import shutil
 import setuptools
 import setuptools.command.build_ext
+import re
 
 _EXTRA_DLL = "extra-dll"
 _DLL_FILENAME = "crc32c.dll"
@@ -26,7 +27,14 @@ _DLL_FILENAME = "crc32c.dll"
 CRC32C_PURE_PYTHON_EXPLICIT = "CRC32C_PURE_PYTHON" in os.environ
 _FALSE_OPTIONS = ("0", "false", "no", "False", "No", None)
 CRC32C_PURE_PYTHON = os.getenv("CRC32C_PURE_PYTHON") not in _FALSE_OPTIONS
+PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
 
+version = None
+
+with open(os.path.join(PACKAGE_ROOT, "pyproject.toml")) as fp:
+    version_candidates = re.findall(r"(?<=\")\d+.\d+.\d+(?=\")", fp.read())
+    assert len(version_candidates) == 1
+    version = version_candidates[0]
 
 def copy_dll(build_lib):
     install_prefix = os.environ.get("CRC32C_INSTALL_PREFIX")
