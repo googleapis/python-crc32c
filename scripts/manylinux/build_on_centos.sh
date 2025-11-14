@@ -39,6 +39,7 @@ cmake \
     -DCRC32C_BUILD_TESTS=no \
     -DCRC32C_BUILD_BENCHMARKS=no \
     -DBUILD_SHARED_LIBS=yes \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.12 \
     ..
 make all install
 
