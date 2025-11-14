@@ -60,7 +60,7 @@ if [[ -z ${BUILD_PYTHON} ]]; then
         elif [[ "${PYTHON_BIN}" == *"312"* ]]; then
             PYTHON_VERSIONS="${PYTHON_VERSIONS} ${PYTHON_BIN}"
             continue
-        elif [[ "${PYTHON_BIN}" == *"313"* ]]; then
+        elif [[ "${PYTHON_BIN}" == *"313"* && "${PYTHON_BIN}" != *"313t"* ]]; then
             PYTHON_VERSIONS="${PYTHON_VERSIONS} ${PYTHON_BIN}"
             continue
         else
@@ -88,7 +88,28 @@ done
 
 # Bundle external shared libraries into the wheels
 for whl in dist_wheels/google_crc32c*.whl; do
-    ${MAIN_PYTHON_BIN}/auditwheel repair "${whl}" --wheel-dir wheels/
+    "${MAIN_PYTHON_BIN}/auditwheel" repair "${whl}" --wheel-dir wheels/
+done
+
+# Install and test wheels
+for PYTHON_BIN in ${PYTHON_VERSIONS}; do
+    # Identify the short python version e.g. "39", "310"
+    PY_SHORT_VER=$(${PYTHON_BIN}/python -c "import sys; print(f'{sys.version_info.major}{sys.version_info.minor}')")
+    
+    # Create a virtual environment to install and test the wheel
+    ${PYTHON_BIN}/python -m venv /tmp/venv
+    
+    # Find the correct wheel file. We use a glob to account for platform tags.
+    WHEEL_FILE=$(ls ${REPO_ROOT}/wheels/google_crc32c-*-cp${PY_SHORT_VER}-cp${PY_SHORT_VER}*-manylinux*.whl)
+    
+    # Install the wheel
+    /tmp/venv/bin/pip install "${WHEEL_FILE}"
+
+    # Verify that the module is installed and peek at contents.
+    /tmp/venv/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
+    
+    # Clean up the virtual environment
+    rm -rf /tmp/venv
 done
 
 # Clean up.
