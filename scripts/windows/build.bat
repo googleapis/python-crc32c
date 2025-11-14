@@ -79,6 +79,5 @@ FOR %%P IN (3.9, 3.10, 3.11, 3.12, 3.13.1) DO (
     echo "Built wheel, now running tests."
     call %~dp0/test.bat !python_version_trimmed! || goto :error
 
-    echo "Finished with Python version %%P, now uninstalling"
-    choco uninstall python -y
+    echo "Finished with Python version %P"
 )
