@@ -23,7 +23,10 @@ ${MAIN_PYTHON_BIN}/python -m pip install --upgrade pip
 # Install `openssl` (i.e. non-Python build dependency for `cmake`).
 yum install -y openssl-devel
 # Install `cmake` (i.e. non-Python build dependency).
-${MAIN_PYTHON_BIN}/python -m pip install "cmake >= 3.12.0"
+curl -sSL "https://cmake.org/files/v3.12/cmake-3.12.0-Linux-x86_64.tar.gz" -o cmake.tar.gz
+tar -xzf cmake.tar.gz
+mv cmake-3.12.0-Linux-x86_64 /usr/local/cmake
+export PATH=/usr/local/cmake/bin:$PATH
 # Install Python build dependencies.
 ${MAIN_PYTHON_BIN}/python -m pip install \
     --requirement ${REPO_ROOT}/scripts/dev-requirements.txt
