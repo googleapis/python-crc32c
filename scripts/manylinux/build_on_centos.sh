@@ -94,13 +94,14 @@ done
 # Install and test wheels
 for PYTHON_BIN in ${PYTHON_VERSIONS}; do
     # Identify the short python version e.g. "39", "310"
-                # Get the ABI tag from the Python binary's path, e.g., "cp310-cp310"
-                ABI_TAG=$(basename $(dirname ${PYTHON_BIN}))
-                # Create a virtual environment to install and test the wheel
-                ${PYTHON_BIN}/python -m venv /tmp/venv
-                
-                # Find the correct wheel file using the precise ABI tag.
-                WHEEL_FILE=$(ls ${REPO_ROOT}/wheels/google_crc32c-*-${ABI_TAG}-manylinux*.whl)    # Install the wheel
+                    # Get the ABI tag from the Python binary's path, e.g., "cp310-cp310"
+                    ABI_TAG=$(basename $(dirname ${PYTHON_BIN}))
+                    ARCH=$(uname -m)
+                    # Create a virtual environment to install and test the wheel
+                    ${PYTHON_BIN}/python -m venv /tmp/venv
+                    
+                    # Find the correct wheel file using the precise ABI tag and architecture.
+                    WHEEL_FILE=$(ls ${REPO_ROOT}/wheels/google_crc32c-*-${ABI_TAG}-*manylinux*${ARCH}*.whl)    # Install the wheel
     /tmp/venv/bin/pip install "${WHEEL_FILE}"
 
     # Verify that the module is installed and peek at contents.
