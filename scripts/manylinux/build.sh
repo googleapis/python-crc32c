@@ -24,6 +24,12 @@ REPO_ROOT=$(dirname ${SCRIPTS_DIR})
 sudo apt-get install -y software-properties-common
 sudo add-apt-repository -y ppa:deadsnakes/ppa
 sudo apt-get update
+# === DEBUGGING START ===
+echo "--- Checking apt sources for deadsnakes ---"
+grep -r deadsnakes /etc/apt/sources.list*
+echo "--- Checking apt policy for python3.13 ---"
+apt-cache policy python3.13
+echo "--- DEBUGGING END ---"
 sudo apt-get install -y python3.13
 
 cd $REPO_ROOT
