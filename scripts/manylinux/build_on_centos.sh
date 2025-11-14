@@ -20,6 +20,8 @@ REPO_ROOT=/var/code/python-crc32c/
 
 # Upgrade `pip` before using it.
 ${MAIN_PYTHON_BIN}/python -m pip install --upgrade pip
+# Install `openssl` (i.e. non-Python build dependency for `cmake`).
+yum install -y openssl-devel
 # Install `cmake` (i.e. non-Python build dependency).
 ${MAIN_PYTHON_BIN}/python -m pip install "cmake >= 3.12.0"
 # Install Python build dependencies.
