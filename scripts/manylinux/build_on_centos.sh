@@ -18,6 +18,9 @@ MAIN_PYTHON_BIN="/opt/python/cp39-cp39/bin/"
 echo "BUILD_PYTHON: ${BUILD_PYTHON}"
 REPO_ROOT=/var/code/python-crc32c/
 
+# Install `openssl-devel` so that `cmake` can be built.
+yum install -y openssl-devel
+
 # Upgrade `pip` before using it.
 ${MAIN_PYTHON_BIN}/python -m pip install --upgrade pip
 # Install `openssl` (i.e. non-Python build dependency for `cmake`).
