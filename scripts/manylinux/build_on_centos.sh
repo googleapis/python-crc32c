@@ -36,7 +36,7 @@ cd ${REPO_ROOT}/google_crc32c/
 rm -rf build
 mkdir build
 cd build/
-${MAIN_PYTHON_BIN}/cmake \
+cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DCRC32C_BUILD_TESTS=no \
     -DCRC32C_BUILD_BENCHMARKS=no \
