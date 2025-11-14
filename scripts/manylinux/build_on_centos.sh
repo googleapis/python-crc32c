@@ -94,14 +94,14 @@ done
 # Install and test wheels
 for PYTHON_BIN in ${PYTHON_VERSIONS}; do
     # Identify the short python version e.g. "39", "310"
-        PY_IMPL=$(${PYTHON_BIN}/python -c "import sys; print(sys.implementation.name)")
-        PY_SHORT_VER=$(${PYTHON_BIN}/python -c "import sys; print(f'{sys.version_info.major}{sys.version_info.minor}')")
-        # Create a virtual environment to install and test the wheel
-        ${PYTHON_BIN}/python -m venv /tmp/venv
-        
-        # Find the correct wheel file. We use a glob to account for platform tags.
-        WHEEL_FILE=$(ls ${REPO_ROOT}/wheels/google_crc32c-*-${PY_IMPL}${PY_SHORT_VER}-*-manylinux*.whl)
-    
+            # Get the abbreviated Python implementation tag (e.g., 'cp' for CPython, 'pp' for PyPy)
+            PY_IMPL_TAG=$(${PYTHON_BIN}/python -c "import sys; print(sys.implementation.cache_tag.split('-')[0])")
+            PY_SHORT_VER=$(${PYTHON_BIN}/python -c "import sys; print(f'{sys.version_info.major}{sys.version_info.minor}')")
+            # Create a virtual environment to install and test the wheel
+            ${PYTHON_BIN}/python -m venv /tmp/venv
+            
+            # Find the correct wheel file. We use a glob to account for platform tags.
+            WHEEL_FILE=$(ls ${REPO_ROOT}/wheels/google_crc32c-*-${PY_IMPL_TAG}${PY_SHORT_VER}-*-manylinux*.whl)    
     # Install the wheel
     /tmp/venv/bin/pip install "${WHEEL_FILE}"
 
