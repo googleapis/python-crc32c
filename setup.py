@@ -29,9 +29,9 @@ _FALSE_OPTIONS = ("0", "false", "no", "False", "No", None)
 CRC32C_PURE_PYTHON = os.getenv("CRC32C_PURE_PYTHON") not in _FALSE_OPTIONS
 PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-version = "1.7.1"
+version = None
 
-with open(os.path.join(PACKAGE_ROOT, "proto/version.py")) as fp:
+with open(os.path.join(PACKAGE_ROOT, "pyproject.toml")) as fp:
     version_candidates = re.findall(r"(?<=\")\d+.\d+.\d+(?=\")", fp.read())
     assert len(version_candidates) == 1
     version = version_candidates[0]
