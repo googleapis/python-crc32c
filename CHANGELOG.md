@@ -4,6 +4,14 @@
 
 [1]: https://pypi.org/project/google-crc32c/#history
 
+## [1.8.0](https://github.com/googleapis/python-crc32c/compare/v1.7.1...v1.8.0) (2025-11-18)
+
+
+### Features
+
+* add version to pyproject.toml ([17c8d0956a8c486d77831ae7cced742f0f3a9999](https://github.com/googleapis/python-crc32c/commit/17c8d0956a8c486d77831ae7cced742f0f3a9999))
+* move version ([38f22cc9fcbd6f32c16cc14b6caad0331a32540e](https://github.com/googleapis/python-crc32c/commit/38f22cc9fcbd6f32c16cc14b6caad0331a32540e))
+
 ## [1.7.1](https://github.com/googleapis/python-crc32c/compare/v1.7.0...v1.7.1) (2025-03-25)
 
 
