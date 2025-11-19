@@ -27,7 +27,7 @@ CRC32C_PURE_PYTHON_EXPLICIT = "CRC32C_PURE_PYTHON" in os.environ
 _FALSE_OPTIONS = ("0", "false", "no", "False", "No", None)
 CRC32C_PURE_PYTHON = os.getenv("CRC32C_PURE_PYTHON") not in _FALSE_OPTIONS
 
-
+# test
 def copy_dll(build_lib):
     install_prefix = os.environ.get("CRC32C_INSTALL_PREFIX")
 
