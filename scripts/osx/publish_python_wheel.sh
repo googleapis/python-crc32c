@@ -15,14 +15,14 @@
 
 set -eo pipefail
 
-PYTHON=$(PYENV_VERSION=3.9 pyenv which python)
-PYTHON_BIN=$(dirname ${PYTHON})
+pyenv install 3.8.14
+pyenv global 3.8.14
+
+python -m pip install "setuptools<71"
 
 # Start the releasetool reporter
-${PYTHON} -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
-${PYTHON} -m releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
-
-TWINE=${PYTHON_BIN}/twine
+python -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
+python -m releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
 
 # Disable logging
 set +x
