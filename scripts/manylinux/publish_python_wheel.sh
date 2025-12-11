@@ -15,13 +15,13 @@
 
 set -eo pipefail
 
-python -m pip install "setuptools<71"
+python3.12 -m pip install "setuptools<71"
 
 # Start the releasetool reporter
-python -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
-python -m releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
+python3.12 -m pip install --require-hashes -r ${REPO_ROOT}/.kokoro/requirements.txt
+python3.12 -m releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
 
 # Disable logging
 set +x
 TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-3")
-python -m twine upload --skip-existing --username __token__ --password "${TWINE_PASSWORD}" ${REPO_ROOT}/wheels/*
+python3.12 -m twine upload --skip-existing --username __token__ --password "${TWINE_PASSWORD}" ${REPO_ROOT}/wheels/*
