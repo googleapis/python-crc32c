@@ -38,13 +38,8 @@ git submodule update --init --recursive
 
 ${OSX_DIR}/build_c_lib.sh
 
-# reinstall pyenv
-rm -rf /Users/kbuilder/.pyenv
-git clone https://github.com/pyenv/pyenv.git /Users/kbuilder/.pyenv
-
 SUPPORTED_PYTHON_VERSIONS=("3.9" "3.10" "3.11" "3.12" "3.13" "3.14")
 
-pyenv install --list
 for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
     if [ -z "$(pyenv versions --bare | grep $PYTHON_VERSION)" ]; then
         echo "Python $PYTHON_VERSION is not installed. Installing..."
