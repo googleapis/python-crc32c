@@ -45,15 +45,6 @@ git clone https://github.com/pyenv/pyenv.git /Users/kbuilder/.pyenv
 SUPPORTED_PYTHON_VERSIONS=("3.9" "3.10" "3.11" "3.12" "3.13" "3.14")
 
 for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
-    if [ -z "$(pyenv versions --bare | grep $PYTHON_VERSION)" ]; then
-        echo "Python $PYTHON_VERSION is not installed. Installing..."
-        pyenv install $PYTHON_VERSION
-        echo "Python $PYTHON_VERSION installed."
-    else
-        echo "Python $PYTHON_VERSION is already installed."
-    fi
-done
-for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
     echo "Build wheel for Python ${PYTHON_VERSION}"
     export PY_BIN=$PYTHON_VERSION
     export PY_TAG="cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}"
