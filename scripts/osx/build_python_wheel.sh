@@ -97,6 +97,8 @@ ${VENV}/bin/pip install pytest
 ${VENV}/bin/py.test ${REPO_ROOT}/tests
 ${VENV}/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
 
+ls ${REPO_ROOT}/wheels/
+
 # Clean up.
 rm -fr ${DIST_WHEELS}
 rm -fr ${VENV}
