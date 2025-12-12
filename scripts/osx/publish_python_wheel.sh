@@ -19,7 +19,7 @@ if [ -z "$(pyenv versions --bare | grep 3.8)" ]; then
     echo "Python 3.8 is not installed. Installing..."
     pyenv install 3.8
 fi
-pyenv shell $version
+pyenv shell 3.8
 
 python -m pip install "setuptools<71"
 
