@@ -41,7 +41,6 @@ ${OSX_DIR}/build_c_lib.sh
 
 SUPPORTED_PYTHON_VERSIONS=("3.9" "3.10" "3.11" "3.12" "3.13", "3.14")
 
-pyenv update
 pyenv install --list
 for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
     if [ -z "$(pyenv versions --bare | grep $PYTHON_VERSION)" ]; then
