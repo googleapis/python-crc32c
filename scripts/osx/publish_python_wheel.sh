@@ -27,11 +27,4 @@ python -m releasetool publish-reporter-script > /tmp/publisher-script; source /t
 # Disable logging
 set +x
 TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-3")
-#${PYTHON} -m twine upload --skip-existing --username __token__ --password "${TWINE_PASSWORD}" ${REPO_ROOT}/wheels/*
-
-# TODO: temporary test. Remove
-export GOOGLE_APPLICATION_CREDENTIALS=${KOKORO_GFILE_DIR}/service-account.json
-gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
-ls ${REPO_ROOT}/wheels/
-gsutil cp ${REPO_ROOT}/wheels/* gs://python_crc32c/
-echo "Osx wheels uploaded successfully"
+${PYTHON} -m twine upload --skip-existing --username __token__ --password "${TWINE_PASSWORD}" ${REPO_ROOT}/wheels/*
