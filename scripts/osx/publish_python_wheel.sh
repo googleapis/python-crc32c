@@ -18,7 +18,7 @@ set -eo pipefail
 if [ -z "$(pyenv versions --bare | grep 3.8)" ]; then
     echo "Python 3.8 is not installed. Installing..."
     pyenv install 3.8
-else
+fi
 
 python3.8 -m pip install "setuptools<71"
 
