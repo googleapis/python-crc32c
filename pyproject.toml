@@ -25,6 +25,3 @@ requires-python = ">=3.9"
 
 [project.optional-dependencies]
 testing = ["pytest"]
-
-[tool.setuptools.package-data]
-google_crc32c = ["py.typed"]
