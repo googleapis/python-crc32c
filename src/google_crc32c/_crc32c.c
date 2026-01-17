@@ -58,5 +58,15 @@ static struct PyModuleDef crc32cmodule = {
 PyMODINIT_FUNC
 PyInit__crc32c(void)
 {
-    return PyModule_Create(&crc32cmodule);
+    PyObject *mod = PyModule_Create(&crc32cmodule);
+
+    if (mod == NULL) {
+        return NULL;
+    }
+
+#ifdef Py_GIL_DISABLED
+    PyUnstable_Module_SetGIL(mod, Py_MOD_GIL_NOT_USED);
+#endif
+
+    return mod;
 }
