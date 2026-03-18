@@ -28,7 +28,11 @@ jobs:
     - name: Build riscv64 wheels
       run: |
         docker pull quay.io/pypa/manylinux_2_28_riscv64
-        docker run           --rm           --volume ${{ github.workspace }}:/var/code/python-crc32c/           quay.io/pypa/manylinux_2_28_riscv64           /var/code/python-crc32c/scripts/manylinux/build_on_centos.sh
+        docker run \
+          --rm \
+          --volume ${{ github.workspace }}:/var/code/python-crc32c/ \
+          quay.io/pypa/manylinux_2_28_riscv64 \
+          /var/code/python-crc32c/scripts/manylinux/build_on_centos.sh
 
     - name: Upload wheels
       uses: actions/upload-artifact@v4
