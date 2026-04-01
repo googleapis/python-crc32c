@@ -1,4 +1,4 @@
-**NOTE**: **This github repository is archived. The repository contents and history have moved to** [google-cloud-python](https://github.com/googleapis/google-cloud-python/tree/main/packages/google-api-core)
+**NOTE**: **This github repository is archived. The repository contents and history have moved to** [google-cloud-python](https://github.com/googleapis/google-cloud-python/tree/main/packages/google-crc32c)
 
 # `google-crc32c`
 ![GA](https://img.shields.io/badge/support-GA-gold.svg) [<img src="https://img.shields.io/pypi/v/google-crc32c.svg">](https://pypi.org/project/google-crc32c) ![Python Versions](https://img.shields.io/pypi/pyversions/google-crc32c)
